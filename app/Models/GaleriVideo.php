@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class GaleriVideo extends Model
 {
     use HasFactory;
+    protected $table = 'galeri_video';
     protected $fillable = [
         'thumbnail',
         'file_video',

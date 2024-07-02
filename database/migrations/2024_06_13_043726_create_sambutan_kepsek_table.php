@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('sambutan_kepsek', function (Blueprint $table) {
             $table->id();
-            $table->string('deskripsi');
+            $table->longText('deskripsi');
             $table->timestamps();
         });
     }

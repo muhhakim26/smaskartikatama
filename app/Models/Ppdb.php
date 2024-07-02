@@ -2,12 +2,17 @@
 
 namespace App\Models;
 
+use App\Models\Area\District;
+use App\Models\Area\Province;
+use App\Models\Area\Regency;
+use App\Models\Area\Village;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Ppdb extends Model
 {
     use HasFactory;
+    protected $table = 'ppdb';
     protected $fillable = [
         'id_pendaftaran',
         'nama',
@@ -17,10 +22,12 @@ class Ppdb extends Model
         'tgl_lahir',
         'agama',
         'brkthn_khusus_siswa',
-        'alamat',
-        'desa_kelurahan',
-        'kecamatan',
+        'provinsi_id',
+        'kabupaten_id',
+        'kecamatan_id',
+        'desa_kelurahan_id',
         'kode_pos',
+        'alamat',
         'nhp_ortu',
         'nhp_siswa',
         'email',
@@ -46,4 +53,23 @@ class Ppdb extends Model
         'filefc_skhu',
         'filefc_skm',
     ];
+    public function provinsi()
+    {
+        return $this->belongsTo(Province::class, 'provinsi_id', 'id');
+    }
+
+    public function kabupaten()
+    {
+        return $this->belongsTo(Regency::class, 'kabupaten_id', 'id');
+    }
+
+    public function kecamatan()
+    {
+        return $this->belongsTo(District::class, 'kecamatan_id', 'id');
+    }
+
+    public function kelurahan()
+    {
+        return $this->belongsTo(Village::class, 'desa_kelurahan_id', 'id');
+    }
 }
