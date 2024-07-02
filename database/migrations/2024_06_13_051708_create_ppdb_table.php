@@ -22,10 +22,10 @@ return new class extends Migration
             $table->string('agama');
             $table->boolean('brkthn_khusus_siswa');
             $table->mediumText('alamat');
-            $table->foreignId('provinsi_id')->constrained(env('INDONESIA_AREA_TABLE_PREFIX', '') . 'provinces', 'id')->cascadeOnUpdate()->restrictOnDelete();
-            $table->foreignId('kabupaten_id')->constrained(env('INDONESIA_AREA_TABLE_PREFIX', '') . 'regencies', 'id')->cascadeOnUpdate()->restrictOnDelete();
-            $table->foreignId('kecamatan_id')->constrained(env('INDONESIA_AREA_TABLE_PREFIX', '') . 'districts', 'id')->cascadeOnUpdate()->restrictOnDelete();
-            $table->foreignId('desa_kelurahan_id')->constrained(env('INDONESIA_AREA_TABLE_PREFIX', '') . 'villages', 'id')->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId('provinsi_id')->constrained(env('INDONESIA_AREA_TABLE_PREFIX', 'indonesia_') . 'provinces', 'id')->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId('kabupaten_id')->constrained(env('INDONESIA_AREA_TABLE_PREFIX', 'indonesia_') . 'regencies', 'id')->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId('kecamatan_id')->constrained(env('INDONESIA_AREA_TABLE_PREFIX', 'indonesia_') . 'districts', 'id')->cascadeOnUpdate()->restrictOnDelete();
+            $table->foreignId('desa_kelurahan_id')->constrained(env('INDONESIA_AREA_TABLE_PREFIX', 'indonesia_') . 'villages', 'id')->cascadeOnUpdate()->restrictOnDelete();
             $table->string('kode_pos');
             $table->string('nhp_ortu');
             $table->string('nhp_siswa');

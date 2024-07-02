@@ -13,7 +13,7 @@ class CreateProvincesTable extends Migration
      */
     public function up()
     {
-        Schema::create(env('INDONESIA_AREA_TABLE_PREFIX', '') . 'provinces', function (Blueprint $table) {
+        Schema::create(env('INDONESIA_AREA_TABLE_PREFIX', 'indonesia_') . 'provinces', function (Blueprint $table) {
             $table->id();
             $table->char('code', 2)->unique();
             $table->string('name', 255);
@@ -28,6 +28,6 @@ class CreateProvincesTable extends Migration
      */
     public function down()
     {
-        Schema::drop(env('INDONESIA_AREA_TABLE_PREFIX', '') . 'provinces');
+        Schema::drop(env('INDONESIA_AREA_TABLE_PREFIX', 'indonesia_') . 'provinces');
     }
 }
