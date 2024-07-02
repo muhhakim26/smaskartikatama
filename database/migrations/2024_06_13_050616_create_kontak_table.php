@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('kontak', function (Blueprint $table) {
             $table->id();
-            $table->string('alamat');
-            $table->string('notelpon');
-            $table->string('email');
+            $table->mediumText('alamat')->nullable();
+            $table->string('notelpon')->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
         });
     }

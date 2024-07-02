@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('osis', function (Blueprint $table) {
             $table->id();
-            $table->string('deskripsi');
+            $table->longText('deskripsi');
             $table->string('foto_struktur');
             $table->timestamps();
         });

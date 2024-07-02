@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('visi_misi', function (Blueprint $table) {
             $table->id();
-            $table->string('deskripsi');
+            $table->longText('deskripsi');
             $table->timestamps();
         });
     }

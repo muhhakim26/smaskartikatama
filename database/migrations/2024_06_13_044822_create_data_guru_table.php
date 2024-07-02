@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('data_guru', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('nip');
+            $table->unsignedBigInteger('nip')->unique();
             $table->string('nama');
             $table->string('file_foto');
             $table->string('bidang');
