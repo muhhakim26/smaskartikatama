@@ -13,7 +13,7 @@ class CreateRegenciesTable extends Migration
      */
     public function up()
     {
-        Schema::create(env('INDONESIA_AREA_TABLE_PREFIX', '') . 'regencies', function (Blueprint $table) {
+        Schema::create(env('INDONESIA_AREA_TABLE_PREFIX', 'indonesia_') . 'regencies', function (Blueprint $table) {
             $table->id();
             $table->char('code', 5)->unique();
             $table->char('province_code', 2);
@@ -22,7 +22,7 @@ class CreateRegenciesTable extends Migration
 
             $table->foreign('province_code')
                 ->references('code')
-                ->on(env('INDONESIA_AREA_TABLE_PREFIX', '') . 'provinces')
+                ->on(env('INDONESIA_AREA_TABLE_PREFIX', 'indonesia_') . 'provinces')
                 ->onUpdate('cascade')->onDelete('restrict');
         });
     }
@@ -34,6 +34,6 @@ class CreateRegenciesTable extends Migration
      */
     public function down()
     {
-        Schema::drop(env('INDONESIA_AREA_TABLE_PREFIX', '') . 'regencies');
+        Schema::drop(env('INDONESIA_AREA_TABLE_PREFIX', 'indonesia_') . 'regencies');
     }
 }
