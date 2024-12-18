@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('data_guru', function (Blueprint $table) {
+        Schema::create('tb_ekstrakurikuler', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('nip')->unique();
             $table->string('nama');
-            $table->string('file_foto');
-            $table->string('bidang');
-            $table->string('jabatan');
+            $table->text('deskripsi');
+            $table->string('foto_struktur');
+            $table->json('foto_kegiatan');
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('data_guru');
+        Schema::dropIfExists('ekstrakurikuler');
     }
 };

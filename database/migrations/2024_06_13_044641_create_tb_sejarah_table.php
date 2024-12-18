@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kontak', function (Blueprint $table) {
+        Schema::create('tb_sejarah', function (Blueprint $table) {
             $table->id();
-            $table->mediumText('alamat')->nullable();
-            $table->string('notelpon')->nullable();
-            $table->string('email')->nullable();
+            $table->text('deskripsi');
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kontak');
+        Schema::dropIfExists('sejarah');
     }
 };

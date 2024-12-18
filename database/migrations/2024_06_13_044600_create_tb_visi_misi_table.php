@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('berita', function (Blueprint $table) {
+        Schema::create('tb_visi_misi', function (Blueprint $table) {
             $table->id();
-            $table->string('judul');
-            $table->string('file_foto');
-            $table->longText('deskripsi');
+            $table->text('deskripsi');
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('berita');
+        Schema::dropIfExists('struktur_visi_misi');
     }
 };

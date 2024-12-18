@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ekstrakurikuler', function (Blueprint $table) {
+        Schema::create('tb_berita', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->longText('deskripsi');
-            $table->string('foto_struktur');
-            $table->json('foto_kegiatan');
+            $table->string('judul');
+            $table->string('file_foto');
+            $table->text('deskripsi');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ekstrakurikuler');
+        Schema::dropIfExists('berita');
     }
 };

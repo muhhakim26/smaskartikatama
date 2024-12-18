@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('osis', function (Blueprint $table) {
+        Schema::table('tb_info_ppdb', function (Blueprint $table) {
             $table->id();
-            $table->longText('deskripsi');
-            $table->string('foto_struktur');
+            $table->text('deskripsi');
             $table->timestamps();
         });
     }
@@ -24,6 +23,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('osis');
+        Schema::table('tb_info_ppdb', function (Blueprint $table) {
+            //
+        });
     }
 };

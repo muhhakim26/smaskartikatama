@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('visi_misi', function (Blueprint $table) {
+        Schema::create('tb_kontak', function (Blueprint $table) {
             $table->id();
-            $table->longText('deskripsi');
+            $table->text('alamat')->nullable();
+            $table->string('notelpon')->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
         });
     }
@@ -23,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('struktur_visi_misi');
+        Schema::dropIfExists('kontak');
     }
 };

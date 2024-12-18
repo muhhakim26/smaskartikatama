@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sambutan_kepsek', function (Blueprint $table) {
+        Schema::create('tb_data_guru', function (Blueprint $table) {
             $table->id();
-            $table->longText('deskripsi');
+            $table->string('nip')->unique();
+            $table->string('nama');
+            $table->string('file_foto');
+            $table->string('bidang');
+            $table->string('jabatan');
             $table->timestamps();
         });
     }
@@ -23,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sambutan_kepsek');
+        Schema::dropIfExists('data_guru');
     }
 };
