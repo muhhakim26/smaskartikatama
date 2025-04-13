@@ -19,7 +19,11 @@
         </tr>
         <tr>
             <td align="right">Foto :</td>
-            <td><img alt="{{ $GaleriFoto->nama_foto }}" src="{{ asset('img/' . $GaleriFoto->file_foto) }}"></td>
+            <td>
+                <a class="magnific-image" href="{{ asset('img/' . $GaleriFoto->file_foto) }}" title="{{ Str::title($GaleriFoto->nama_foto) }}">
+                    <img alt="{{ $GaleriFoto->nama_foto }}" src="{{ asset('img/' . $GaleriFoto->file_foto) }}">
+                </a>
+            </td>
         </tr>
 
         <tr>
@@ -41,3 +45,19 @@
         </form>
     </div>
 @endsection
+
+@push('script')
+    <script>
+        $(".magnific-image").magnificPopup({
+            type: "image",
+            closeOnContentClick: true,
+            mainClass: 'mfp-img-mobile',
+            image: {
+                verticalFit: true
+            },
+            zoom: {
+                enabled: true,
+            }
+        });
+    </script>
+@endpush

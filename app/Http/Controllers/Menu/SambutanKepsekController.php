@@ -36,15 +36,18 @@ class SambutanKepsekController extends Controller
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-            return back()->with(['message' => 'gagal menambahkan data.', 'isActive' => false, 'hasError' => true])->withErrors($validator)->withInput();
+            return back()->with(['message' => 'gagal menambahkan data.', 'hasError' => true])->withErrors($validator)->withInput();
         }
         $validator = $validator->validated();
+        if (trim($validator['deskripsi-kepsek']) === '<p></p>') {
+            $validator['deskripsi-kepsek'] = null;
+        }
         SambutanKepsek::updateOrCreate(['id' => 1], [
             'id' => 1,
             'deskripsi' => $validator['deskripsi-kepsek'],
         ]);
 
-        return redirect()->route('kelola-sambutan-kepsek.index')->with(['message' => 'sukses menambahkan data.', 'isActive' => true, 'hasError' => false]);
+        return redirect()->route('kelola-sambutan-kepsek.index')->with(['message' => 'sukses menambahkan data.', 'hasError' => false]);
     }
 
     /**

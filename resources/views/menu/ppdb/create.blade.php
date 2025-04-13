@@ -326,7 +326,7 @@
         </div>
     </form>
 @endsection
-@push('js')
+@push('script')
     <script>
         $('input[type="radio"].deselectable').on('click', function() {
             let $this = $(this);

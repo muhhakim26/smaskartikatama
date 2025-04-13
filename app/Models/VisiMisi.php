@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class VisiMisi extends Model
 {
     use HasFactory;
-    protected $table = 'visi_misi';
+    protected $table = 'tb_visi_misi';
     protected $fillable = [
         'id',
         'deskripsi',

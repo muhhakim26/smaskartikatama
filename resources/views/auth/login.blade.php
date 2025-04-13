@@ -1,39 +1,57 @@
 @extends('layouts/preset')
 @section('judul', 'Masuk')
+@push('style')
+    <link href="{{ asset('assets/css/iofrm-style.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('assets/css/iofrm-theme7.css') }}" rel="stylesheet" type="text/css">
+@endpush
 @section('konten')
-    <h1>Halaman Login</h1>
-    {{-- @php
-        echo $errors;
-        echo session('message');
-    @endphp --}}
-    @if ($errors->has('status'))
-        @foreach ($errors->get('status') as $value)
-            <div>
-                {{ $value }}
+    <div class="form-body">
+        <div class="website-logo">
+            <a href="{{ route('home') }}">
+                <div class="logo">
+                    <img alt="" class="logo-size" src="{{ asset('assets/images/logo-light.svg') }}">
+                </div>
+            </a>
+        </div>
+        <div class="iofrm-layout">
+            <div class="img-holder">
+                <div class="bg"></div>
+                <div class="info-holder">
+                    <img alt="" src="{{ asset('assets/images/graphic3.svg') }}">
+                </div>
             </div>
-        @endforeach
-    @endif
-    @if (session()->has('status'))
-        <div>
-            {{ session('status') }}
+            <div class="form-holder">
+                <div class="form-content">
+                    <div class="form-items">
+                        @if ($errors->has('status'))
+                            @foreach ($errors->get('status') as $value)
+                                <div>
+                                    {{ $value }}
+                                </div>
+                            @endforeach
+                        @endif
+                        @if (session()->has('status'))
+                            <div>
+                                {{ session('status') }}
+                            </div>
+                        @endif
+                        {{ session('message') }}
+                        <form action="{{ route('admin.login') }}" id="login" method="post">
+                            @csrf
+                            <label for="surel">Email</label>
+                            <input class="form-control" id="surel" name="surel" required type="email">
+                            @error('surel', 'login')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                            <label for="kata-sandi">Password</label>
+                            <input class="form-control" id="kata-sandi" name="kata-sandi" required type="password">
+                            <div class="form-button">
+                                <button class="ibtn" type="submit">Login</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-    @endif
-    {{ session('message') }}
-    <form action="{{ route('admin.login') }}" id="login" method="post">
-        @csrf
-        <div>
-            <label for="surel">Email</label>
-            <input id="surel" name="surel" type="email">
-        </div>
-        @error('surel', 'login')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label for="kata-sandi">Password</label>
-            <input id="kata-sandi" name="kata-sandi" type="password">
-        </div>
-        <div>
-            <button type="submit">Login</button>
-        </div>
-    </form>
+    </div>
 @endsection

@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Menu;
 use App\Http\Controllers\Controller;
 use App\Models\GaleriFoto;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 class GaleriFotoController extends Controller
@@ -17,7 +17,7 @@ class GaleriFotoController extends Controller
      */
     public function index()
     {
-        $GaleriFoto = GaleriFoto::all();
+        $GaleriFoto = GaleriFoto::paginate(8);
         return view('menu/galeri/foto/list', compact('GaleriFoto'));
     }
 
@@ -86,7 +86,7 @@ class GaleriFotoController extends Controller
     {
         $rules = [
             'nama-foto' => 'required|string|max:255',
-            'foto' => 'required|image|mimes:jpeg,jpg,png|max:3072',
+            'foto' => 'nullable|image|mimes:jpeg,jpg,png|max:3072',
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
@@ -117,14 +117,26 @@ class GaleriFotoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        $GaleriFoto = GaleriFoto::findOrFail($id);
-        if (!empty($GaleriFoto->file_foto)) {
-            Storage::delete($GaleriFoto->file_foto);
+        if ($request->ajax()) {
+            try {
+                $GaleriFoto = GaleriFoto::findOrFail($id);
+                if (!empty($GaleriFoto->file_foto)) {
+                    Storage::delete($GaleriFoto->file_foto);
+                }
+                $GaleriFoto->delete();
+                return response([
+                    'status' => 'success',
+                    'data' => 'sukses menghapus data.'
+                ]);
+            } catch (\Exception $e) {
+                return response([
+                    'status' => 'error',
+                    'data' => $e->getMessage()
+                ], 500);
+            }
         }
-        $GaleriFoto->delete();
-        return redirect()->route('kelola-galeri-foto.index')->with('message', 'sukses menghapus data.');
-
+        return redirect()->back();
     }
 }

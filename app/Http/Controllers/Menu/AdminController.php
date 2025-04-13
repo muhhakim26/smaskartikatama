@@ -6,22 +6,48 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Yajra\DataTables\Facades\DataTables;
 
 class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $Admin = Admin::get();
-        return view('menu/admin/list', compact('Admin'));
+        if ($request->ajax()) {
+            $model = Admin::query()->select('id', 'nama', 'email', 'level')->where('id', '!=', 1);
+
+            if ($request->has('order') && !empty($request->input('order'))) {
+                $order = $request->input('order')[0];
+                $columnIndex = $order['column'];
+                $columnName = $request->input('columns')[$columnIndex]['data'];
+                $columnDirection = $order['dir'];
+                $model->orderBy($columnName, $columnDirection);
+            } else {
+                $model->latest();
+            }
+
+            return DataTables::eloquent($model)
+                ->addIndexColumn()
+                ->editColumn('level', function ($row) {
+                    return "<span class='bg-success-focus text-success-600 border border-success-main px-24 py-4 radius-4 fw-medium text-sm'>$row->level</span>";
+                })
+                ->addColumn('action', function ($row) {
+                    return '<a class="w-32-px h-32-px bg-primary-light text-primary-600 rounded-circle d-inline-flex align-items-center justify-content-center" href="' . route('kelola-admin.show', $row->id) . '"> <iconify-icon icon="iconamoon:eye-light"></iconify-icon> </a> <a class="w-32-px h-32-px bg-success-focus text-success-main rounded-circle d-inline-flex align-items-center justify-content-center" href="' . route('kelola-admin.edit', $row->id) . '"> <iconify-icon icon="lucide:edit"></iconify-icon> </a> <a class="w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center" style="cursor:pointer" onclick="hapus(\'' . $row->id . '\')"> <iconify-icon icon="mingcute:delete-2-line"></iconify-icon> </a>';
+                })
+                ->rawColumns(['level', 'action'])
+                ->removeColumn('id')
+                ->toJson(true);
+        }
+        return view('menu/admin/list');
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
+    public function create()
     {
         return view('menu/admin/create');
     }
@@ -39,17 +65,17 @@ class AdminController extends Controller
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-            return back()->with(['message' => 'gagal menambahkan data.', 'isActive' => false, 'hasError' => true])->withErrors($validator)->withInput();
+            return back()->with(['message' => 'gagal menambahkan data.'])->withErrors($validator)->withInput();
         }
         $validator = $validator->validated();
         Admin::create([
             'nama' => $validator['nama-lengkap'],
-            'email' => $validator['surel'],
+            'email' => Str::lower($validator['surel']),
             'level' => $validator['role'],
             'password' => bcrypt($validator['kata-sandi']),
         ]);
 
-        return redirect()->route('admin.index')->with(['message' => 'sukses menambahkan data.', 'isActive' => true, 'hasError' => false]);
+        return redirect()->route('kelola-admin.index')->with(['message' => 'sukses menambahkan data.']);
     }
 
     /**
@@ -57,7 +83,7 @@ class AdminController extends Controller
      */
     public function show(string $id)
     {
-        $Admin = Admin::findOrFail($id);
+        $Admin = Admin::where('id', '!=', 1)->findOrFail($id);
         return view('menu/admin/show', compact('Admin'));
     }
 
@@ -66,7 +92,7 @@ class AdminController extends Controller
      */
     public function edit(string $id)
     {
-        $Admin = Admin::findOrFail($id);
+        $Admin = Admin::where('id', '!=', 1)->findOrFail($id);
         return view('menu/admin/edit', compact('Admin'));
     }
 
@@ -83,29 +109,40 @@ class AdminController extends Controller
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-            return back()->with(['message' => 'gagal menambahkan data.', 'isActive' => false, 'hasError' => true])->withErrors($validator)->withInput();
+            return back()->with(['message' => 'gagal menambahkan data.'])->withErrors($validator)->withInput();
         }
         $validator = $validator->validated();
-        Admin::findOrFail($id)->update([
+        Admin::where('id', '!=', 1)->findOrFail($id)->update([
             'nama' => $validator['nama-lengkap'],
-            'email' => $validator['surel'],
+            'email' => Str::lower($validator['surel']),
             'level' => $validator['role'],
             // 'password' => bcrypt($validator['kata-sandi']),
         ]);
 
-        return redirect()->route('admin.show')->with(['message' => 'sukses mengubah data.', 'isActive' => true, 'hasError' => false]);
+        return redirect()->route('kelola-admin.index')->with(['message' => 'sukses mengubah data.']);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        if (Admin::count() < 2) {
-            return back()->with('message', 'gagal menghapus data yang terkahir.');
-        }
+        if ($request->ajax()) {
+            try {
+                $admin = Admin::findOrFail($id);
+                $admin->delete();
 
-        Admin::findOrFail($id)->delete();
-        return redirect()->route('admin.index')->with('message', 'sukses menghapus data.');
+                return response([
+                    'status' => 'success',
+                    'data' => 'sukses menghapus data.'
+                ]);
+            } catch (\Exception $e) {
+                return response([
+                    'status' => 'error',
+                    'data' => $e->getMessage()
+                ], 500);
+            }
+        }
+        return redirect()->back();
     }
 }

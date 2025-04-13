@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sejarah extends Model
 {
     use HasFactory;
-    protected $table = 'sejarah';
+    protected $table = 'tb_sejarah';
     protected $fillable = [
         'id',
         'deskripsi',

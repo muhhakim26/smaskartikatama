@@ -1,345 +1,352 @@
-@extends('layouts/preset')
-@section('judul', 'Daftar PPDB Siswa')
+@extends('layouts/user/preset')
+@section('judul', 'Form Pendaftaran PPDB')
 @section('konten')
-    <div>
-        <a href="{{ route('home') }}">Kembali</a>
-    </div>
-    {{-- blade-formatter-disable --}}
-        @if (session()->has('message'))
-            <div @class(['p-4', 'font-bold' => session()->get('isActive'), 'text-gray-500' => !session()->get('isActive'), 'bg-red' => session()->get('hasError'),])>
-                {{ session()->get('message') }}
-            </div>
-        @endif
-    {{-- blade-formatter-enable --}}
-    <form action="{{ route('kelola-ppdb.store') }}" enctype="multipart/form-data" id="ppdb-create" method="post">
-        @csrf
-        <h3>Data Pribadi</h3>
-        <div>
-            <label for="nama-siswa">Nama</label>
-            <input id="nama-siswa" name="nama-siswa" required type="text" value="{{ old('nama-siswa') }}">
+    @include('layouts.user.hero', ['judul' => 'Form Pendaftaran PPDB'])
+    <!-- PPDB Section -->
+    <section class="py-80" id="berita">
+        <div class="container">
+            <h5 class="mb-40">Formulir Pendaftaran Calon Siswa Baru</h5>
+            {{-- blade-formatter-disable --}}
+            @if (session()->has('message'))
+                <div @class([ 'p-4', 'font-bold' => session()->get('isActive'), 'text-gray-500' => !session()->get('isActive'), 'bg-red' => session()->get('hasError'), ])>
+                    {{ session()->get('message') }}
+                </div>
+            @endif
+            {{-- blade-formatter-enable --}}
+            <form action="{{ route('kelola-ppdb.store') }}" autocomplete="off" enctype="multipart/form-data" id="ppdb-create" method="post">
+                <div class="py-32">
+                    <h6 class="mb-20">Data Calon Siswa</h6>
+                    <div class="row g-5 mb-20">
+                        <div class="col-md-6">
+                            <label class="form-label" for="nama-siswa">Nama</label>
+                            <input class="form-control" id="nama-siswa" name="nama-siswa" placeholder="Nama" required type="text" value="{{ old('nama-siswa') }}">
+                            @error('nama-siswa')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="provinsi-siswa">Provinsi</label>
+                            <select class="form-select" id="provinsi-siswa" name="provinsi-siswa" required>
+                                <option hidden>Pilih...</option>
+                                @foreach ($Provinsi as $value)
+                                    <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('provinsi-siswa')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row g-5 mb-20">
+                        <div class="col-md-6">
+                            <label class="form-label">Jenis Kelamin</label>
+                            <div class="form-check d-flex align-items-center mb-10">
+                                <input class="form-check-input" id="laki-laki" name="jenis-kelamin-siswa" required type="radio" value="laki-laki">
+                                <label class="form-check-label" for="laki-laki">Laki-laki</label>
+                            </div>
+                            <div class="form-check d-flex align-items-center mb-10">
+                                <input class="form-check-input" id="perempuan" name="jenis-kelamin-siswa" required type="radio" value="perempuan">
+                                <label class="form-check-label" for="perempuan">Perempuan</label>
+                            </div>
+                            @error('jenis-kelamin-siswa')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="kabupaten-siswa">Kabupaten</label>
+                            <select class="form-select" id="kabupaten-siswa" name="kabupaten-siswa" required>
+                                <option hidden>Pilih...</option>
+                            </select>
+                            @error('kabupaten-siswa')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row g-5 mb-20">
+                        <div class="col-md-6">
+                            <label class="form-label" for="nisn-siswa">NISN</label>
+                            <input class="form-control" id="nisn-siswa" name="nisn-siswa" placeholder="NISN" required type="text" value="{{ old('nisn-siswa') }}">
+                            @error('nisn-siswa')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="kecamatan-siswa">Kecamatan</label>
+                            <select class="form-select" id="kecamatan-siswa" name="kecamatan-siswa" required>
+                                <option hidden>Pilih...</option>
+                            </select>
+                            @error('kecamatan-siswa')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row g-5 mb-20">
+                        <div class="col-md-6">
+                            <label class="form-label" for="tempat-lahir-siswa">Tempat Lahir</label>
+                            <input class="form-control" id="tempat-lahir-siswa" name="tempat-lahir-siswa" placeholder="Tempat Lahir" required type="text" value="{{ old('tempat-lahir-siswa') }}">
+                            @error('tempat-lahir-siswa')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="desa-kelurahan-siswa">Desa/Kelurahan</label>
+                            <select class="form-select" id="desa-kelurahan-siswa" name="desa-kelurahan-siswa" required>
+                                <option hidden>Pilih...</option>
+                            </select>
+                            @error('desa-kelurahan-siswa')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row g-5 mb-20">
+                        <div class="col-md-6">
+                            <label class="form-label" for="tanggal-lahir-siswa">Tanggal Lahir</label>
+                            <input class="form-control" id="tanggal-lahir-siswa" name="tanggal-lahir-siswa" placeholder="Tanggal Lahir" required type="date" value="{{ old('tanggal-lahir-siswa') }}">
+                            @error('tanggal-lahir-siswa')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="kode-pos-siswa">Kode POS</label>
+                            <input class="form-control" id="kode-pos-siswa" name="kode-pos-siswa" placeholder="Kode POS" required type="text" value="{{ old('kode-pos-siswa') }}">
+                            @error('kode-pos-siswa')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row g-5 mb-20">
+                        <div class="col-md-6">
+                            <label class="form-label">Agama</label>
+                            <div class="form-check d-flex align-items-center mb-10">
+                                <input class="form-check-input" id="buddha" name="agama-siswa" type="radio" value="buddha">
+                                <label class="form-check-label" for="buddha">Buddha</label>
+                            </div>
+                            <div class="form-check d-flex align-items-center mb-10">
+                                <input class="form-check-input" id="hindu" name="agama-siswa" type="radio" value="hindu">
+                                <label class="form-check-label" for="hindu">Hindu</label>
+                            </div>
+                            <div class="form-check d-flex align-items-center mb-10">
+                                <input class="form-check-input" id="khonghucu" name="agama-siswa" type="radio" value="khonghucu">
+                                <label class="form-check-label" for="khonghucu">Khonghucu</label>
+                            </div>
+                            <div class="form-check d-flex align-items-center mb-10">
+                                <input class="form-check-input" id="katolik" name="agama-siswa" type="radio" value="kristen_katolik">
+                                <label class="form-check-label" for="katolik">Katolik</label>
+                            </div>
+                            <div class="form-check d-flex align-items-center mb-10">
+                                <input class="form-check-input" id="protestan" name="agama-siswa" type="radio" value="kristen_protestan">
+                                <label class="form-check-label" for="protestan">Protestan</label>
+                            </div>
+                            <div class="form-check d-flex align-items-center mb-10">
+                                <input class="form-check-input" id="islam" name="agama-siswa" required type="radio" value="islam">
+                                <label class="form-check-label" for="islam">Islam</label>
+                            </div>
+                            @error('agama-siswa')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="email-siswa">Email</label>
+                            <input class="form-control" id="email-siswa" name="email-siswa" placeholder="Email" required type="email">
+                            @error('email-siswa')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row g-5 mb-20">
+                        <div class="col-md-6">
+                            <label class="form-label" for="asal-sekolah-siswa">Asal Sekolah SMP/Mts</label>
+                            <input class="form-control" id="asal-sekolah-siswa" name="asal-sekolah-siswa" placeholder="Asal Sekolah" required type="text">
+                            @error('asal-sekolah-siswa')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="no-hp-siswa">Nomor HP</label>
+                            <input class="form-control" id="no-hp-siswa" name="no-hp-siswa" pattern="^[0-9\-\+\s\(\)]*$" placeholder="No HP" required type="tel" value="{{ old('no-hp-siswa') }}">
+                            @error('no-hp-siswa')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row g-5 mb-20">
+                        <div class="col-md-6">
+                            <label class="form-label" for="alamat-siswa">Alamat</label>
+                            <textarea class="form-control" id="alamat-siswa" name="alamat-siswa" placeholder="Alamat" required rows="3"></textarea>
+                            @error('alamat-siswa')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+                <div class="py-32">
+                    <div class="row g-5 mb-20">
+                        <div class="col-md-6">
+                            <h6 class="mb-20">Data Ayah</h6>
+                            <div class="mb-20">
+                                <label class="form-label" for="nama-ayah-siswa">Nama Lengkap</label>
+                                <input class="form-control" id="nama-ayah-siswa" name="nama-ayah-siswa" placeholder="Nama" required type="text"value="{{ old('nama-ayah-siswa') }}">
+                                @error('nama-ayah-siswa')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-20">
+                                <label class="form-label" for="pendikian-terakhir-ayah">Pendidikan Terakhir</label>
+                                <input class="form-control" id="pendikian-terakhir-ayah" name="pendikian-terakhir-ayah" placeholder="Pendidikan Terakhir" required type="text" value="{{ old('pendikian-terakhir-ayah') }}">
+                                @error('pendikian-terakhir-ayah')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-20">
+                                <label class="form-label" for="pekerjaan-ayah">Pekerjaan</label>
+                                <input class="form-control" id="pekerjaan-ayah" name="pekerjaan-ayah" placeholder="Pekerjaan" required type="text" value="{{ old('pekerjaan-ayah') }}">
+                                @error('pekerjaan-ayah')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-20">
+                                <label class="form-label" for="penghasilan-ayah">Pengehasilan (Perbulan)</label>
+                                <input class="form-control" id="penghasilan-ayah" name="penghasilan-ayah" placeholder="Penghasilan" required type="number" value="{{ old('penghasilan-ayah') }}">
+                                @error('penghasilan-ayah')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-20">
+                                <label class="form-label" for="no-hp-ayah">No HP</label>
+                                <input class="form-control" id="no-hp-ayah" name="no-hp-ayah" pattern="^[0-9\-\+\s\(\)]*$" placeholder="No HP" required type="tel" value="{{ old('no-hp-ayah') }}">
+                                @error('no-hp-ayah')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="mb-20">Data Ibu</h6>
+                            <div class="mb-20">
+                                <label class="form-label" for="nama-ibu-siswa">Nama Lengkap</label>
+                                <input class="form-control" id="nama-ibu-siswa" name="nama-ibu-siswa" placeholder="Nama" required type="text" value="{{ old('nama-ibu-siswa') }}">
+                                @error('nama-ibu-siswa')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-20">
+                                <label class="form-label" for="pendikian-terakhir-ibu">Pendidikan Terakhir</label>
+                                <input class="form-control" id="pendikian-terakhir-ibu" name="pendikian-terakhir-ibu" placeholder="Pendidikan Terakhir" required type="text" value="{{ old('pendikian-terakhir-ibu') }}">
+                                @error('pendikian-terakhir-ibu')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-20">
+                                <label class="form-label" for="pekerjaan-ibu">Pekerjaan</label>
+                                <input class="form-control" id="pekerjaan-ibu" name="pekerjaan-ibu" placeholder="Pekerjaan" required type="text" value="{{ old('pekerjaan-ibu') }}">
+                                @error('pekerjaan-ibu')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-20">
+                                <label class="form-label" for="penghasilan-ibu">Pengehasilan (Perbulan)</label>
+                                <input class="form-control" id="penghasilan-ibu" name="penghasilan-ibu" placeholder="Penghasilan" required type="number" value="{{ old('penghasilan-ibu') }}">
+                                @error('penghasilan-ibu')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-20">
+                                <label class="form-label" for="no-hp-ibu">No HP</label>
+                                <input class="form-control" id="no-hp-ibu" name="no-hp-ibu" pattern="^[0-9\-\+\s\(\)]*$" placeholder="No HP" required type="tel" value="{{ old('no-hp-ibu') }}">
+                                @error('no-hp-ibu')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="py-32">
+                    <div class="row g-5 mb-20">
+                        <div class="col-md-6">
+                            <h6 class="mb-20">File</h6>
+                            <div class="mb-20">
+                                <label class="form-label" for="">Foto 3x4</label>
+                                <input class="form-control" id="" name="" type="file">
+                            </div>
+                            <div class="mb-20">
+                                <label class="form-label" for="file-akte">Scan Akta Kelahiran</label>
+                                <input accept="image/jpg, image/png, image/jpeg" class="form-control" id="file-akte" name="file-akte" required type="file">
+                                @error('file-akte')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-20">
+                                <label class="form-label" for="file-kk">Scan Kartu Keluarga</label>
+                                <input accept="image/jpg, image/png, image/jpeg" class="form-control" id="file-kk" name="file-kk" required type="file">
+                                @error('file-kk')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-20">
+                                <label class="form-label" for="file-skhu">Scan Surat Keterangan Hasil Ujian</label>
+                                <input accept="image/jpg, image/png, image/jpeg" class="form-control" id="file-skhu" name="file-skhu" required type="file">
+                                @error('file-skhu')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-20">
+                                <label class="form-label" for="file-skm">Scan Standar Kompetensi Mandiri</label>
+                                <input accept="image/jpg, image/png, image/jpeg" class="form-control" id="file-skm" name="file-skm" required type="file">
+                                @error('file-skm')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="mb-20">Informasi Pendaftaran</h6>
+                            <div class="mb-20">
+                                <label class="form-label">Sumber Informasi Pendaftaran</label>
+                                <div class="form-check d-flex align-items-center mb-10">
+                                    <input class="form-check-input" id="facebook" name="info-pendaftaran" type="radio" value="facebook">
+                                    <label class="form-check-label" for="facebook">Facebook</label>
+                                </div>
+                                <div class="form-check d-flex align-items-center mb-10">
+                                    <input class="form-check-input" id="tiktok" name="info-pendaftaran" type="radio" value="tiktok">
+                                    <label class="form-check-label" for="">Tiktok</label>
+                                </div>
+                                <div class="form-check d-flex align-items-center mb-10">
+                                    <input class="form-check-input" id="instagram" name="info-pendaftaran" type="radio" value="instagram">
+                                    <label class="form-check-label" for="instagram">Instagram</label>
+                                </div>
+                                <div class="form-check d-flex align-items-center mb-10">
+                                    <input class="form-check-input" id="baner" name="info-pendaftaran" type="radio" value="media_cetak">
+                                    <label class="form-check-label" for="baner">Baner/Brosur</label>
+                                </div>
+                                <div class="form-check d-flex align-items-center mb-10">
+                                    <input class="form-check-input" id="youtube" name="info-pendaftaran" type="radio" value="youtube">
+                                    <label class="form-check-label" for="youtube">Youtube</label>
+                                </div>
+                                <div class="form-check d-flex align-items-center mb-10">
+                                    <input class="form-check-input" id="twitter" name="info-pendaftaran" type="radio" value="twitter">
+                                    <label class="form-check-label" for="twitter">Twitter</label>
+                                </div>
+                                <div class="form-check d-flex align-items-center mb-10">
+                                    <input class="form-check-input" id="masyarakat" name="info-pendaftaran" type="radio" value="masyarakat">
+                                    <label class="form-check-label" for="masyarakat">Masyarakat</label>
+                                </div>
+                                <div class="form-check d-flex align-items-center mb-10">
+                                    <input class="form-check-input" id="website" name="info-pendaftaran" type="radio" value="website">
+                                    <label class="form-check-label" for="website">Website</label>
+                                </div>
+                                @error('info-pendaftaran')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center m-auto">
+                    <button class="btn btn-primary-600 rounded-pill radius-50 w-100 fw-semibold max-w-440-px px-20 py-20" type="submit">Kirim Formulir Pendaftaran</button>
+                </div>
+            </form>
         </div>
-        @error('nama-siswa')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label>Jenis Kelamin</label>
-            <input id="laki-laki" name="jenis-kelamin-siswa" required type="radio" value="laki-laki">
-            <label for="laki-laki">Laki-laki</label>
-            <input id="perempuan" name="jenis-kelamin-siswa" type="radio" value="perempuan">
-            <label for="perempuan">Perempuan</label>
-        </div>
-        @error('jenis-kelamin-siswa')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label for="nisn-siswa">Nomor Induk Siswa Nasional (NISN)</label>
-            <input id="nisn-siswa" name="nisn-siswa" required type="text" value="{{ old('nisn-siswa') }}">
-        </div>
-        @error('nisn-siswa')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label for="tempat-lahir-siswa">Tempat Lahir</label>
-            <input id="tempat-lahir-siswa" name="tempat-lahir-siswa" required type="text" value="{{ old('tempat-lahir-siswa') }}">
-        </div>
-        @error('tempat-lahir-siswa')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label for="tanggal-lahir-siswa">Tanggal Lahir</label>
-            <input id="tanggal-lahir-siswa" name="tanggal-lahir-siswa" required type="date" value="{{ old('tanggal-lahir-siswa') }}">
-        </div>
-        @error('tanggal-lahir-siswa')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label>Agama</label>
-            <input id="buddha" name="agama-siswa" type="radio" value="buddha">
-            <label for="buddha">Buddha</label>
-            <input id="hindu" name="agama-siswa" type="radio" value="hindu">
-            <label for="hindu">Hindu</label>
-            <input id="islam" name="agama-siswa" required type="radio" value="islam">
-            <label for="islam">Islam</label>
-            <input id="katolik" name="agama-siswa" type="radio" value="katolik">
-            <label for="katolik">Katolik</label>
-            <input id="khonghucu" name="agama-siswa" type="radio" value="khonghucu">
-            <label for="khonghucu">Khonghucu</label>
-            <input id="kristen" name="agama-siswa" type="radio" value="kristen">
-            <label for="kristen">Kristen</label>
-        </div>
-        @error('agama-siswa')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label>Berkebutuhan Khusus</label>
-            <input id="berkebutuhan-khusus-siswa-ya" name="berkebutuhan-khusus-siswa" required type="radio" value="1">
-            <label for="berkebutuhan-khusus-siswa-ya">Ya</label>
-            <input id="berkebutuhan-khusus-siswa-tidak" name="berkebutuhan-khusus-siswa" type="radio" value="0">
-            <label for="berkebutuhan-khusus-siswa-tidak">Tidak</label>
-        </div>
-        @error('berkebutuhan-khusus-siswa')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-
-        <div>
-            <label for="alamat-siswa">Alamat Jalan</label>
-            <textarea id="alamat-siswa" name="alamat-siswa" required>{{ old('alamat-siswa') }}</textarea>
-        </div>
-        @error('alamat-siswa')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label for="provinsi-siswa">Provinsi</label>
-            <select id="provinsi-siswa" name="provinsi-siswa" required>
-                <option hidden>Pilih Provinsi...</option>
-                @foreach ($Provinsi as $value)
-                    <option value="{{ $value->id }}">{{ $value->name }}</option>
-                @endforeach
-            </select>
-        </div>
-        @error('provinsi-siswa')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label for="kabupaten-siswa">Kabupaten</label>
-            <select id="kabupaten-siswa" name="kabupaten-siswa" required>
-                <option hidden>Pilih Kabupaten...</option>
-            </select>
-        </div>
-        @error('kabupaten-siswa')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label for="kecamatan-siswa">Kecamatan</label>
-            <select id="kecamatan-siswa" name="kecamatan-siswa" required>
-                <option hidden>Pilih Kecamatan...</option>
-            </select>
-        </div>
-        @error('kecamatan-siswa')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label for="desa-kelurahan-siswa">Desa/Kelurahan</label>
-            <select id="desa-kelurahan-siswa" name="desa-kelurahan-siswa" required>
-                <option hidden>Pilih Desa/Kelurahan...</option>
-            </select>
-        </div>
-        @error('desa-kelurahan-siswa')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label for="kode-pos-siswa">Kode Pos</label>
-            <input id="kode-pos-siswa" name="kode-pos-siswa" required type="text" value="{{ old('kode-pos-siswa') }}">
-        </div>
-        @error('kode-pos-siswa')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label for="no-hp-orang-tua-siswa">Nomor HP Orang Tua</label>
-            <input id="no-hp-orang-tua-siswa" name="no-hp-orang-tua-siswa" pattern="^[0-9\-\+\s\(\)]*$" required type="tel" value="{{ old('no-hp-orang-tua-siswa') }}">
-        </div>
-        @error('no-hp-orang-tua-siswa')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label for="no-hp-siswa">Nomor HP</label>
-            <input id="no-hp-siswa" name="no-hp-siswa" pattern="^[0-9\-\+\s\(\)]*$" required type="tel" value="{{ old('no-hp-siswa') }}">
-        </div>
-        @error('no-hp-siswa')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label for="email-siswa">Email</label>
-            <input name="email-siswa" required type="email" value="{{ old('email-siswa') }}">
-        </div>
-        @error('email-siswa')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label for="asal-sekolah-siswa">Asal Sekolah SMP/Mts</label>
-            <input id="asal-sekolah-siswa" name="asal-sekolah-siswa" required type="text" value="{{ old('asal-sekolah-siswa') }}">
-        </div>
-        @error('asal-sekolah-siswa')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <hr>
-        <h3>Data Ayah Kandung</h3>
-        <div>
-            <label for="nama-ayah-siswa">Nama</label>
-            <input id="nama-ayah-siswa" name="nama-ayah-siswa" required type="text" value="{{ old('nama-ayah-siswa') }}">
-        </div>
-        @error('nama-ayah-siswa')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label for="pendikian-terakhir-ayah">Pendidikan Terakhir</label>
-            <input id="pendikian-terakhir-ayah" name="pendikian-terakhir-ayah" required type="text" value="{{ old('pendikian-terakhir-ayah') }}">
-        </div>
-        @error('pendikian-terakhir-ayah')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label for="pekerjaan-ayah">Pekerjaan</label>
-            <input id="pekerjaan-ayah" name="pekerjaan-ayah" required type="text" value="{{ old('pekerjaan-ayah') }}">
-        </div>
-        @error('pekerjaan-ayah')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label for="penghasilan-ayah">Penghasilan</label>
-            <input id="penghasilan-ayah" name="penghasilan-ayah" required type="number" value="{{ old('penghasilan-ayah') }}">
-        </div>
-        @error('penghasilan-ayah')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-
-        <div>
-            <label>Berkebutuhan Khusus</label>
-            <input id="berkebutuhan-khusus-ayah-ya" name="berkebutuhan-khusus-ayah" required type="radio" value="1">
-            <label for="berkebutuhan-khusus-ayah-ya">Ya</label>
-            <input id="berkebutuhan-khusus-ayah-tidak" name="berkebutuhan-khusus-ayah" type="radio" value="0">
-            <label for="berkebutuhan-khusus-ayah-tidak">Tidak</label>
-        </div>
-        @error('berkebutuhan-khusus-ayah')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <h3>Data Ibu Kandung</h3>
-        <div>
-            <label for="nama-ibu-siswa">Nama</label>
-            <input id="nama-ibu-siswa" name="nama-ibu-siswa" required type="text" value="{{ old('nama-ibu-siswa') }}">
-        </div>
-        @error('nama-ibu-siswa')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label for="pendikian-terakhir-ibu">Pendidikan Terakhir</label>
-            <input id="pendikian-terakhir-ibu" name="pendikian-terakhir-ibu" required type="text" value="{{ old('pendikian-terakhir-ibu') }}">
-        </div>
-        @error('pendikian-terakhir-ibu')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label for="pekerjaan-ibu">Pekerjaan</label>
-            <input id="pekerjaan-ibu" name="pekerjaan-ibu" required type="text" value="{{ old('pekerjaan-ibu') }}">
-        </div>
-        @error('pekerjaan-ibu')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label for="penghasilan-ibu">Penghasilan</label>
-            <input id="penghasilan-ibu" name="penghasilan-ibu" required type="number" value="{{ old('penghasilan-ibu') }}">
-        </div>
-        @error('penghasilan-ibu')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label>Berkebutuhan Khusus</label>
-            <input id="berkebutuhan-khusus-ibu-ya" name="berkebutuhan-khusus-ibu" required type="radio" value="1">
-            <label for="berkebutuhan-khusus-ibu-ya">Ya</label>
-            <input id="berkebutuhan-khusus-ibu-tidak" name="berkebutuhan-khusus-ibu" type="radio" value="0">
-            <label for="berkebutuhan-khusus-ibu-tidak">Tidak</label>
-        </div>
-        @error('berkebutuhan-khusus-ibu')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <hr>
-        <h3>Data Wali</h3>
-        <div>
-            <label for="nama-wali-siswa">Nama</label>
-            <input id="nama-wali-siswa" name="nama-wali-siswa" type="text" value="{{ old('nama-wali-siswa') }}">
-        </div>
-        @error('nama-wali-siswa')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label>Jenis Kelamin</label>
-            <input class="deselectable" id="laki-laki-wali" name="jenis-kelamin-wali" type="radio" value="laki-laki">
-            <label for="laki-laki-wali">Laki-laki</label>
-            <input class="deselectable" id="perempuan-wali name="jenis-kelamin-wali" type="radio" value="perempuan">
-            <label for="perempuan-wali">Perempuan</label>
-        </div>
-        @error('jenis-kelamin-wali')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label for="pendikian-terakhir-wali">Pendidikan Terakhir</label>
-            <input id="pendikian-terakhir-wali" name="pendikian-terakhir-wali" type="text" value="{{ old('pendikian-terakhir-wali') }}">
-        </div>
-        @error('pendikian-terakhir-wali')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label for="pekerjaan-wali">Pekerjaan</label>
-            <input id="pekerjaan-wali" name="pekerjaan-wali" type="text" value="{{ old('pekerjaan-wali') }}">
-        </div>
-        @error('pekerjaan-wali')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label for="penghasilan-wali">Penghasilan</label>
-            <input id="penghasilan-wali" name="penghasilan-wali" type="number" value="{{ old('penghasilan-wali') }}">
-        </div>
-        @error('penghasilan-wali')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label>Berkebutuhan Khusus</label>
-            <input class="deselectable" id="berkebutuhan-khusus-wali-ya" name="berkebutuhan-khusus-wali" type="radio" value="1">
-            <label for="berkebutuhan-khusus-wali-ya">Ya</label>
-            <input class="deselectable" id="berkebutuhan-khusus-wali-tidak" name="berkebutuhan-khusus-wali" type="radio" value="0">
-            <label for="berkebutuhan-khusus-wali-tidak">Tidak</label>
-        </div>
-        @error('berkebutuhan-khusus-wali')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <hr>
-        <div>
-            <label for="file-akte">Fotokopi Akte</label>
-            <input accept="image/jpg, image/png, image/jpeg" id="file-akte" name="file-akte" required type="file">
-        </div>
-        @error('file-akte')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label for="file-kk">Fotokopi Kartu Keluarga</label>
-            <input accept="image/jpg, image/png, image/jpeg" id="file-kk" name="file-kk" required type="file">
-        </div>
-        @error('file-kk')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label for="file-skhu">Fotokopi Surat Keterangan Hasil Ujian (SKHU)</label>
-            <input accept="image/jpg, image/png, image/jpeg" id="file-skhu" name="file-skhu" required type="file">
-        </div>
-        @error('file-skhu')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <label for="file-skm">Fotokopi Surat Keterangan Miskin (SKM)</label>
-            <input accept="image/jpg, image/png, image/jpeg" id="file-skm" name="file-skm" required type="file">
-        </div>
-        @error('file-skm')
-            <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
-        <div>
-            <button type="submit">Buat</button>
-        </div>
-    </form>
+    </section>
 @endsection
-@push('js')
-    <script>
-        $('input[type="radio"].deselectable').on('click', function() {
-            let $this = $(this);
-
-            if ($this.data('wasChecked') == true) {
-                $this.prop('checked', false);
-                $this.data('wasChecked', false);
-            } else {
-                $('input[type="radio"]').data('wasChecked', false);
-                $this.data('wasChecked', true);
-            }
-        });
-    </script>
+@push('script')
     <script>
         function onChangeSelect(url, id, name, title) {
             // send ajax request to get the cities of the selected province and append to the select tag

@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,6 +13,7 @@ return new class extends Migration
         Schema::create('tb_kontak', function (Blueprint $table) {
             $table->id();
             $table->text('alamat')->nullable();
+            $table->text('gmaps')->nullable();
             $table->string('notelpon')->nullable();
             $table->string('email')->nullable();
             $table->timestamps();
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kontak');
+        Schema::dropIfExists('tb_kontak');
     }
 };

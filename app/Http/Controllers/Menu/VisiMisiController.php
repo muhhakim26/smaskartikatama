@@ -32,20 +32,22 @@ class VisiMisiController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'isi' => 'nullable|string',
+            'deskripsi-visi-misi' => 'nullable|string',
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return back()->with(['message' => 'gagal menambahkan data.', 'isActive' => false, 'hasError' => true])->withErrors($validator)->withInput();
         }
         $validator = $validator->validated();
+        if (trim($validator['deskripsi-visi-misi']) === '<p></p>') {
+            $validator['deskripsi-visi-misi'] = null;
+        }
         VisiMisi::updateOrCreate(['id' => 1], [
             'id' => 1,
-            'deskripsi' => $validator['isi'],
+            'deskripsi' => $validator['deskripsi-visi-misi'],
         ]);
 
         return redirect()->route('kelola-visi-misi.index')->with(['message' => 'sukses menambahkan data.', 'isActive' => true, 'hasError' => false]);
-
     }
 
     /**

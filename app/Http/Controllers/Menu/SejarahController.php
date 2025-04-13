@@ -32,20 +32,22 @@ class SejarahController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'isi' => 'nullable|string',
+            'deskripsi-sejarah' => 'nullable|string',
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-            return back()->with(['message' => 'gagal menambahkan data.', 'isActive' => false, 'hasError' => true])->withErrors($validator)->withInput();
+            return back()->with(['message' => 'gagal menambahkan data.', 'hasError' => true])->withErrors($validator)->withInput();
         }
         $validator = $validator->validated();
+        if (trim($validator['deskripsi-sejarah']) === '<p></p>') {
+            $validator['deskripsi-sejarah'] = null;
+        }
         Sejarah::updateOrCreate(['id' => 1], [
             'id' => 1,
-            'deskripsi' => $validator['isi'],
+            'deskripsi' => $validator['deskripsi-sejarah'],
         ]);
 
-        return redirect()->route('kelola-sejarah.index')->with(['message' => 'sukses menambahkan data.', 'isActive' => true, 'hasError' => false]);
-
+        return redirect()->route('kelola-sejarah.index')->with(['message' => 'sukses menambahkan data.', 'hasError' => false]);
     }
 
     /**

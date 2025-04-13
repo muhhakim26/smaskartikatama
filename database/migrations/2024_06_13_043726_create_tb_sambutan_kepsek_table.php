@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,8 +12,8 @@ return new class extends Migration
     {
         Schema::create('tb_sambutan_kepsek', function (Blueprint $table) {
             $table->id();
-            $table->text('deskripsi');
-            $table->string('file_foto');
+            $table->text('deskripsi')->nullable();
+            $table->string('file_foto')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sambutan_kepsek');
+        Schema::dropIfExists('tb_sambutan_kepsek');
     }
 };

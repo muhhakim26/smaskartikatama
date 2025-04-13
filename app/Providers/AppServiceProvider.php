@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Admin;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,5 +24,8 @@ class AppServiceProvider extends ServiceProvider
         // RateLimiter::for('login', function (Request $request) {
         //     // return Limit::perMinute(3)->by($request->input('surel'));
         // });
+        Gate::define('isSuperAdmin', function (Admin $admin) {
+            return $admin->level === 'admin';
+        });
     }
 }

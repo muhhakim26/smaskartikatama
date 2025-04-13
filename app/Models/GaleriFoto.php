@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class GaleriFoto extends Model
 {
     use HasFactory, TimestampTrait;
-    protected $table = 'galeri_foto';
+    protected $table = 'tb_galeri_foto';
     protected $fillable = [
         'file_foto',
         'nama_foto',
