@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class DataGuru extends Model
 {
     use HasFactory, TimestampTrait;
-    protected $table = 'data_guru';
+    protected $table = 'tb_data_guru';
     protected $fillable = [
         'nip',
         'nama',

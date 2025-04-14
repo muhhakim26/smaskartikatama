@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Osis extends Model
 {
     use HasFactory;
-    protected $table = 'osis';
+    protected $table = 'tb_osis';
     protected $fillable = [
         'id',
         'deskripsi',

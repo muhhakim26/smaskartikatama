@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('visi_misi', function (Blueprint $table) {
+        Schema::create('tb_galeri_video', function (Blueprint $table) {
             $table->id();
-            $table->longText('deskripsi');
+            $table->string('thumbnail');
+            $table->string('file_video');
+            $table->string('judul_video');
             $table->timestamps();
         });
     }
@@ -23,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('struktur_visi_misi');
+        Schema::dropIfExists('tb_galeri_video');
     }
 };

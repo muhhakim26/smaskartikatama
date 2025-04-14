@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 class Ppdb extends Model
 {
     use HasFactory;
-    protected $table = 'ppdb';
+    protected $table = 'tb_ppdb';
     protected $fillable = [
         'id_pendaftaran',
         'nama',

@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use App\Traits\TimestampTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Ekstrakurikuler extends Model
 {
-    use HasFactory;
-    protected $table = 'ekstrakurikuler';
+    use HasFactory, TimestampTrait;
+
+    protected $table = 'tb_ekstrakurikuler';
+
     protected $fillable = [
         'nama',
         'deskripsi',

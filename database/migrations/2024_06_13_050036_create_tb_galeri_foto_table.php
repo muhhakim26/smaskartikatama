@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ekstrakurikuler', function (Blueprint $table) {
+        Schema::create('tb_galeri_foto', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->longText('deskripsi');
-            $table->string('foto_struktur');
-            $table->json('foto_kegiatan');
+            $table->string('file_foto');
+            $table->string('nama_foto');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ekstrakurikuler');
+        Schema::dropIfExists('tb_galeri_foto');
     }
 };

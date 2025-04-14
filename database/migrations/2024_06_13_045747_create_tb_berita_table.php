@@ -4,16 +4,18 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('sambutan_kepsek', function (Blueprint $table) {
+        Schema::create('tb_berita', function (Blueprint $table) {
             $table->id();
-            $table->longText('deskripsi');
+            $table->string('judul');
+            $table->string('file_foto');
+            $table->string('kutipan');
+            $table->text('deskripsi');
             $table->timestamps();
         });
     }
@@ -23,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sambutan_kepsek');
+        Schema::dropIfExists('tb_berita');
     }
 };

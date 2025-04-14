@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Menu;
 use App\Http\Controllers\Controller;
 use App\Models\GaleriVideo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 class GaleriVideoController extends Controller
@@ -17,7 +17,7 @@ class GaleriVideoController extends Controller
      */
     public function index()
     {
-        $GaleriVideo = GaleriVideo::all();
+        $GaleriVideo = GaleriVideo::paginate(4);
         return view('menu/galeri/video/list', compact('GaleriVideo'));
     }
 
@@ -34,9 +34,7 @@ class GaleriVideoController extends Controller
      */
     public function store(Request $request)
     {
-        /**
-         * Pertanyaannya adalah link video pake youtube?
-         */
+        /** Pertanyaannya adalah link video pake youtube? */
         $rules = [
             'judul-video' => 'required|string|max:255',
             'keluku' => 'required|image|mimes:jpeg,jpg,png|max:3072',
@@ -47,9 +45,16 @@ class GaleriVideoController extends Controller
             return back()->with(['message' => 'gagal menambahkan data.', 'isActive' => false, 'hasError' => true])->withErrors($validator)->withInput();
         }
         $validator = $validator->validated();
+        $parseUrl = parse_url($validator['link-video']);
+        if ($parseUrl['host'] == 'youtu.be') {
+            $videoId = ltrim($parseUrl['path'], '/');
+        } else {
+            parse_str($parseUrl['query'], $query_vars);
+            $videoId = $query_vars['v'];
+        }
         $data = [
             'judul_video' => $validator['judul-video'],
-            'file_video' => $validator['link-video'],
+            'file_video' => "https://www.youtube.com/watch?v=$videoId",
         ];
         $today = Carbon::now()->setTimezone('Asia/Jakarta')->format('YmdHis');
         $converted = Str::lower($validator['judul-video']);
@@ -99,9 +104,16 @@ class GaleriVideoController extends Controller
             return back()->with(['message' => 'gagal mengubah data.', 'isActive' => false, 'hasError' => true])->withErrors($validator)->withInput();
         }
         $validator = $validator->validated();
+        $parseUrl = parse_url($validator['link-video']);
+        if ($parseUrl['host'] == 'youtu.be') {
+            $videoId = ltrim($parseUrl['path'], '/');
+        } else {
+            parse_str($parseUrl['query'], $query_vars);
+            $videoId = $query_vars['v'];
+        }
         $data = [
             'judul_video' => $validator['judul-video'],
-            'file_video' => $validator['link-video'],
+            'file_video' => "https://www.youtube.com/watch?v=$videoId",
         ];
         $today = Carbon::now()->setTimezone('Asia/Jakarta')->format('YmdHis');
         $converted = Str::lower($validator['judul-video']);
@@ -124,14 +136,29 @@ class GaleriVideoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        $GaleriVideo = GaleriVideo::findOrFail($id);
-        if (!empty($GaleriVideo->thumbnail)) {
-            Storage::delete($GaleriVideo->thumbnail);
+        try {
+            $GaleriVideo = GaleriVideo::findOrFail($id);
+            if (!empty($GaleriVideo->thumbnail)) {
+                Storage::delete($GaleriVideo->thumbnail);
+            }
+            $GaleriVideo->delete();
+            if ($request->ajax()) {
+                return response([
+                    'status' => 'success',
+                    'data' => 'sukses menghapus data.'
+                ]);
+            }
+            return redirect()->route('kelola-galeri-video.index')->with('message', 'sukses menghapus data.');
+        } catch (\Exception $e) {
+            if ($request->ajax()) {
+                return response([
+                    'status' => 'error',
+                    'data' => $e->getMessage()
+                ], 500);
+            }
+            return redirect()->route('kelola-galeri-video.index')->with('message', 'gagal menghapus data: ' . $e->getMessage());
         }
-        $GaleriVideo->delete();
-        return redirect()->route('kelola-galeri-video.index')->with('message', 'sukses menghapus data.');
-
     }
 }

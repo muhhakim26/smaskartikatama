@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('osis', function (Blueprint $table) {
+        Schema::create('tb_ekstrakurikuler', function (Blueprint $table) {
             $table->id();
-            $table->longText('deskripsi');
+            $table->string('nama');
+            $table->text('deskripsi');
             $table->string('foto_struktur');
+            $table->json('foto_kegiatan');
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('osis');
+        Schema::dropIfExists('tb_ekstrakurikuler');
     }
 };

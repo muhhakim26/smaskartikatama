@@ -1,13 +1,41 @@
-@extends('layouts/preset')
-@section('judul', 'Berita')
+@extends('layouts/user/preset')
+@section('judul', $Berita)
 @section('konten')
-    @if (!empty($Berita))
-        <div>
-            <h2>{{ $Berita->judul }}</h2>
-            <img alt="struktur organisasi" src="{{ asset('img/' . $Berita->file_foto) }}">
-            <div>
-                {{ $Berita->deskripsi }}
+    @include('layouts.user.hero', ['judul' => 'Berita'])
+    <!-- Berita Section -->
+    <section class="py-120" id="berita">
+        <div class="container">
+            <div class="row g-4">
+                @if ($Berita->isEmpty())
+                    <div class="col-xxl-3 col-md-4 col-sm-6">
+                        <p class="24">
+                        <h6 class="fw-bold text-secondary">Tidak Ada Berita Terbaru</h6>
+                        </p>
+                    </div>
+                @else
+                    @foreach ($Berita as $value)
+                        <div class="col-md-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body p-0">
+                                    <a class="w-100 max-h-266-px radius-0 overflow-hidden" href="{{ route('berita', $value->id) }}">
+                                        <img alt="{{ $value->judul }}" class="w-100 h-100 object-fit-cover" src="{{ asset('img/' . $value->file_foto) }}">
+                                    </a>
+                                    <div class="p-20">
+                                        <h5 class="card-title mb-16"><a class="text-line-2 text-hover-primary-600 transition-2 text-xl" href="{{ route('infoberita', $value->id) }}">{{ $value->judul }}</a></h5>
+                                        <p class="card-text text-line-3">{{ $value->kutipan }}</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <small class="text-body-secondary">{{ $value->created_at->diffForHumans() }}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
+            </div>
+            <div class="mt-24">
+                {{ $Berita->links('pagination::bootstrap-5') }}
             </div>
         </div>
-    @endif
+    </section>
 @endsection

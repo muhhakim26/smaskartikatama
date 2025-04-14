@@ -19,7 +19,7 @@
         </tr>
         <tr>
             <td align="right">Deskripsi :</td>
-            <td>{{ $Berita->deskripsi }}</td>
+            <td>{!! $Berita->deskripsi !!}</td>
         </tr>
         <tr>
             <td align="right">Foto :</td>

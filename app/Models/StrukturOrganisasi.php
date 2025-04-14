@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class StrukturOrganisasi extends Model
 {
     use HasFactory;
-    protected $table = 'struktur_organisasi';
+    protected $table = 'tb_struktur_organisasi';
     protected $fillable = [
         'id',
         'foto_struktur',

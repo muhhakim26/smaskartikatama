@@ -1,18 +1,16 @@
 <?php
 
 return [
-
     /*
-    |--------------------------------------------------------------------------
-    | Validation Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines contain the default error messages used by
-    | the validator class. Some of these rules have multiple versions such
-    | as the size rules. Feel free to tweak each of these messages here.
-    |
+     * |--------------------------------------------------------------------------
+     * | Validation Language Lines
+     * |--------------------------------------------------------------------------
+     * |
+     * | The following language lines contain the default error messages used by
+     * | the validator class. Some of these rules have multiple versions such
+     * | as the size rules. Feel free to tweak each of these messages here.
+     * |
      */
-
     'accepted' => ':attribute harus diterima.',
     'accepted_if' => ':attribute harus diterima ketika :other adalah :value',
     'active_url' => ':attribute bukan URL yang valid.',
@@ -162,38 +160,50 @@ return [
     'uuid' => ':attribute harus merupakan UUID yang valid.',
 
     /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify custom validation messages for attributes using the
-    | convention "attribute.rule" to name the lines. This makes it quick to
-    | specify a specific custom language line for a given attribute rule.
-    |
+     * |--------------------------------------------------------------------------
+     * | Custom Validation Language Lines
+     * |--------------------------------------------------------------------------
+     * |
+     * | Here you may specify custom validation messages for attributes using the
+     * | convention "attribute.rule" to name the lines. This makes it quick to
+     * | specify a specific custom language line for a given attribute rule.
+     * |
      */
-
     'custom' => [
         'foto-kegiatan' => [
-            'max' => ':attribute maksimal 3 file yang boleh diunggah.',
+            'max' => ':attribute maksimal 3 file.',
         ],
     ],
 
     /*
-    |--------------------------------------------------------------------------
-    | Custom Validation Attributes
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used to swap our attribute placeholder
-    | with something more reader friendly such as "E-Mail Address" instead
-    | of "email". This simply helps us make our message more expressive.
-    |
+     * |--------------------------------------------------------------------------
+     * | Custom Validation Attributes
+     * |--------------------------------------------------------------------------
+     * |
+     * | The following language lines are used to swap our attribute placeholder
+     * | with something more reader friendly such as "E-Mail Address" instead
+     * | of "email". This simply helps us make our message more expressive.
+     * |
      */
-
     'attributes' => [
-        'foto-kegiatan' => 'foto kegiatan',
-        'foto-struktur' => 'foto struktur',
-        'foto-struktur-organisasi' => 'foto struktur organisasi',
+        'nama-lengkap' => 'nama lengkap',
+        'kata-sandi' => 'kata sandi',
+        'judul-berita' => 'judul berita',
+        'deskripsi-berita' => 'deskripsi berita',
+        'foto-berita' => 'foto berita',
         'nama-ekskul' => 'nama ekstrakurikuler',
+        'foto-struktur' => 'foto struktur',
+        'foto-kegiatan' => 'foto kegiatan',
+        'nama-foto' => 'nama foto',
+        'judul-video' => 'judul video',
+        'link-video' => 'link video',
+        'deskripsi-info-ppdb' => 'deskripsi info ppdb',
+        'no-telepon' => 'nomor telepon',
+        'deskripsi-osis' => 'deskripsi osis',
+        'foto-struktur-osis' => 'foto struktur osis',
+        'deskripsi-kepsek' => 'deskripsi kepsek',
+        'deskripsi-sejarah' => 'deskripsi sejarah',
+        'foto-struktur-organisasi' => 'foto struktur organisasi',
+        'deskripsi-visi-misi' => 'deskripsi visi misi'
     ],
-
 ];

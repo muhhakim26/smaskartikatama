@@ -5,20 +5,40 @@ namespace App\Http\Controllers\Menu;
 use App\Http\Controllers\Controller;
 use App\Models\Ekstrakurikuler;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use Yajra\DataTables\Facades\DataTables;
 
 class EkstrakurikulerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $Ekstrakurikuler = Ekstrakurikuler::select('nama', 'id')->get();
-        return view('menu/ekstrakurikuler/list', compact('Ekstrakurikuler'));
+        if ($request->ajax()) {
+            $model = Ekstrakurikuler::query()->select('nama', 'id');
+            if ($request->has('order') && !empty($request->input('order'))) {
+                $order = $request->input('order')[0];
+                $columnIndex = $order['column'];
+                $columnName = $request->input('columns')[$columnIndex]['data'];
+                $columnDirection = $order['dir'];
+                $model->orderBy($columnName, $columnDirection);
+            } else {
+                $model->latest();
+            }
+            return DataTables::eloquent($model)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    return '<a class="w-32-px h-32-px bg-primary-light text-primary-600 rounded-circle d-inline-flex align-items-center justify-content-center" href="' . route('kelola-ekstrakurikuler.show', $row->id) . '"> <iconify-icon icon="iconamoon:eye-light"></iconify-icon> </a> <a class="w-32-px h-32-px bg-success-focus text-success-main rounded-circle d-inline-flex align-items-center justify-content-center" href="' . route('kelola-ekstrakurikuler.edit', $row->id) . '"> <iconify-icon icon="lucide:edit"></iconify-icon> </a> <a class="w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center" style="cursor:pointer" onclick="hapus(\'' . $row->id . '\')"> <iconify-icon icon="mingcute:delete-2-line"></iconify-icon> </a>';
+                })
+                ->rawColumns(['action'])
+                ->removeColumn('id')
+                ->toJson(true);
+        }
+        return view('menu/ekstrakurikuler/list');
     }
 
     /**
@@ -43,7 +63,7 @@ class EkstrakurikulerController extends Controller
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-            return back()->with(['message' => 'gagal menambahkan data.', 'isActive' => false, 'hasError' => true])->withErrors($validator)->withInput();
+            return back()->with(['message' => 'gagal menambahkan data.'])->withErrors($validator)->withInput();
         }
         $validator = $validator->validated();
         $data = [
@@ -72,7 +92,7 @@ class EkstrakurikulerController extends Controller
 
         Ekstrakurikuler::create($data);
 
-        return redirect()->route('kelola-ekstrakurikuler.index')->with(['message' => 'sukses menambahkan data.', 'isActive' => true, 'hasError' => false]);
+        return redirect()->route('kelola-ekstrakurikuler.index')->with(['message' => 'sukses menambahkan data.']);
     }
 
     /**
@@ -107,7 +127,7 @@ class EkstrakurikulerController extends Controller
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-            return back()->with(['message' => 'gagal mengubah data.', 'isActive' => false, 'hasError' => true])->withErrors($validator)->withInput();
+            return back()->with(['message' => 'gagal mengubah data.'])->withErrors($validator)->withInput();
         }
         $validator = $validator->validated();
         dd($validator);
@@ -132,9 +152,7 @@ class EkstrakurikulerController extends Controller
             $album = [];
             if (!empty($getEkskulData->foto_kegiatan)) {
                 $ConvertedStringJsonToPhpArray = json_decode($getEkskulData->foto_kegiatan, true);
-                /**
-                 * Pertanyaannya adalah attr foto_kegiatan diganti semua ?
-                 */
+                /** Pertanyaannya adalah attr foto_kegiatan diganti semua ? */
                 foreach ($request->file('foto-kegiatan') as $index => $file) {
                     $fotoKegiatan = $file->storeAs('ekskul/kegiatan', 'kegiatan' . '-' . ($index + 1) . '-' . $converted . '-' . $today . '.' . $ext);
                     $album[] = $fotoKegiatan;
@@ -146,29 +164,41 @@ class EkstrakurikulerController extends Controller
 
         $getEkskulData->update($data);
 
-        return redirect()->route('kelola-ekstrakurikuler.index')->with(['message' => 'sukses mengubah data.', 'isActive' => true, 'hasError' => false]);
-
+        return redirect()->route('kelola-ekstrakurikuler.index')->with(['message' => 'sukses mengubah data.']);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        $Ekstrakurikuler = Ekstrakurikuler::findOrFail($id);
-        if (!empty($Ekstrakurikuler->foto_struktur)) {
-            Storage::delete($Ekstrakurikuler->foto_struktur);
-        }
-        if (!empty($Ekstrakurikuler->foto_kegiatan)) {
-            $album = json_decode($Ekstrakurikuler->foto_kegiatan, true);
-            foreach ($album as $index => $file) {
-                Storage::delete($file);
+        if ($request->ajax()) {
+            try {
+                $Ekstrakurikuler = Ekstrakurikuler::findOrFail($id);
+                if (!empty($Ekstrakurikuler->foto_struktur)) {
+                    Storage::delete($Ekstrakurikuler->foto_struktur);
+                }
+                if (!empty($Ekstrakurikuler->foto_kegiatan)) {
+                    $album = json_decode($Ekstrakurikuler->foto_kegiatan, true);
+                    foreach ($album as $index => $file) {
+                        Storage::delete($file);
+                    }
+                }
+                $converted = Str::lower($Ekstrakurikuler->nama);
+                $converted = Str::slug($converted, '-');
+                Storage::deleteDirectory('ekskul/' . $converted);
+                $Ekstrakurikuler->delete();
+                return response([
+                    'status' => 'success',
+                    'data' => 'sukses menghapus data.'
+                ]);
+            } catch (\Exception $e) {
+                return response([
+                    'status' => 'error',
+                    'data' => $e->getMessage()
+                ], 500);
             }
         }
-        $converted = Str::lower($Ekstrakurikuler->nama);
-        $converted = Str::slug($converted, '-');
-        Storage::deleteDirectory('ekskul/' . $converted);
-        $Ekstrakurikuler->delete();
-        return redirect()->route('kelola-ekstrakurikuler.index')->with('message', 'sukses menghapus data.');
+        return redirect()->back();
     }
 }

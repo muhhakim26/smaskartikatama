@@ -30,7 +30,7 @@
             <td>
                 <ul>
                     @foreach (json_decode($Ekstrakurikuler->foto_kegiatan) as $key => $value)
-                        <li>{{ $value }}</li>
+                        <li><img alt="{{ $key++ }}" src="{{ asset('img/' . $value) }}"></li>
                     @endforeach
                 </ul>
             </td>
