@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Route;
  * | User Routes
  * |------------------------------------------------------------------------------------------------------------------
  */
+
 Route::controller(HomeController::class)->group(function () {
     // Menu Home
     Route::get('/', 'index')->name('home');

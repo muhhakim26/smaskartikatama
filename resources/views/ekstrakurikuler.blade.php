@@ -18,7 +18,8 @@
                             <div class="card shadow-sm">
                                 <div class="card-body p-0">
                                     <a class="w-100 max-h-266-px radius-0 overflow-hidden" href="{{ route('infoekstrakurikuler', $value->id) }}">
-                                        <img alt="{{ $value->nama }}"class="w-100 h-100 object-fit-cover" src="{{ asset('img/' . $value) }}">
+                                        <!-- <img alt="{{ $value->nama }}"class="w-100 h-100 object-fit-cover" src="{{ asset('img/' . $value) }}"> -->
+                                        <img alt="{{ $value->nama }}"class="w-100 h-100 object-fit-cover" src="{{asset('assets/images/Esktrakurikuler.png')}}">
                                     </a>
                                     <div class="p-20 text-center">
                                         <h6 class="card-title mb-10"><a class="text-line-2 text-hover-primary-600 transition-2 text-capitalize text-xl" href="{{ route('infoekstrakurikuler', $value->id) }}">{{ $value->nama }}</a></h6>

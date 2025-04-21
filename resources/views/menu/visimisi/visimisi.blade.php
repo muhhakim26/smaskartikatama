@@ -2,15 +2,15 @@
 @section('judul', 'Kelola Visi Misi')
 @section('konten')
     <div class="row gy-4">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h6 class="fw-semibold mb-0">Sejarah Form</h6>
+                    <h6 class="fw-semibold mb-0">Visi Misi</h6>
                 </div>
                 <div class="card-body">
-                    {{-- blade-formatter-disable --}}
+
                     @if (session()->has('message'))
-                        @if(session()->get('hasError'))
+                        @if (session()->get('hasError'))
                             <div class="alert alert-danger bg-danger-100 text-danger-600 border-danger-600 border-start-width-4-px border-top-0 border-end-0 border-bottom-0 px-24 py-13 mb-0 fw-semibold text-lg radius-4 d-flex align-items-center justify-content-between" role="alert">
                                 <div class="d-flex align-items-center gap-2">
                                     <iconify-icon icon="ep:warning-filled" class="icon text-xl"></iconify-icon>
@@ -20,19 +20,18 @@
                                     <iconify-icon icon="iconamoon:sign-times-light" class="icon"></iconify-icon>
                                 </button>
                             </div>
-                       @else
+                        @else
                             <div class="alert alert-success bg-success-100 text-success-600 border-success-600 border-start-width-4-px border-top-0 border-end-0 border-bottom-0 px-24 py-13 mb-0 fw-semibold text-lg radius-4 d-flex align-items-center justify-content-between" role="alert">
                                 <div class="d-flex align-items-center gap-2">
                                     <iconify-icon icon="ep:success-filled" class="icon text-xl"></iconify-icon>
-                                        {{ session()->get('message') }}
+                                    {{ session()->get('message') }}
                                 </div>
                                 <button class="remove-button text-success-600 text-xxl line-height-1">
                                     <iconify-icon icon="iconamoon:sign-times-light" class="icon"></iconify-icon>
                                 </button>
                             </div>
-                         @endif
+                        @endif
                     @endif
-                    {{-- blade-formatter-enable --}}
                     <form action="{{ route('kelola-visi-misi.store') }}" autocomplete="off" class="d-flex flex-column mt-20 gap-20" id="form" method="post">
                         @csrf
                         <div>
@@ -87,7 +86,7 @@
                                 <!-- Editor Toolbar Start -->
                                 <!-- Editor start -->
                                 <textarea class="form-control d-none" id="deskripsi" name="deskripsi-visi-misi"></textarea>
-                                <div id="editor">{!! old('deskripsi-visi-misi', $VisiMisi->deskripsi ?? '') !!}</div>
+                                <div class="h-200-px"id="editor">{!! old('deskripsi-visi-misi', $VisiMisi->deskripsi ?? '') !!}</div>
                                 <!-- Edit End -->
                             </div>
                         </div>

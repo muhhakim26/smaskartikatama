@@ -12,20 +12,20 @@
                             <div class="d-flex justify-content-start">
                                 <span class="h5">Email</span>
                             </div>
-                            <span>{{ $Kontak->email ?? '' }}</span>
+                            <span>{{ $Kontak->email ?? 'smakartikatamametro@ymail.com' }}</span>
                         </div>
                         <div class="col-md-6">
                             <div class="d-flex justify-content-start">
                                 <span class="h5">Telepon</span>
                             </div>
-                            <span>{{ $Kontak->notelpon ?? '' }}</span>
+                            <span>{{ $Kontak->notelpon ?? '0725-45311' }}</span>
                         </div>
                     </div>
                     <div class="mt-24">
                         <div class="d-flex justify-content-start">
                             <span class="h5">Alamat</span>
                         </div>
-                        <span>J{{ $Kontak->alamat ?? '' }}</span>
+                        <span>{{ $Kontak->alamat ?? 'Jl. Kapten Tendean, Margorejo, Kec. Metro Sel., Kota Metro, Lampung 34111' }}</span>
                     </div>
                     <div class="w-100 mt-24">
                         <iframe class="w-100" height="450" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3973.763690429656!2d105.29709552433528!3d-5.141702644835496!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e40b9464c8e1355%3A0xa18bf3f399f79a31!2sSMAS%20Kartikatama%20Metro!5e0!3m2!1sid!2sid!4v1744305340014!5m2!1sid!2sid" style="border:0;"></iframe>

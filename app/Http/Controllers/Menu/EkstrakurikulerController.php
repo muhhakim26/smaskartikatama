@@ -130,7 +130,7 @@ class EkstrakurikulerController extends Controller
             return back()->with(['message' => 'gagal mengubah data.'])->withErrors($validator)->withInput();
         }
         $validator = $validator->validated();
-        dd($validator);
+        // dd($validator);
         $data = [
             'nama' => $validator['nama-ekskul'],
             'deskripsi' => $validator['deskripsi'],

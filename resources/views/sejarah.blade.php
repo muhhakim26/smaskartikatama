@@ -9,7 +9,7 @@
                 <div class="card-body text-black">
                     <div class="p-20">
                         {{-- p.mb-24 --}}
-                        {!! $Sejarah->deskripsi !!}
+                        {!! $Sejarah->deskripsi ?? 'Deskripsi Belum Ada' !!}
                     </div>
                 </div>
             </div>

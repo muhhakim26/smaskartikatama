@@ -13,7 +13,7 @@
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img alt="..." class="d-block max-h-612-px w-100 object-fit-cover" src="https://abh.ai/landscapes/1000/1000">
+                    <img alt="..." class="d-block max-h-612-px w-100 object-fit-cover" src="{{ asset('assets/images/gambar-sekolah.svg') }}">
                     <div class="container">
                         <div class="carousel-caption pb-144 text-start">
                             <h3 class="mb-20 text-white">Menajdikan Generasi Cerdas, Berakhlak Mulia, Dan Berprestasi Gemilang</h3>
@@ -35,13 +35,21 @@
     <section class="py-120" id="sambutan">
         <div class="container">
             <div class="row">
-                <div class="col-md-7 order-md-2">
-                    <h4 class="fw-normal lh-1">Oh yeah, it’s that good. <span class="text-body-secondary">See for yourself.</span></h4>
-                    <p class="lead">Another featurette? Of course. More placeholder content here to give you an idea of how this layout would work with some actual real-world content in place.</p>
-                    <a class="btn rounded-pill btn-primary radius-50 px-28 py-12" href="#">Baca Selengkapnya</a>
+                <div class="col-md-8 order-md-2">
+                    <!-- <h4 class="fw-normal lh-2">Sambutan Kepala Sekolah<span class="text-body-secondary"></span></h4> -->
+                    {{-- {!! $SambutanKepsek->deskripsi !!} --}}
+                    {!! Str::words($SambutanKepsek->deskripsi, 200) !!}
+                    <div class="py-3">
+                        <a class="btn rounded-pill btn-primary radius-50 px-28 py-12" href="#">Baca Selengkapnya</a>
+                    </div>
                 </div>
-                <div class="col-md-5 order-md-1">
-                    <img alt="" class="" src="https://abh.ai/landscapes/1000">
+                <div class="col-md-4 order-md-1">
+                    <div class="d-flex justify-content-center">
+                        <img alt="" class="object-fit-cover" style="height: 397px;width: 330px;" src="{{ asset('img/' . $DataKepalaSekolah->file_foto) }}">
+                    </div>
+                    <div class="text-center py-32">
+                        <h5>{{ $DataKepalaSekolah->nama }}</h5>
+                    </div>
                 </div>
             </div>
         </div>
@@ -53,37 +61,37 @@
             <div class="row g-4 mt-24">
                 <div class="col-md-3">
                     <div class="card">
-                        <img alt="..." class="card-img-top" src="https://img.freepik.com/free-psd/3d-illustration-reading-with-book-esssential_23-2151295076.jpg?t=st=1744227061~exp=1744230661~hmac=1eb289409014087463be18c74767ff2a5bd37da227360b7de298701e6c0071d2&w=740">
+                        <img alt="..." class="card-img-top" src="{{ asset('assets/images/program-unggulan1.svg') }}">
                         <div class="card-body p-30">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <h5 class="card-title">Pendidikan Akhlak dan Karakter</h5>
+                            <p class="card-text">Membentuk siswa dengan akhlak mulia dan karakter Islami yang kuat melalui pendekatan nilai-nilai moral.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="card">
-                        <img alt="..." class="card-img-top" src="https://img.freepik.com/free-psd/3d-illustration-reading-with-book-esssential_23-2151295076.jpg?t=st=1744227061~exp=1744230661~hmac=1eb289409014087463be18c74767ff2a5bd37da227360b7de298701e6c0071d2&w=740">
+                        <img alt="..." class="card-img-top" src="{{ asset('assets/images/program-unggulan2.svg') }}">
                         <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <h5 class="card-title">Ekstrakulikuler Kreatif dan Olahraga</h5>
+                            <p class="card-text">Menyediakan berbagai kegiatan seni, olahraga, dan kreativitas untuk mengembangkan potensi siswa secara menyeluruh.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="card">
-                        <img alt="..." class="card-img-top" src="https://img.freepik.com/free-psd/3d-illustration-reading-with-book-esssential_23-2151295076.jpg?t=st=1744227061~exp=1744230661~hmac=1eb289409014087463be18c74767ff2a5bd37da227360b7de298701e6c0071d2&w=740">
+                        <img alt="..." class="card-img-top" src="{{ asset('assets/images/program-unggulan3.svg') }}">
                         <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <h5 class="card-title">Pondok Pendidikan Tahfiz Quran</h5>
+                            <p class="card-text">Program unggulan untuk hafalan Al-Quran yang dibimbing oleh tenaga pengajar profesional dalam suasana Islami.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="card">
-                        <img alt="..." class="card-img-top" src="https://img.freepik.com/free-psd/3d-illustration-reading-with-book-esssential_23-2151295076.jpg?t=st=1744227061~exp=1744230661~hmac=1eb289409014087463be18c74767ff2a5bd37da227360b7de298701e6c0071d2&w=740">
+                        <img alt="..." class="card-img-top" src="{{ asset('assets/images/program-unggulan4.svg') }}">
                         <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <h5 class="card-title">Study Bahasa Inggris di Pare, Kediri dan Flip Trip</h5>
+                            <p class="card-text">Belajar intensif bahasa Inggris di Kampung Inggris, Pare, disertai perjalanan edukatif yang menambah wawasan siswa.</p>
                         </div>
                     </div>
                 </div>
@@ -95,7 +103,7 @@
         <div class="container">
             <div class="d-flex justify-content-between align-items-center mb-32">
                 <h4>Berita SMAS Kartikatama Metro</h4>
-                <a class="btn btn-primary radius-50 px-15 py-8" href="{{ route('berita') }}">Lihat Semua</a>
+                <a class="btn btn-primary radius-50 px-24 py-12" href="{{ route('berita') }}">Lihat Semua</a>
             </div>
             <div class="row g-4">
                 @if ($Berita->isEmpty())
@@ -132,7 +140,8 @@
         <div class="container">
             <div class="d-flex justify-content-between align-items-center mb-32">
                 <h4>Galeri Foto SMAS Kartikatama Metro</h4>
-                <a class="btn btn-primary radius-50 px-15 py-8" href="{{ route('foto') }}">Lihat Semua</a>
+                <a class="btn btn-primary radius-50 px-24 py-12 href=" {{ route('foto') }}">Lihat Semua</a>
+
             </div>
             <div class="row gy-4">
                 @if ($GaleriFoto->isEmpty())
@@ -160,7 +169,8 @@
         <div class="container">
             <div class="d-flex justify-content-between align-items-center mb-32">
                 <h4>Galeri Video SMAS Kartikatama Metro</h4>
-                <a class="btn btn-primary radius-50 px-15 py-8" href="{{ route('video') }}">Lihat Semua</a>
+                <a class="btn btn-primary radius-50 px-24 py-12" href="{{ route('video') }}">Lihat Semua</a>
+
             </div>
             <div class="row gy-4">
                 @if ($GaleriVideo->isEmpty())
@@ -198,7 +208,8 @@
         <div class="container">
             <div class="d-flex justify-content-between align-items-center mb-32">
                 <h4>Tenaga Kependidikan SMAS Kartikatama Metro</h4>
-                <a class="btn btn-primary radius-50 px-15 py-8" href="{{ route('guru') }}">Lihat Semua</a>
+                <a class="btn btn-primary radius-50 px-24 py-12" href="{{ route('guru') }}">Lihat Semua</a>
+
             </div>
             <div class="row gy-4">
                 @if ($DataGuru->isEmpty())
@@ -309,7 +320,7 @@
         <div class="container">
             <div class="max-w-1000-px m-auto">
                 <h5 class="text-uppercase fw-bold mb-28 text-white">Layanan Informasi PPDB SMAS Kartikatama Metro</h5>
-                <p class="fw-normal mb-28 text-white">Memberikan informasi lengkap dan terkini tentang Penerimaan Peserta Didik Baru (PPDB) SMA, kami siap membantu calon siswa dan orang tua memahami alur pendaftaran, persyaratan, jadwal, serta pilihan sekolah terbaik. Dengan layanan profesional dan responsif, kami hadir untuk memastikan proses pendaftaran berjalan lancar dan transparan.</p>
+                <p class="fw-normal mb-28 text-white">Kami menyediakan informasi lengkap dan terkini mengenai Penerimaan Peserta Didik Baru (PPDB) SMAS Kartikatama Metro. Layanan ini dirancang untuk membantu calon siswa dan orang tua memahami alur pendaftaran, persyaratan, jadwal, serta program pendidikan yang ditawarkan oleh sekolah. Dengan pendekatan yang profesional dan responsif, kami berkomitmen untuk memastikan proses pendaftaran berjalan dengan lancar, transparan, dan mudah diakses.</p>
                 <a class="btn rounded-pill btn-primary radius-50 px-28 py-12" href="#">Hubungi Kami</a>
             </div>
         </div>

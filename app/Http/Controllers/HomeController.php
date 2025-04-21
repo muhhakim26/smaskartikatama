@@ -42,6 +42,7 @@ class HomeController extends Controller
         $this->province = new Province();
         $this->sambutanKepsek = new SambutanKepsek();
         $this->sejarah = new Sejarah();
+        $this->strukturOrganisasi = new StrukturOrganisasi();
         $this->visiMisi = new VisiMisi();
     }
 
@@ -51,7 +52,9 @@ class HomeController extends Controller
         $GaleriFoto = $this->galeriFoto->limit(8)->latest()->get();
         $GaleriVideo = $this->galeriVideo->limit(3)->latest()->get();
         $DataGuru = $this->dataGuru->limit(4)->latest()->get();
-        return view('home', compact('Berita', 'GaleriFoto', 'GaleriVideo', 'DataGuru'));
+        $DataKepalaSekolah = $this->dataGuru->where('jabatan', 'kepala sekolah')->first();
+        $SambutanKepsek = $this->sambutanKepsek->where('id', 1)->first();
+        return view('home', compact('Berita', 'GaleriFoto', 'GaleriVideo', 'DataGuru', 'DataKepalaSekolah', 'SambutanKepsek'));
     }
 
     public function sambutan()
@@ -75,7 +78,10 @@ class HomeController extends Controller
 
     public function strukturOrganisasi()
     {
-        $StrukturOrganisasi = $this->strukturOrganisasi->where('id', 1)->first();
+        // $StrukturOrganisasi = $this->strukturOrganisasi->where('id', 1)->first();
+        // $StrukturOrganisasi = $this->strukturOrganisasi->findOrFail(1);
+        $StrukturOrganisasi = $this->strukturOrganisasi->findOrFail(1);
+
         return view('struktur-organisasi', compact('StrukturOrganisasi'));
     }
 
