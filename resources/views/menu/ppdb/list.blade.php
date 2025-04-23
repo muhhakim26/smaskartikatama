@@ -1,17 +1,120 @@
 @extends('layouts/preset')
 @section('judul', 'Kelola PPDB')
+@push('style')
+    <!-- style untuk kolom serach -->
+    <style>
+        div.dt-container .dt-search input {
+            text-align: left
+        }
+    </style>
+@endpush
 @section('konten')
-    <div>
-        <a href="{{ route('dashboard') }}">Kembali</a>
-    </div>
-    <h1>Kelola PPDB</h1>
-
-    <a href="{{ route('kelola-ppdb.create') }}">Buat PPDB</a>
-    <div>
-        <ul>
-            @foreach ($PPDB as $key => $value)
-                <li>nama:{{ $value->nama }}, <a href="{{ route('kelola-ppdb.show', $value->id) }}">Lihat</a></li>
-            @endforeach
-        </ul>
+    <div class="card h-100 radius-12 basic-data-table p-0">
+        <div class="card-header border-bottom bg-base d-flex align-items-center justify-content-between flex-wrap gap-3 px-24 py-16">
+            <div class="d-flex align-items-center flex-wrap gap-3">
+                <h6 class="fw-semibold mb-0">Kelola PPDB</h6>
+            </div>
+        </div>
+        <div class="card-body p-24">
+            <div class="table-responsive">
+                <table class="bordered-table nowrap w-100 mb-0 table" data-page-length='10' id="dataTable">
+                    <thead>
+                        <tr>
+                            <th class="w-100-px text-center" scope="col">No.</th>
+                            <th scope="col">Judul</th>
+                            <th class="w-200-px text-center" scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
     </div>
 @endsection
+
+@push('script')
+    <script>
+        $(document).ready(function() {
+            let table = new DataTable("#dataTable", {
+                processing: true,
+                serverSide: true,
+                responsive: true,
+                ajax: window.location.href,
+                order: [],
+                columnDefs: [{
+                    className: "text-center",
+                    targets: [0, 2]
+                }, ],
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false
+                    }, {
+                        data: 'judul',
+                        name: 'judul'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ],
+            });
+        });
+
+        function hapus(id) {
+            Swal2.fire({
+                title: "Yakin hapus?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Iya",
+                cancelButtonText: "Batal",
+                showLoaderOnConfirm: true,
+                reverseButtons: true,
+                preConfirm: async () => {
+                    try {
+                        const url = window.location.href + '/' + id;
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                "X-Requested-With": "XMLHttpRequest",
+                                "Content-Type": "application/json",
+                                "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
+                            },
+                            body: JSON.stringify({
+                                "_method": "DELETE"
+                            })
+                        });
+                        const res = await response.json();
+                        if (!response.ok) {
+                            Swal2.fire({
+                                title: "Dibatalkan!",
+                                text: res.data,
+                                icon: "error",
+                            });
+                            return false;
+                        }
+                        return res;
+                    } catch (error) {
+                        Swal2.showValidationMessage(`Request failed: ${error}`);
+                    }
+                },
+                allowOutsideClick: () => !Swal2.isLoading()
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal2.fire({
+                        title: "Dihapus!",
+                        text: result.value.data,
+                        icon: "success",
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                }
+            });
+        }
+    </script>
+@endpush
