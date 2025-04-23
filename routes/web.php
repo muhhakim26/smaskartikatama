@@ -4,6 +4,7 @@ use App\Http\Controllers\Area\AreaIndonesiaController;
 use App\Http\Controllers\Auth\AutentikasiController;
 use App\Http\Controllers\Menu\AdminController;
 use App\Http\Controllers\Menu\BeritaController;
+use App\Http\Controllers\Menu\DashboardController;
 use App\Http\Controllers\Menu\DataGuruController;
 use App\Http\Controllers\Menu\EkstrakurikulerController;
 use App\Http\Controllers\Menu\GaleriFotoController;
@@ -72,9 +73,7 @@ Route::controller(AutentikasiController::class)->group(function () {
 });
 
 Route::middleware('auth:admin')->prefix('dashboard')->group(function () {
-    Route::get('/', function () {
-        return view('menu.dashboard');
-    })->name('dashboard');
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('kelola-admin', AdminController::class)->middleware('can:isSuperAdmin');
     Route::prefix('kelola-berita')->controller(BeritaController::class)->group(function () {
         Route::get('/', 'index')->name('kelola-berita.index');
