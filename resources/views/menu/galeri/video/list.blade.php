@@ -17,7 +17,7 @@
                     <div class="col-xxl-3 col-md-4 col-sm-6">
                         <div class="bg-base radius-8 overflow-hidden border">
                             <div class="position-relative max-h-258-px overflow-hidden">
-                                <a href="{{ route('kelola-galeri-video.show', $value->id) }}">
+                                <a href="{{ route('kelola-galeri-video.edit', $value->id) }}">
                                     <img alt="video-{{ $key++ }}" class="w-100 object-fit-cover" src="{{ asset('img/' . $value->thumbnail) }}">
                                 </a>
                                 <a class="magnific-video bordered-shadow w-56-px h-56-px rounded-circle d-flex justify-content-center align-items-center position-absolute start-50 top-50 translate-middle z-1 bg-white" href="{{ $value->file_video }}">

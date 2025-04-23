@@ -17,14 +17,14 @@
                     <div class="col-xxl-3 col-md-4 col-sm-6">
                         <div class="hover-scale-img radius-16 overflow-hidden border">
                             <div class="max-h-266-px position-relative overflow-hidden">
-                                <a href="{{ route('kelola-galeri-foto.show', $value->id) }}">
+                                <a href="{{ route('kelola-galeri-foto.edit', $value->id) }}">
                                     <img alt="foto-{{ $key++ }}" class="hover-scale-img__img w-100 h-100 object-fit-cover" src="{{ asset('img/' . $value->file_foto) }}">
                                 </a>
                                 <a class="position-absolute z-1 text-2xxl line-height-1 d-flex bg-danger-600 w-40-px h-40-px justify-content-center align-items-center rounded-circle end-0 top-0 me-8 mt-8" onclick="hapus({{ $value->id }})" style="cursor:pointer">
                                     <iconify-icon class="text-2xl text-white" icon="radix-icons:cross-2"></iconify-icon>
                                 </a>
                             </div>
-                            <a href="{{ route('kelola-galeri-foto.show', $value->id) }}">
+                            <a href="{{ route('kelola-galeri-foto.edit', $value->id) }}">
                                 <div class="px-24 py-16">
                                     <h6 class="mb-4">{{ Str::limit($value->nama_foto, 18) }}</h6>
                                 </div>
