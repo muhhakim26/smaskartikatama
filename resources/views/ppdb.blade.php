@@ -264,8 +264,8 @@
                         <div class="col-md-6">
                             <h6 class="mb-20">File</h6>
                             <div class="mb-20">
-                                <label class="form-label" for="">Foto 3x4</label>
-                                <input class="form-control" id="" name="" type="file">
+                                <label class="form-label" for="file-ft-siswa">Foto 3x4</label>
+                                <input accept="image/jpg, image/png, image/jpeg" class="form-control" id="file-ft-siswa" name="file-ft-siswa" type="file">
                             </div>
                             <div class="mb-20">
                                 <label class="form-label" for="file-akte">Scan Akta Kelahiran</label>

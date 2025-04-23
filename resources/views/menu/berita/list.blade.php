@@ -20,16 +20,18 @@
             </a>
         </div>
         <div class="card-body p-24">
-            <table class="bordered-table nowrap w-100 mb-0 table" data-page-length='10' id="dataTable">
-                <thead>
-                    <tr>
-                        <th class="w-100-px text-center" scope="col">No.</th>
-                        <th scope="col">Judul</th>
-                        <th class="w-200-px text-center" scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="bordered-table nowrap w-100 mb-0 table" data-page-length='10' id="dataTable">
+                    <thead>
+                        <tr>
+                            <th class="w-100-px text-center" scope="col">No.</th>
+                            <th scope="col">Judul</th>
+                            <th class="w-200-px text-center" scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
         </div>
     </div>
 @endsection
