@@ -17,7 +17,7 @@ class GaleriVideoController extends Controller
      */
     public function index()
     {
-        $GaleriVideo = GaleriVideo::paginate(4);
+        $GaleriVideo = GaleriVideo::paginate(8);
         return view('menu/galeri/video/list', compact('GaleriVideo'));
     }
 

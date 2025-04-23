@@ -2,7 +2,7 @@
 @section('judul', 'Buat Ekstrakurikuler')
 @section('konten')
     <div class="row gy-4">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <h6 class="fw-semibold mb-0">Input Form</h6>

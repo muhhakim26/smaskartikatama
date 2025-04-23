@@ -19,10 +19,10 @@
 <body>
     <!-- Header -->
     <header class="sticky-top">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <nav class="navbar navbar-expand-lg bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" href="{{ route('home') }}">
-                    <img alt="Logo SMAS Kartikatama Metro" class="w-50-px h-50-px me-10" src="{{ asset('assets/images/logo-smas-kartikatama.png') }}">
+                    <img alt="Logo SMAS Kartikatama Metro" class="w-50-px h-50-px me-10" src="{{ asset('assets/images/logosmaskartikatamametro.png') }}">
                     <span class="fw-medium mb-0">SMAS Kartikatama Metro</span>
                 </a>
                 <button class="navbar-toggler" data-bs-target="#navigasi" data-bs-toggle="collapse" type="button">
@@ -55,6 +55,7 @@
                                     Kesiswaan
                                 </a>
                                  {{-- blade-formatter-enable --}}
+                            {{-- blade-formatter-disable --}}
                             <ul class="dropdown-menu">
                                 <li><a @class(['dropdown-item', 'active' => Route::is('osis')]) href="{{ route('osis') }}">OSIS</a></li>
                                 <li><a @class(['dropdown-item', 'active' => Route::is('ekstrakurikuler')]) href="{{ route('ekstrakurikuler') }}">Ekstrakurikuler</a></li>
@@ -93,39 +94,39 @@
         @yield('konten')
     </main>
     <!-- Footer -->
-    <footer class="border-top bg-neutral-200 pb-28 pt-60">
+    <footer class="border-top bg-white pb-28 pt-60">
         <div class="container">
             <div class="row g-5">
                 <div class="col-md-6 col-lg-6 col-xl-3">
                     <div class="mb-32">
                         <span class="d-flex align-items-center">
-                            <img alt="Logo SMAS Kartikatama Metro" class="w-50-px h-50-px me-10" src="{{ asset('assets/images/logo-smas-kartikatama.png') }}">
+                            <img alt="Logo SMAS Kartikatama Metro" class="w-50-px h-50-px me-10" src="{{ asset('assets/images/logosmaskartikatamametro.png') }}">
                             <span class="fw-medium mb-0">SMAS Kartikatama Metro</span>
                         </span>
                     </div>
                     <p>Jl. Kapten P. Tendean, Kecamatan Metro Selatan, Kota Metro, Lampung.</p>
                     <div class="d-flex gap-3">
-                        <a class="link-body-emphasis" href="https://meet.google.com/edf-bovr-nau?authuser=3"><iconify-icon height="24" icon="mdi:instagram" width="24"></iconify-icon></a>
-                        <a class="link-body-emphasis" href="#"><iconify-icon heightx="24" icon="ic:baseline-facebook" width="24"></iconify-icon></a>
-                        <a class="link-body-emphasis" href="#"><iconify-icon height="24" icon="mdi:twitter" width="24"></iconify-icon></a>
-                        <a class="link-body-emphasis" href="#"><iconify-icon height="24" icon="mdi:youtube" width="24"></iconify-icon></a>
+                        <a class="link-body-emphasis" href="https://www.instagram.com/smaskartikatamametro?igsh=NTc4MTIwNjQ2YQ=="><iconify-icon height="24" icon="mdi:instagram" width="24"></iconify-icon></a>
+                        <a class="link-body-emphasis" href="https://www.facebook.com/share/15xTbdfAKS/"><iconify-icon heightx="24" icon="ic:baseline-facebook" width="24"></iconify-icon></a>
+                        <a class="link-body-emphasis" href="https://www.tiktok.com/@smaskartika?_t=ZS-8vk7wB7ttaR&_r=1"><iconify-icon height="24" icon="ic:baseline-tiktok" width="24"></iconify-icon></a>
+                        <a class="link-body-emphasis" href="https://www.youtube.com/@smaskartikatamametro"><iconify-icon height="24" icon="mdi:youtube" width="24"></iconify-icon></a>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-xl-3">
                     <h6 class="mb-32">Informasi</h6>
                     <div class="d-flex flex-column lh-lg">
                         <a class="text-body-secondary text-hover-primary-600 transition-2 p-0" href="{{ route('berita') }}">Berita</a>
-                        <a class="text-body-secondary text-hover-primary-600 transition-2 p-0" href="#">Galeri Foto</a>
-                        <a class="text-body-secondary text-hover-primary-600 transition-2 p-0" href="#">Galeri Video</a>
-                        <a class="text-body-secondary text-hover-primary-600 transition-2 p-0" href="#">Ekstrakurikuler</a>
+                        <a class="text-body-secondary text-hover-primary-600 transition-2 p-0" href="{{ route('foto') }}">Galeri Foto</a>
+                        <a class="text-body-secondary text-hover-primary-600 transition-2 p-0" href="{{ route('video') }}">Galeri Video</a>
+                        <a class="text-body-secondary text-hover-primary-600 transition-2 p-0" href="{{ route('ekstrakurikuler') }}">Ekstrakurikuler</a>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-xl-3">
                     <h6 class="mb-32">Akademik</h6>
                     <div class="d-flex flex-column lh-lg">
-                        <a class="text-body-secondary text-hover-primary-600 transition-2 p-0" href="#">Sejarah</a>
-                        <a class="text-body-secondary text-hover-primary-600 transition-2 p-0" href="#">Visi dan Misi</a>
-                        <a class="text-body-secondary text-hover-primary-600 transition-2 p-0" href="#">OSIS</a>
+                        <a class="text-body-secondary text-hover-primary-600 transition-2 p-0" href="{{ route('sejarah') }}">Sejarah</a>
+                        <a class="text-body-secondary text-hover-primary-600 transition-2 p-0" href="{{ route('visi-misi') }}">Visi dan Misi</a>
+                        <a class="text-body-secondary text-hover-primary-600 transition-2 p-0" href="{{ route('osis') }}">OSIS</a>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-6 col-xl-3">

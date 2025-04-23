@@ -3,22 +3,43 @@
 @push('style')
     <link href="{{ asset('assets/css/iofrm-style.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/iofrm-theme7.css') }}" rel="stylesheet" type="text/css">
+    <style>
+        .bg-login {
+            background-image: url("{{ asset('assets/images/bgloginadmin.png') }}");
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .website-logo img {
+            width: 200px;
+            height: auto;
+        }
+    </style>
 @endpush
 @section('konten')
     <div class="form-body">
         <div class="website-logo">
-            <a href="{{ route('home') }}">
-                <div class="logo">
-                    <img alt="" class="logo-size" src="{{ asset('assets/images/logo-light.svg') }}">
-                </div>
-            </a>
+            <div class="website-logo">
+                <a href="{{ route('home') }}">
+                    <div>
+                        <img alt="" src="{{ asset('assets/images/logo-smas-kartikatama-metro.svg') }}">
+                    </div>
+                </a>
+            </div>
+
         </div>
         <div class="iofrm-layout">
             <div class="img-holder">
-                <div class="bg"></div>
-                <div class="info-holder">
-                    <img alt="" src="{{ asset('assets/images/graphic3.svg') }}">
-                </div>
+                <div class="bg-login"></div>
+                {{-- <div class="info-holder">
+                    <img alt="" src="{{ asset('assets/images/bgloginadmin.jpg') }}">
+                </div> --}}
             </div>
             <div class="form-holder">
                 <div class="form-content">

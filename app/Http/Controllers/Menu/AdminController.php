@@ -17,7 +17,7 @@ class AdminController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $model = Admin::query()->select('id', 'nama', 'email', 'level')->where('id', '!=', 1);
+            $model = Admin::query()->select('id', 'nama', 'email', 'level');
 
             if ($request->has('order') && !empty($request->input('order'))) {
                 $order = $request->input('order')[0];
@@ -92,7 +92,7 @@ class AdminController extends Controller
      */
     public function edit(string $id)
     {
-        $Admin = Admin::where('id', '!=', 1)->findOrFail($id);
+        $Admin = Admin::findOrFail($id);
         return view('menu/admin/edit', compact('Admin'));
     }
 

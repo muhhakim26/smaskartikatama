@@ -1,6 +1,34 @@
 @extends('layouts.user.preset')
 @section('judul', 'Halaman Utama')
 @push('style')
+    <style>
+        .rounded-img {
+            height: 397px;
+            width: 330px;
+            border-radius: 18px;
+            object-fit: cover;
+        }
+
+        .bginfo-ppdb1 {
+            background-image: url('{{ asset('assets/images/bgpendaftaran1.png') }}');
+            background-size: cover;
+            background-position: center;
+            width: 100%;
+        }
+
+        .bginfo-ppdb2 {
+            background-image: url('{{ asset('assets/images/bgpendaftaran2.png') }}');
+            background-size: cover;
+            background-position: center;
+            width: 100%;
+        }
+
+        .card-gurutendik {
+            background-color: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+    </style>
 @endpush
 @section('konten')
     <!-- Hero Section -->
@@ -13,49 +41,65 @@
             </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img alt="..." class="d-block max-h-612-px w-100 object-fit-cover" src="{{ asset('assets/images/gambar-sekolah.svg') }}">
+                    <img alt="..." class="d-block max-h-612-px w-100 object-fit-cover" src="{{ asset('assets/images/bghero1.png') }}">
                     <div class="container">
                         <div class="carousel-caption pb-144 text-start">
                             <h3 class="mb-20 text-white">Menajdikan Generasi Cerdas, Berakhlak Mulia, Dan Berprestasi Gemilang</h3>
                             <p class="mb-36">SMAS Kartikatama Metro dengan menanamkan akhlak yang mulia menciptakan generasi para penerus untuk memimpin nusa dan bangsa yang cerdas dan gemilang.</p>
-                            <a class="btn btn-lg btn-primary radius-50 px-30 py-15" href="#">Daftar Sebagai Siswa Baru</a>
+                            <a class="btn btn-lg btn-primary radius-50 px-32 py-16" href="{{ route('ppdb') }}">Daftar Sebagai Siswa Baru</a>
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img alt="..." class="d-block max-h-612-px w-100 object-fit-cover" src="https://abh.ai/landscapes/1000/1000">
+                    <img alt="..." class="d-block max-h-612-px w-100 object-fit-cover" src="{{ asset('assets/images/bghero2.png') }}">
+                    <div class="container">
+                        <div class="carousel-caption pb-144 text-start">
+                            <h3 class="mb-20 text-white">Bersama SMAS Kartikatama Metro, Raih Prestasi dan Wujudkan Masa Depan!</h3>
+                            <p class="mb-36">SMAS Kartikatama Metro hadir untuk mencetak generasi cerdas, kreatif, dan berkarakter unggul. Dengan lingkungan belajar yang inspiratif serta bimbingan berkualitas, kami mendorong setiap siswa untuk mencapai impian mereka dan menjadi pemimpin masa depan.</p>
+                            <div class="d-flex gap-3 text-white">
+                                <a class="btn rounded-pill btn-primary radius-50 px-32 py-16" href="{{ route('ppdb') }}">Daftar Sekarang</a>
+                                <a class="btn rounded-pill btn-outline-primary-600 radius-50 px-32 py-16" href="{{ route('info-ppdb') }}"><span class="text-base">Lihat Persyaratan</span></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="carousel-item">
-                    <img alt="..." class="d-block max-h-612-px w-100 object-fit-cover" src="https://abh.ai/landscapes/1000/1000">
+                    <img alt="..." class="d-block max-h-612-px w-100 object-fit-cover" src="{{ asset('assets/images/bghero3.png') }}">
+                    <div class="container">
+                        <div class="carousel-caption pb-144 text-start">
+                            <h3 class="mb-20 text-white">Langkah Awal Menuju Kesuksesan Bersama SMAS Kartikatama Metro!</h3>
+                            <p class="mb-36">SMAS Kartikatama Metro berkomitmen untuk mencetak generasi unggul dengan pendidikan berkualitas, karakter kuat, dan prestasi gemilang. Kami membuka peluang bagi setiap siswa untuk berkembang, berinovasi, dan siap menghadapi masa depan dengan percaya diri.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
     <!-- Sambutan Section -->
-    <section class="py-120" id="sambutan">
+    <section class="py-90" id="sambutan">
         <div class="container">
             <div class="row">
                 <div class="col-md-8 order-md-2">
-                    <!-- <h4 class="fw-normal lh-2">Sambutan Kepala Sekolah<span class="text-body-secondary"></span></h4> -->
                     {{-- {!! $SambutanKepsek->deskripsi !!} --}}
-                    {!! Str::words($SambutanKepsek->deskripsi, 200) !!}
+                    <h4 class="mb-16">Sambutan Kepala Sekolah</h4>
+                    {!! Str::words($SambutanKepsek->deskripsi, 130) !!}
                     <div class="py-3">
-                        <a class="btn rounded-pill btn-primary radius-50 px-28 py-12" href="#">Baca Selengkapnya</a>
+                        <a class="btn rounded-pill btn-primary radius-50 px-28 py-12" href="{{ route('sambutan') }}">Baca Selengkapnya</a>
                     </div>
                 </div>
                 <div class="col-md-4 order-md-1">
                     <div class="d-flex justify-content-center">
-                        <img alt="" class="object-fit-cover" style="height: 397px;width: 330px;" src="{{ asset('img/' . $DataKepalaSekolah->file_foto) }}">
+                        <img alt="" class="rounded-img" style="height: 397px;width: 330px;" src="{{ asset('img/' . $DataKepalaSekolah->file_foto) }}">
                     </div>
-                    <div class="text-center py-32">
-                        <h5>{{ $DataKepalaSekolah->nama }}</h5>
+                    <div class="text-center py-24">
+                        <h6>{{ $DataKepalaSekolah->nama }}</h6>
                     </div>
                 </div>
             </div>
         </div>
     </section>
     <!-- Program Section -->
-    <section class="bg-body-secondary py-120 bg-opacity-50" id="program">
+    <section class="bg-body-secondary py-90 bg-opacity-50" id="program">
         <div class="container">
             <h4>Program-Program Unggulan SMAS Kartikatama Metro</h4>
             <div class="row g-4 mt-24">
@@ -99,7 +143,7 @@
         </div>
     </section>
     <!-- Berita Section -->
-    <section class="py-120" id="berita">
+    <section class="py-90" id="berita">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center mb-32">
                 <h4>Berita SMAS Kartikatama Metro</h4>
@@ -136,12 +180,11 @@
         </div>
     </section>
     <!-- Foto Section -->
-    <section class="bg-body-secondary py-120 bg-opacity-50" id="foto">
+    <section class="bg-body-secondary py-90 bg-opacity-50" id="foto">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center mb-32">
                 <h4>Galeri Foto SMAS Kartikatama Metro</h4>
-                <a class="btn btn-primary radius-50 px-24 py-12 href=" {{ route('foto') }}">Lihat Semua</a>
-
+                <a class="btn btn-primary radius-50 px-24 py-12" href="{{ route('foto') }}">Lihat Semua</a>
             </div>
             <div class="row gy-4">
                 @if ($GaleriFoto->isEmpty())
@@ -165,7 +208,7 @@
         </div>
     </section>
     <!-- Video Section -->
-    <section class="py-120" id="video">
+    <section class="py-110" id="video">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center mb-32">
                 <h4>Galeri Video SMAS Kartikatama Metro</h4>
@@ -204,7 +247,7 @@
         </div>
     </section>
     <!-- Staf Section -->
-    <section class="bg-body-secondary py-120 bg-opacity-50" id="staf">
+    <section class="bg-body-secondary py-110 bg-opacity-50" id="staf">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center mb-32">
                 <h4>Tenaga Kependidikan SMAS Kartikatama Metro</h4>
@@ -239,14 +282,14 @@
         </div>
     </section>
     <!-- CTA Section -->
-    <section class="bg-dark bg-gradient py-120 bg-opacity-75" id="cta">
+    <section class="py-144 bginfo-ppdb1" id="cta">
         <div class="container">
             <div class="max-w-1000-px m-auto text-center">
                 <h3 class="text-uppercase fw-bold mb-28 text-white"> PENDAFTARAN PESERTA DIDIK BARU </h3>
                 <p class="fw-normal mb-28 text-white">Selamat datang di SMAS Kartikatama Metro! Kami mengundang calon siswa untuk mendaftar dalam Penerimaan Peserta Didik Baru (PPDB). Dengan fasilitas lengkap, pengajaran berkualitas, dan berbagai kegiatan ekstrakurikuler, kami siap mendukung potensi Anda. Datang dan lihat mengapa kami menjadi pilihan tepat untuk masa depan pendidikan Anda. Jangan ragu untuk menghubungi kami atau kunjungi website kami untuk informasi lebih lanjut.</p>
                 <div class="d-flex justify-content-center gap-3 text-white">
-                    <a class="btn rounded-pill btn-primary radius-50 px-28 py-12" href="#">Daftar Sekarang</a>
-                    <a class="btn rounded-pill btn-outline-primary-600 radius-50 px-28 py-12" href="#"><span class="text-base">Lihat Persyaratan</span></a>
+                    <a class="btn rounded-pill btn-primary radius-50 px-28 py-12" href="{{ route('ppdb') }}">Daftar Sekarang</a>
+                    <a class="btn rounded-pill btn-outline-primary-600 radius-50 px-28 py-12" href="{{ route('info-ppdb') }}"><span class="text-base">Lihat Persyaratan</span></a>
                 </div>
             </div>
         </div>
@@ -262,16 +305,16 @@
                     <div class="card shadow-sm">
                         <div class="card-body p-6">
                             <div class="p-20">
-                                <h5 class="mb-36 text-center"><a class="text-uppercase text-line-2 text-primary-600 text-hover-primary-600 transition-2" href="">Batch 1</a></h5>
+                                <h5 class="mb-36 text-center"><a class="text-uppercase text-line-2 text-primary-600 text-hover-primary-600 transition-2 disabled" href="#"><strong>Batch 1</strong></a></h5>
                                 <div class="mb-32 text-black">
                                     <p class="mb-10">Pendaftaran Batch 1</p>
-                                    <p class="mb-10">21 Agustus s.d. 30 Desember 2024</p>
+                                    <p class="mb-10">1 Agustus s.d. 30 November 2024</p>
                                     <p class="mb-10">Lokasi: SMAS Kartikatama Metro</p>
                                     <p class="mb-10">Offline: 10.00 WIB sampai 15.00 WIB</p>
                                     <p class="mb-10">Online 24 Jam</p>
-                                    <p class="fst-italic mb-10">* Kuota Pendaftar 150 Orang Siswa</p>
+                                    {{-- <p class="fst-italic mb-10">* Kuota Pendaftar 150 Orang Siswa</p> --}}
                                 </div>
-                                <a class="btn rounded-pill btn-primary radius-50 w-100 py-12" href="#">Daftar Batch 1</a>
+                                <a class="btn rounded-pill btn-primary radius-50 w-100 py-12 disabled" href="#">Daftar Batch 1</a>
                             </div>
                         </div>
                     </div>
@@ -280,16 +323,16 @@
                     <div class="card shadow-sm">
                         <div class="card-body p-6">
                             <div class="p-20">
-                                <h5 class="mb-36 text-center"><a class="text-uppercase text-line-2 text-primary-600 text-hover-primary-600 transition-2" href="">Batch 1</a></h5>
+                                <h5 class="mb-36 text-center"><a class="text-uppercase text-line-2 text-primary-600 text-hover-primary-600 transition-2 disabled" href="#"><strong>Batch 2</strong></a></h5>
                                 <div class="mb-32 text-black">
-                                    <p class="mb-10">Pendaftaran Batch 1</p>
-                                    <p class="mb-10">21 Agustus s.d. 30 Desember 2024</p>
+                                    <p class="mb-10">Pendaftaran Batch 2</p>
+                                    <p class="mb-10">09 Desember 2024 s.d. 21 Maret 2025</p>
                                     <p class="mb-10">Lokasi: SMAS Kartikatama Metro</p>
                                     <p class="mb-10">Offline: 10.00 WIB sampai 15.00 WIB</p>
                                     <p class="mb-10">Online 24 Jam</p>
-                                    <p class="fst-italic mb-10">* Kuota Pendaftar 150 Orang Siswa</p>
+                                    {{-- <p class="fst-italic mb-10">* Kuota Pendaftar 150 Orang Siswa</p> --}}
                                 </div>
-                                <a class="btn rounded-pill btn-primary radius-50 w-100 py-12" href="#">Daftar Batch 1</a>
+                                <a class="btn rounded-pill btn-primary radius-50 w-100 py-12 disabled" href="#">Daftar Batch 2</a>
                             </div>
                         </div>
                     </div>
@@ -298,16 +341,16 @@
                     <div class="card shadow-sm">
                         <div class="card-body p-6">
                             <div class="p-20">
-                                <h5 class="mb-36 text-center"><a class="text-uppercase text-line-2 text-primary-600 text-hover-primary-600 transition-2" href="">Batch 1</a></h5>
+                                <h5 class="mb-36 text-center"><a class="text-uppercase text-line-2 text-primary-600 text-hover-primary-600 transition-2 disabled" href={{ route('ppdb') }}><strong>Batch 3</strong></a></h5>
                                 <div class="mb-32 text-black">
-                                    <p class="mb-10">Pendaftaran Batch 1</p>
-                                    <p class="mb-10">21 Agustus s.d. 30 Desember 2024</p>
+                                    <p class="mb-10">Pendaftaran Batch 3</p>
+                                    <p class="mb-10">14 April 2025 s.d. 13 Juni 2025</p>
                                     <p class="mb-10">Lokasi: SMAS Kartikatama Metro</p>
                                     <p class="mb-10">Offline: 10.00 WIB sampai 15.00 WIB</p>
                                     <p class="mb-10">Online 24 Jam</p>
-                                    <p class="fst-italic mb-10">* Kuota Pendaftar 150 Orang Siswa</p>
+                                    {{-- <p class="fst-italic mb-10">* Kuota Pendaftar 150 Orang Siswa</p> --}}
                                 </div>
-                                <a class="btn rounded-pill btn-primary radius-50 w-100 py-12" href="#">Daftar Batch 1</a>
+                                <a class="btn rounded-pill btn-primary radius-50 w-100 py-12" href="{{ route('ppdb') }}">Daftar Batch 3</a>
                             </div>
                         </div>
                     </div>
@@ -316,12 +359,18 @@
         </div>
     </section>
     <!-- Info Section -->
-    <section class="py-120 mb-120 bg-black" id="info">
+    <section class="py-120 mb-140 bginfo-ppdb2" id="info">
         <div class="container">
             <div class="max-w-1000-px m-auto">
                 <h5 class="text-uppercase fw-bold mb-28 text-white">Layanan Informasi PPDB SMAS Kartikatama Metro</h5>
-                <p class="fw-normal mb-28 text-white">Kami menyediakan informasi lengkap dan terkini mengenai Penerimaan Peserta Didik Baru (PPDB) SMAS Kartikatama Metro. Layanan ini dirancang untuk membantu calon siswa dan orang tua memahami alur pendaftaran, persyaratan, jadwal, serta program pendidikan yang ditawarkan oleh sekolah. Dengan pendekatan yang profesional dan responsif, kami berkomitmen untuk memastikan proses pendaftaran berjalan dengan lancar, transparan, dan mudah diakses.</p>
-                <a class="btn rounded-pill btn-primary radius-50 px-28 py-12" href="#">Hubungi Kami</a>
+                <p class="fw-normal mb-28 text-white">
+                    Kami menyediakan informasi lengkap dan terkini mengenai Penerimaan Peserta Didik Baru (PPDB) SMAS Kartikatama Metro.
+                    Layanan ini dirancang untuk membantu calon siswa dan orang tua memahami alur pendaftaran, persyaratan, jadwal, serta program pendidikan yang ditawarkan oleh sekolah.
+                    Dengan pendekatan yang profesional dan responsif, kami berkomitmen untuk memastikan proses pendaftaran berjalan dengan lancar, transparan, dan mudah diakses.
+                </p>
+                <a class="btn rounded-pill btn-primary radius-50 px-28 py-12" href="https://api.whatsapp.com/send?phone=6285888082608&text=Assalamualaikum%2C%20%0ASaya%20telah%20melihat%20informasi%20PPDB%20SMAS%20Kartikatama%20Metro%20dan%20ingin%20menanyakan%20beberapa%20hal%20lebih%20lanjut.">
+                    Hubungi Kami
+                </a>
             </div>
         </div>
     </section>

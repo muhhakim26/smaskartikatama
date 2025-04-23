@@ -64,7 +64,7 @@
                 reverseButtons: true,
                 preConfirm: async () => {
                     try {
-                        const url = window.location.href + '/' + id;
+                        const url = "{{ route('kelola-galeri-video.destroy', '') }}" + "/" + id;
                         const response = await fetch(url, {
                             method: 'POST',
                             headers: {
@@ -98,7 +98,7 @@
                         text: result.value.data,
                         icon: "success",
                     }).then(() => {
-                        window.location.reload();
+                        window.location.href = "{{ route('kelola-galeri-video.index') }}";
                     });
                 }
             });

@@ -1,6 +1,16 @@
 @extends('layouts/user/preset')
 @section('judul', 'Sambutan Kepala Sekolah')
 @section('konten')
+    @push('style')
+        <style>
+            .rounded-imagekepsesk {
+                height: 397px;
+                width: 330px;
+                border-radius: 18px;
+                object-fit: cover;
+            }
+        </style>
+    @endpush
     @include('layouts.user.hero', ['judul' => 'Sambutan'])
     <!-- Sambutan Section -->
     <section class="py-120" id="sambuatan">
@@ -13,9 +23,11 @@
                                 <div class="flex-shrink-1">
                                     <div class="position-relative">
                                         @if (!empty($DataGuru->file_foto))
-                                            <img alt="kepala-sekolah" class="w-100 mw-100" src="{{ asset('img/' . $DataGuru->file_foto) }}">
+                                            <div class="d-flex justify-content-center">
+                                                <img alt="kepala-sekolah" class="rounded-imagekepsesk" src="{{ asset('img/' . $DataGuru->file_foto) }}">
+                                            </div>
                                         @else
-                                            Tidak Ada Foto
+                                            <p>Tidak Ada Foto</p>
                                         @endif
                                     </div>
                                     <h6 class="fw-semibold mt-16 text-center">{{ $DataGuru->nama ?? 'Dra. HJ Tugirah' }}

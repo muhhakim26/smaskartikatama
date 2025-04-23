@@ -55,7 +55,7 @@
                 reverseButtons: true,
                 preConfirm: async () => {
                     try {
-                        const url = window.location.href + '/' + id;
+                        const url = "{{ route('kelola-galeri-foto.destroy', '') }}" + "/" + id;
                         const response = await fetch(url, {
                             method: 'POST',
                             headers: {
@@ -68,6 +68,7 @@
                             })
                         });
                         const res = await response.json();
+
                         if (!response.ok) {
                             Swal2.fire({
                                 title: "Dibatalkan!",
@@ -89,7 +90,7 @@
                         text: result.value.data,
                         icon: "success",
                     }).then(() => {
-                        window.location.reload();
+                        window.location.href = "{{ route('kelola-galeri-foto.index') }}";
                     });
                 }
             });

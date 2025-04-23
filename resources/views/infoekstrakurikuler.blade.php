@@ -7,7 +7,7 @@
         <div class="container">
             <div class="card lh-sm mb-40 text-base">
                 <div class="card-body text-black">
-                    <div class="p-20">
+                    <div class="editor p-20">
                         <div class="mb-50">
                             {{-- h4.mb-32, h5.mb-32, p.mb-24, ol.list-decimal, li.mb-16 --}}
                             {!! $Ekstrakurikuler->deskripsi !!}
@@ -26,3 +26,21 @@
         </div>
     </section>
 @endsection
+@push('script')
+    <script>
+        document.querySelectorAll('.editor h4, .editor h5').forEach((p) => {
+            p.classList.add('mb-32'); // Tambahkan class ke <p>
+        });
+        document.querySelectorAll('.editor p').forEach((p) => {
+            p.classList.add('mb-24'); // Tambahkan class ke <p>
+        });
+        ['ol', 'ul'].forEach((tag) => {
+            document.querySelectorAll(`.editor ${tag}`).forEach((c) => {
+                c.classList.add(tag === 'ol' ? 'list-decimal' : 'list-style');
+                c.querySelectorAll('li').forEach((li) => {
+                    li.classList.add('mb-16');
+                });
+            });
+        });
+    </script>
+@endpush

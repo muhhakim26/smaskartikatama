@@ -2,7 +2,7 @@
 @section('judul', 'Ubah Ekstrakurikuler')
 @section('konten')
     <div class="row gy-4">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <h6 class="fw-semibold mb-0">Input Form</h6>
@@ -33,22 +33,66 @@
                         </div>
                         <div>
                             <label class="form-label fw-bold text-neutral-900" for="deskripsi">Deskripsi</label>
-                            <textarea class="form-control" id="deskripsi" name="deskripsi">{{ old('deskripsi', $Ekstrakurikuler->deskripsi) }}</textarea>
+                            <div class="radius-8 border border-neutral-200">
+                                <!-- Editor Toolbar Start -->
+                                <div id="toolbar-container">
+                                    <span class="ql-formats">
+                                        <select class="ql-font">
+                                            <option selected>Inter</option>
+                                            <option value="poppins">Poppins</option>
+                                        </select>
+                                        <select class="ql-size"></select>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-bold"></button>
+                                        <button class="ql-italic"></button>
+                                        <button class="ql-underline"></button>
+                                        <button class="ql-strike"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <select class="ql-color"></select>
+                                        <select class="ql-background"></select>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-script" value="sub"></button>
+                                        <button class="ql-script" value="super"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-header" value="5"></button>
+                                        <button class="ql-blockquote"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-list" value="ordered"></button>
+                                        <button class="ql-list" value="bullet"></button>
+                                        <button class="ql-indent" value="-1"></button>
+                                        <button class="ql-indent" value="+1"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-direction" value="rtl"></button>
+                                        <select class="ql-align"></select>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-link"></button>
+                                    </span>
+                                    <span class="ql-formats">
+                                        <button class="ql-clean"></button>
+                                    </span>
+                                </div>
+                                <!-- Editor Toolbar Start -->
+                                <!-- Editor start -->
+                                <textarea class="form-control d-none" id="deskripsi" name="deskripsi"></textarea>
+                                <div id="editor">{!! old('deskripsi', $Ekstrakurikuler->deskripsi) !!}</div>
+                                <!-- Edit End -->
+                            </div>
                             @error('deskripsi')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+
                         <div>
                             <label class="form-label fw-bold text-neutral-900" for="foto-struktur">Foto Struktur</label>
                             <input accept="image/jpg, image/png, image/jpeg" class="form-control" class="form-control" id="foto-struktur" name="foto-struktur" type="file">
                             @error('foto-struktur')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div>
-                            <label class="form-label fw-bold text-neutral-900" for="foto-kegiatan">Foto Kegiatan</label>
-                            <input accept="image/jpg, image/png, image/jpeg" class="form-control" id="foto-kegiatan" multiple name="foto-kegiatan[]" type="file">
-                            @error('foto-kegiatan')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>

@@ -66,7 +66,7 @@ Route::controller(AutentikasiController::class)->group(function () {
     });
     Route::middleware('auth:admin')->name('admin.')->group(function () {
         Route::get('admin/ubah-sandi', 'changePasswordPage')->name('ubah-sandi');
-        Route::put('admin/ubah-sandi/{id}', 'changePassword');
+        Route::put('admin/ubah-sandi/{id}', 'changePassword')->name('ubah-sandi.update');
     });
     Route::middleware('auth:admin')->post('admin/logout', 'logout')->name('logout');
 });

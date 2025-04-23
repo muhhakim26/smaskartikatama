@@ -79,17 +79,18 @@ class AutentikasiController extends Controller
             'kata-sandi-baru_confirmation' => ['required', 'string', 'max:255'],
         ];
         $validator = Validator::make($request->all(), $rules);
+        $validated = $validator->validated();
         if ($validator->fails()) {
             return back()->with('message', 'gagal mengubah kata sandi.')->withErrors($validator)->withInput();
         }
 
         $admin = auth()->user();
 
-        if (!Hash::check($validator['kata-sandi-lama'], $admin->password)) {
+        if (!Hash::check($validated['kata-sandi-lama'], $admin->password)) {
             return response()->json(['status' => false, 'errors' => ['message' => ['Terjadi kesalahan kata sandi lama tidak cocok']]]);
         }
         $data = [
-            'password' => bcrypt($validator['kata-sandi-baru']),
+            'password' => bcrypt($validated['kata-sandi-baru']),
         ];
         Admin::where('id', $admin->id)->update($data);
         return redirect()->route('admin.index')->with(['message' => 'sukses mengubah kata sandi.', 'isActive' => true, 'hasError' => false]);

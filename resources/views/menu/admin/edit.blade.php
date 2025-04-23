@@ -44,6 +44,7 @@
                             <label class="form-label" for="role">Role</label>
                             <select class="form-select" form="admin-edit" id="role" name="role">
                                 <option @selected(old('role', $Admin->level) == 'admin') value="admin">Admin</option>
+                                <option @selected(old('role', $Admin->level) == 'superadmin') value="superadmin">Superadmin</option>
                             </select>
                             @error('role')
                                 <div class="text-danger">{{ $message }}</div>

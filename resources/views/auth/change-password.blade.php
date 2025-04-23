@@ -2,7 +2,7 @@
 @section('judul', 'Ubah Kata Sandi')
 @section('konten')
     <h1>Halaman Ubah Sandi</h1>
-    <form action="{{ route('admin.ubah-sandi', ['id' => auth()->user()->id]) }}" id="ubah-sandi" method="post">
+    <form action="{{ route('admin.ubah-sandi.update', ['id' => auth()->user()->id]) }}" id="ubah-sandi" method="post">
         @csrf
         @method('put')
         <div>

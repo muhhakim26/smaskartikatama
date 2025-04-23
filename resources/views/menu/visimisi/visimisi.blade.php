@@ -8,7 +8,6 @@
                     <h6 class="fw-semibold mb-0">Visi Misi</h6>
                 </div>
                 <div class="card-body">
-
                     @if (session()->has('message'))
                         @if (session()->get('hasError'))
                             <div class="alert alert-danger bg-danger-100 text-danger-600 border-danger-600 border-start-width-4-px border-top-0 border-end-0 border-bottom-0 px-24 py-13 mb-0 fw-semibold text-lg radius-4 d-flex align-items-center justify-content-between" role="alert">

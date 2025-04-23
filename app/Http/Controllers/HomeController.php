@@ -8,6 +8,7 @@ use App\Models\DataGuru;
 use App\Models\Ekstrakurikuler;
 use App\Models\GaleriFoto;
 use App\Models\GaleriVideo;
+use App\Models\InfoPpdb;
 use App\Models\Kontak;
 use App\Models\Osis;
 use App\Models\SambutanKepsek;
@@ -28,7 +29,8 @@ class HomeController extends Controller
         $sambutanKepsek,
         $sejarah,
         $strukturOrganisasi,
-        $visiMisi;
+        $visiMisi,
+        $infoPpdb;
 
     public function __construct()
     {
@@ -44,6 +46,7 @@ class HomeController extends Controller
         $this->sejarah = new Sejarah();
         $this->strukturOrganisasi = new StrukturOrganisasi();
         $this->visiMisi = new VisiMisi();
+        $this->infoPpdb = new InfoPpdb();
     }
 
     public function index()
@@ -123,7 +126,8 @@ class HomeController extends Controller
 
     public function infoppdb()
     {
-        return view('infoppdb');
+        $Infoppdb = $this->infoPpdb->where('id', 1)->first();
+        return view('infoppdb', compact('Infoppdb'));
     }
 
     public function osis()

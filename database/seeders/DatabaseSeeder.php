@@ -32,6 +32,5 @@ class DatabaseSeeder extends Seeder
             DistrictSeeder::class,
             VillageSeeder::class,
         ]);
-
     }
 }
