@@ -13,7 +13,8 @@
                 </div>
             @endif
             {{-- blade-formatter-enable --}}
-            <form action="{{ route('kelola-ppdb.store') }}" autocomplete="off" enctype="multipart/form-data" id="ppdb-create" method="post">
+            <form action="{{ route('kelola-ppdb.store') }}" enctype="multipart/form-data" id="ppdb-create" method="post">
+                @csrf
                 <div class="py-32">
                     <h6 class="mb-20">Data Calon Siswa</h6>
                     <div class="row g-5 mb-20">
@@ -266,6 +267,9 @@
                             <div class="mb-20">
                                 <label class="form-label" for="file-ft-siswa">Foto 3x4</label>
                                 <input accept="image/jpg, image/png, image/jpeg" class="form-control" id="file-ft-siswa" name="file-ft-siswa" type="file">
+                                @error('file-ft-siswa')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="mb-20">
                                 <label class="form-label" for="file-akte">Scan Akta Kelahiran</label>

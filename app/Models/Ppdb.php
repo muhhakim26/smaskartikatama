@@ -12,47 +12,43 @@ use Illuminate\Database\Eloquent\Model;
 class Ppdb extends Model
 {
     use HasFactory;
+
     protected $table = 'tb_ppdb';
+
     protected $fillable = [
         'id_pendaftaran',
         'nama',
-        'jenis_kelamin',
-        'nisn',
-        'tempat_lahir',
-        'tgl_lahir',
-        'agama',
-        'brkthn_khusus_siswa',
         'provinsi_id',
+        'jenis_kelamin',
         'kabupaten_id',
+        'nisn',
         'kecamatan_id',
+        'tempat_lahir',
         'desa_kelurahan_id',
+        'tgl_lahir',
         'kode_pos',
-        'alamat',
-        'nhp_ortu',
-        'nhp_siswa',
+        'agama',
         'email',
         'asal_sekolah',
+        'nhp_siswa',
+        'alamat',
         'nama_ayah',
         'pend_terakhir_ayah',
         'pekerjaan_ayah',
         'penghasilan_ayah',
-        'brkthn_khusus_ayah',
+        'nhp_ayah',
         'nama_ibu',
         'pend_terakhir_ibu',
         'pekerjaan_ibu',
         'penghasilan_ibu',
-        'brkthn_khusus_ibu',
-        'nama_wali',
-        'jenis_kelamin_wali',
-        'pend_terakhir_wali',
-        'pekerjaan_wali',
-        'penghasilan_wali',
-        'brkthn_khusus_wali',
+        'nhp_ibu',
+        'fileft_siswa',
         'filefc_akte',
         'filefc_kk',
         'filefc_skhu',
         'filefc_skm',
     ];
+
     public function provinsi()
     {
         return $this->belongsTo(Province::class, 'provinsi_id', 'id');
