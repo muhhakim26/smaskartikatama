@@ -89,9 +89,9 @@
                 </div>
                 <div class="col-md-4 order-md-1">
                     <div class="d-flex justify-content-center">
-                        <img alt="" class="rounded-img" style="height: 397px;width: 330px;" src="{{ asset('img/' . $DataKepalaSekolah->file_foto) }}">
+                        <img alt="" class="rounded-img" src="{{ asset('img/' . $DataKepalaSekolah->file_foto) }}" style="height: 397px;width: 330px;">
                     </div>
-                    <div class="text-center py-24">
+                    <div class="py-24 text-center">
                         <h6>{{ $DataKepalaSekolah->nama }}</h6>
                     </div>
                 </div>
@@ -116,7 +116,7 @@
                     <div class="card">
                         <img alt="..." class="card-img-top" src="{{ asset('assets/images/program-unggulan2.svg') }}">
                         <div class="card-body">
-                            <h5 class="card-title">Ekstrakulikuler Kreatif dan Olahraga</h5>
+                            <h5 class="card-title">Ekstrakurikuler Kreatif dan Olahraga</h5>
                             <p class="card-text">Menyediakan berbagai kegiatan seni, olahraga, dan kreativitas untuk mengembangkan potensi siswa secara menyeluruh.</p>
                         </div>
                     </div>
@@ -314,7 +314,7 @@
                                     <p class="mb-10">Online 24 Jam</p>
                                     {{-- <p class="fst-italic mb-10">* Kuota Pendaftar 150 Orang Siswa</p> --}}
                                 </div>
-                                <a class="btn rounded-pill btn-primary radius-50 w-100 py-12 disabled" href="#">Daftar Batch 1</a>
+                                <a class="btn rounded-pill btn-primary radius-50 w-100 disabled py-12" href="#">Daftar Batch 1</a>
                             </div>
                         </div>
                     </div>
@@ -332,7 +332,7 @@
                                     <p class="mb-10">Online 24 Jam</p>
                                     {{-- <p class="fst-italic mb-10">* Kuota Pendaftar 150 Orang Siswa</p> --}}
                                 </div>
-                                <a class="btn rounded-pill btn-primary radius-50 w-100 py-12 disabled" href="#">Daftar Batch 2</a>
+                                <a class="btn rounded-pill btn-primary radius-50 w-100 disabled py-12" href="#">Daftar Batch 2</a>
                             </div>
                         </div>
                     </div>
@@ -377,6 +377,16 @@
 @endsection
 
 @push('script')
+    @if (session()->has('message'))
+        <script>
+            Swal2.fire({
+                icon: "success",
+                timer: 1500,
+                title: "{{ session()->get('message') }}",
+                showConfirmButton: false,
+            });
+        </script>
+    @endif
     <script>
         $(".magnific-video").magnificPopup({
             type: "iframe"

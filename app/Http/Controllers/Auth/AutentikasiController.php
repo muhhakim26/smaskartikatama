@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
@@ -21,6 +21,7 @@ class AutentikasiController extends Controller
     {
         return view('auth/login');
     }
+
     public function loginForm(Request $request)
     {
         $credentials = $request->validateWithBag('login', [
@@ -61,9 +62,9 @@ class AutentikasiController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         if ($request->ajax()) {
-            return response()->json(['status' => 'redirect', 'url' => route('home')]);
+            return response()->json(['status' => 'redirect', 'url' => route('admin.login')]);
         }
-        return redirect('/');
+        return redirect()->route('admin.login');
     }
 
     public function changePasswordPage()
@@ -79,11 +80,11 @@ class AutentikasiController extends Controller
             'kata-sandi-baru_confirmation' => ['required', 'string', 'max:255'],
         ];
         $validator = Validator::make($request->all(), $rules);
-        $validated = $validator->validated();
-        if ($validator->fails()) {
-            return back()->with('message', 'gagal mengubah kata sandi.')->withErrors($validator)->withInput();
-        }
 
+        if ($validator->fails()) {
+            return back()->with(['message' => 'gagal mengubah kata sandi.', 'isActive' => false, 'hasError' => true])->withErrors($validator)->withInput();
+        }
+        $validated = $validator->validated();
         $admin = auth()->user();
 
         if (!Hash::check($validated['kata-sandi-lama'], $admin->password)) {
@@ -93,6 +94,6 @@ class AutentikasiController extends Controller
             'password' => bcrypt($validated['kata-sandi-baru']),
         ];
         Admin::where('id', $admin->id)->update($data);
-        return redirect()->route('admin.index')->with(['message' => 'sukses mengubah kata sandi.', 'isActive' => true, 'hasError' => false]);
+        return redirect()->route('profil')->with(['message' => 'sukses mengubah kata sandi.', 'isActive' => true, 'hasError' => false]);
     }
 }

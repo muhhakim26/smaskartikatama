@@ -26,14 +26,14 @@
                             @csrf
                         </form>
                         <div class="col-12">
-                            <label class="form-label" id="nama-lengkap">Nama Lengkap</label>
+                            <label class="form-label" for="nama-lengkap">Nama Lengkap</label>
                             <input class="form-control" form="admin-create" id="nama-lengkap" name="nama-lengkap" type="text" value="{{ old('nama-lengkap') }}">
                             @error('nama-lengkap')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-12">
-                            <label class="form-label" id="surel">Email</label>
+                            <label class="form-label" fro="surel">Email</label>
                             <input class="form-control" form="admin-create" id="surel" name="surel" type="email" value="{{ old('surel') }}">
                             @error('surel')
                                 <div class="text-danger">{{ $message }}</div>
@@ -51,7 +51,10 @@
                         </div>
                         <div class="col-12">
                             <label class="form-label" for="kata-sandi">Kata Sandi</label>
-                            <input class="form-control" form="admin-create" id="kata-sandi" name="kata-sandi" type="password">
+                            <div class="position-relative">
+                                <input class="form-control" form="admin-create" id="kata-sandi" name="kata-sandi" type="password">
+                                <span class="toggle-password ri-eye-line ri-eye-off-line position-absolute top-50 translate-middle-y text-secondary-light end-0 me-16 cursor-pointer" data-toggle="#kata-sandi"></span>
+                            </div>
                             @error('kata-sandi')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -64,5 +67,22 @@
                 </div>
             </div>
         </div>
-    </div>
-@endsection
+    @endsection
+
+    @push('script')
+        <script>
+            function initializePasswordToggle(toggleSelector) {
+                $(toggleSelector).on("click", function() {
+                    $(this).toggleClass("ri-eye-off-line");
+                    var input = $($(this).attr("data-toggle"));
+                    if (input.attr("type") === "password") {
+                        input.attr("type", "text");
+                    } else {
+                        input.attr("type", "password");
+                    }
+                });
+            }
+            // Call the function
+            initializePasswordToggle(".toggle-password");
+        </script>
+    @endpush

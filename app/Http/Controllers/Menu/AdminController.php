@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Menu;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
 
 class AdminController extends Controller
@@ -59,9 +62,9 @@ class AdminController extends Controller
     {
         $rules = [
             'nama-lengkap' => 'required|string|min:5,nama|max:255',
-            'role' => 'required|string|in:admin',
+            'role' => 'required|string|in:admin,superadmin',
             'surel' => 'required|email:rfc,dns|unique:admin,email',
-            'kata-sandi' => 'required|min:5|max:255',
+            'kata-sandi' => ['required', 'string', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised(), 'max:255'],
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
@@ -103,23 +106,53 @@ class AdminController extends Controller
     {
         $rules = [
             'nama-lengkap' => 'required|string|min:5,nama|max:255',
-            'role' => 'required|string|in:admin',
             'surel' => 'required|email:rfc,dns|unique:admin,email,' . $id,
-            // 'kata-sandi' => 'required|min:5|max:255',
+            'kata-sandi-lama' => ['nullable', 'string', 'max:255'],
+            'kata-sandi-baru' => ['nullable', 'string', 'confirmed', Password::min(8)->mixedCase()->numbers()->symbols()->uncompromised(), 'max:255'],
+            'kata-sandi-baru_confirmation' => ['nullable', 'string', 'max:255'],
         ];
+        if (!request()->has('isProfil')) {
+            $rules['role'] = 'required|string|in:admin,superadmin';
+        }
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-            return back()->with(['message' => 'gagal menambahkan data.'])->withErrors($validator)->withInput();
+            return back()->with(['message' => 'gagal mengubah data.', 'isActive' => true, 'hasError' => true])->withErrors($validator)->withInput();
         }
-        $validator = $validator->validated();
-        Admin::where('id', '!=', 1)->findOrFail($id)->update([
-            'nama' => $validator['nama-lengkap'],
-            'email' => Str::lower($validator['surel']),
-            'level' => $validator['role'],
-            // 'password' => bcrypt($validator['kata-sandi']),
-        ]);
+        $validating = $validator->validated();
 
-        return redirect()->route('kelola-admin.index')->with(['message' => 'sukses mengubah data.']);
+        $validated = [
+            'nama' => $validating['nama-lengkap'],
+            'email' => Str::lower($validating['surel']),
+        ];
+
+        $admin = Admin::findOrFail($id);
+
+        if (!empty($validating['kata-sandi-lama']) && !empty($validating['kata-sandi-baru']) && !empty($validating['kata-sandi-baru_confirmation'])) {
+            // Cek apakah kata sandi lama cocok
+            if (!Hash::check($validating['kata-sandi-lama'], $admin->password)) {
+                return back()->with('message', 'Terjadi kesalahan: kata sandi lama tidak cocok');
+            }
+
+            // Cek apakah kata sandi baru sama dengan yang lama
+            if ($validating['kata-sandi-lama'] === $validating['kata-sandi-baru']) {
+                return back()->with('message', 'Kata sandi baru tidak boleh sama dengan kata sandi lama')->withErrors(['kata-sandi-baru' => 'Gunakan kata sandi yang berbeda dari sebelumnya.']);
+            }
+
+            // Jika lolos semua validasi
+            $validated['password'] = bcrypt($validating['kata-sandi-baru']);
+        }
+
+        if (!request()->has('isProfil')) {
+            $validated['level'] = $validating['role'];
+        }
+
+        Admin::findOrFail($id)->update($validated);
+
+        if (!request()->has('isProfil')) {
+            return redirect()->route('kelola-admin.index')->with(['message' => 'sukses mengubah data.']);
+        } else {
+            return redirect()->route('profil')->with(['message' => 'sukses mengubah data.', 'hasError' => false]);
+        }
     }
 
     /**
@@ -144,5 +177,11 @@ class AdminController extends Controller
             }
         }
         return redirect()->back();
+    }
+
+    public function profil()
+    {
+        $Admin = auth()->user();
+        return view('menu.profil', compact('Admin'));
     }
 }

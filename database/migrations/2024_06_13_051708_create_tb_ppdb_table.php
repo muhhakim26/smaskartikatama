@@ -38,11 +38,11 @@ return new class extends Migration {
             $table->string('pekerjaan_ibu');
             $table->unsignedInteger('penghasilan_ibu');
             $table->string('nhp_ibu');
-            $table->set('info_pendaftaran', ['masyarakat', 'media_cetak', 'facebook', 'instagram', 'tiktok', 'website', 'youtube', 'twitter']);
-            $table->string('filesc_akte');
-            $table->string('filesc_kk');
-            $table->string('filesc_skhu');
-            $table->string('filesc_skm');
+            $table->enum('info_pendaftaran', ['masyarakat', 'media_cetak', 'facebook', 'instagram', 'tiktok', 'website', 'youtube', 'twitter'])->default('media_cetak');
+            $table->string('filefc_akte');
+            $table->string('filefc_kk');
+            $table->string('filefc_skhu');
+            $table->string('filefc_skm');
             $table->string('fileft_siswa');
             $table->timestamps();
         });

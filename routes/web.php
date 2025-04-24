@@ -74,6 +74,8 @@ Route::controller(AutentikasiController::class)->group(function () {
 
 Route::middleware('auth:admin')->prefix('dashboard')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('profil', [AdminController::class, 'profil'])->name('profil');
+    Route::put('{profil}', [AdminController::class, 'update'])->name('profil.update');
     Route::resource('kelola-admin', AdminController::class)->middleware('can:isSuperAdmin');
     Route::prefix('kelola-berita')->controller(BeritaController::class)->group(function () {
         Route::get('/', 'index')->name('kelola-berita.index');
@@ -99,7 +101,7 @@ Route::middleware('auth:admin')->prefix('dashboard')->group(function () {
         // Route::put('{kelola_osis}', 'update')->name('kelola-osis.update');
         Route::delete('{kelola_osis}', 'destroy')->name('kelola-osis.destroy');
     });
-    Route::resource('kelola-ppdb', PpdbController::class);
+    Route::resource('kelola-ppdb', PpdbController::class)->except(['create']);
     Route::resource('kelola-sambutan-kepsek', SambutanKepsekController::class)->except(['create', 'show', 'edit', 'update', 'destroy']);;
     Route::resource('kelola-sejarah', SejarahController::class)->except(['create', 'show', 'edit', 'update', 'destroy']);;
     Route::resource('kelola-struktur-organisasi', StrukturOrganisasiController::class)->except(['create', 'show', 'edit', 'update']);

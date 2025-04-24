@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
         //     // return Limit::perMinute(3)->by($request->input('surel'));
         // });
         Gate::define('isSuperAdmin', function (Admin $admin) {
-            return $admin->level === 'admin' || $admin->level === 'superadmin';
+            return $admin->level === 'superadmin';
         });
     }
 }

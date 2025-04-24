@@ -50,9 +50,39 @@
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+                        <div class="col-12">
+                            <label class="form-label" for="kata-sandi-lama">Sandi Lama</label>
+                            <div class="position-relative">
+                                <input class="form-control" form="admin-edit" id="kata-sandi-lama" name="kata-sandi-lama" type="password">
+                                <span class="toggle-password ri-eye-line ri-eye-off-line position-absolute top-50 translate-middle-y text-secondary-light end-0 me-16 cursor-pointer" data-toggle="#kata-sandi-lama"></span>
+                            </div>
+                            @error('kata-sandi-lama')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="kata-sandi-baru">Sandi Baru</label>
+                            <div class="position-relative">
+                                <input class="form-control" form="admin-edit" id="kata-sandi-baru" name="kata-sandi-baru" type="password">
+                                <span class="toggle-password ri-eye-line ri-eye-off-line position-absolute top-50 translate-middle-y text-secondary-light end-0 me-16 cursor-pointer" data-toggle="#kata-sandi-baru"></span>
+                            </div>
+                            @error('kata-sandi-baru')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="kata-sandi-baru_confirmation">Konfirmasi Sandi</label>
+                            <div class="position-relative">
+                                <input class="form-control" form="admin-edit" id="kata-sandi-baru_confirmation" name="kata-sandi-baru_confirmation" type="password">
+                                <span class="toggle-password ri-eye-line ri-eye-off-line position-absolute top-50 translate-middle-y text-secondary-light end-0 me-16 cursor-pointer" data-toggle="#kata-sandi-baru_confirmation"></span>
+                            </div>
+                            @error('kata-sandi-baru_confirmation')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
                         <div class="col-12 d-flex justify-content-end">
                             <button class="btn btn-primary-600 me-1 px-32" form="admin-edit" type="submit">Ubah</button>
-                            <a class="btn btn-neutral-400 px-32" href="{{ route('kelola-admin.show', $Admin->id) }}">Kembali</a>
+                            <a class="btn btn-neutral-400 px-32" href="{{ route('kelola-admin.index') }}">Kembali</a>
                         </div>
                     </div>
                 </div>
@@ -60,3 +90,21 @@
         </div>
     </div>
 @endsection
+
+@push('script')
+    <script>
+        function initializePasswordToggle(toggleSelector) {
+            $(toggleSelector).on("click", function() {
+                $(this).toggleClass("ri-eye-off-line");
+                var input = $($(this).attr("data-toggle"));
+                if (input.attr("type") === "password") {
+                    input.attr("type", "text");
+                } else {
+                    input.attr("type", "password");
+                }
+            });
+        }
+        // Call the function
+        initializePasswordToggle(".toggle-password");
+    </script>
+@endpush
