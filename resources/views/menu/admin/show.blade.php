@@ -53,11 +53,6 @@
                 </div>
                 <div>
                     <a class="btn btn-primary-600 me-1 px-32" href="{{ route('kelola-admin.edit', $Admin->id) }}">Ubah</a>
-                    <a class="btn btn-danger-600 px-32" href="{{ route('kelola-admin.destroy', $Admin->id) }}" onclick="event.preventDefault();document.getElementById('delete-form-{{ $Admin->id }}').submit();">Hapus</a>
-                    <form action="{{ route('kelola-admin.destroy', $Admin->id) }}" id="delete-form-{{ $Admin->id }}" method="POST" style="display:inline;" style="display: none;">
-                        @csrf
-                        @method('delete')
-                    </form>
                 </div>
             </div>
         </div>

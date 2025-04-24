@@ -42,11 +42,11 @@
                         <div class="col-md-6">
                             <label class="form-label">Jenis Kelamin</label>
                             <div class="form-check d-flex align-items-center mb-10">
-                                <input class="form-check-input" id="laki-laki" name="jenis-kelamin-siswa" required type="radio" value="laki-laki">
+                                <input @checked(old('jenis-kelamin-siswa') == 'laki-laki') class="form-check-input" id="laki-laki" name="jenis-kelamin-siswa" required type="radio" value="laki-laki">
                                 <label class="form-check-label" for="laki-laki">Laki-laki</label>
                             </div>
                             <div class="form-check d-flex align-items-center mb-10">
-                                <input class="form-check-input" id="perempuan" name="jenis-kelamin-siswa" required type="radio" value="perempuan">
+                                <input @checked(old('jenis-kelamin-siswa') == 'perempuan') class="form-check-input" id="perempuan" name="jenis-kelamin-siswa" required type="radio" value="perempuan">
                                 <label class="form-check-label" for="perempuan">Perempuan</label>
                             </div>
                             @error('jenis-kelamin-siswa')
@@ -148,7 +148,7 @@
                         </div>
                         <div class="col-md-6">
                             <label class="form-label" for="email-siswa">Email</label>
-                            <input class="form-control" id="email-siswa" name="email-siswa" placeholder="Email" required type="email">
+                            <input class="form-control" id="email-siswa" name="email-siswa" placeholder="Email" required type="email" value="{{ old('email-siswa') }}">
                             @error('email-siswa')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -157,7 +157,7 @@
                     <div class="row g-5 mb-20">
                         <div class="col-md-6">
                             <label class="form-label" for="asal-sekolah-siswa">Asal Sekolah SMP/Mts</label>
-                            <input class="form-control" id="asal-sekolah-siswa" name="asal-sekolah-siswa" placeholder="Asal Sekolah" required type="text">
+                            <input class="form-control" id="asal-sekolah-siswa" name="asal-sekolah-siswa" placeholder="Asal Sekolah" required type="text" value="{{ old('asal-sekolah-siswa') }}">
                             @error('asal-sekolah-siswa')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -173,7 +173,7 @@
                     <div class="row g-5 mb-20">
                         <div class="col-md-6">
                             <label class="form-label" for="alamat-siswa">Alamat</label>
-                            <textarea class="form-control" id="alamat-siswa" name="alamat-siswa" placeholder="Alamat" required rows="3"></textarea>
+                            <textarea class="form-control" id="alamat-siswa" name="alamat-siswa" placeholder="Alamat" required rows="3">{{ old('alamat-siswa') }}</textarea>
                             @error('alamat-siswa')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -266,7 +266,7 @@
                             <h6 class="mb-20">File</h6>
                             <div class="mb-20">
                                 <label class="form-label" for="file-ft-siswa">Foto 3x4</label>
-                                <input accept="image/jpg, image/png, image/jpeg" class="form-control" id="file-ft-siswa" name="file-ft-siswa" type="file">
+                                <input accept="image/jpg, image/png, image/jpeg" class="form-control" id="file-ft-siswa" name="file-ft-siswa" required type="file">
                                 @error('file-ft-siswa')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -305,35 +305,35 @@
                             <div class="mb-20">
                                 <label class="form-label">Sumber Informasi Pendaftaran</label>
                                 <div class="form-check d-flex align-items-center mb-10">
-                                    <input class="form-check-input" id="facebook" name="info-pendaftaran" type="radio" value="facebook">
+                                    <input @checked(old('info-pendaftaran') == 'facebook') class="form-check-input" id="facebook" name="info-pendaftaran" type="radio" value="facebook">
                                     <label class="form-check-label" for="facebook">Facebook</label>
                                 </div>
                                 <div class="form-check d-flex align-items-center mb-10">
-                                    <input class="form-check-input" id="tiktok" name="info-pendaftaran" type="radio" value="tiktok">
-                                    <label class="form-check-label" for="">Tiktok</label>
+                                    <input @checked(old('info-pendaftaran') == 'tiktok') class="form-check-input" id="tiktok" name="info-pendaftaran" type="radio" value="tiktok">
+                                    <label class="form-check-label" for="tiktok">Tiktok</label>
                                 </div>
                                 <div class="form-check d-flex align-items-center mb-10">
-                                    <input class="form-check-input" id="instagram" name="info-pendaftaran" type="radio" value="instagram">
+                                    <input @checked(old('info-pendaftaran') == 'instagram') class="form-check-input" id="instagram" name="info-pendaftaran" type="radio" value="instagram">
                                     <label class="form-check-label" for="instagram">Instagram</label>
                                 </div>
                                 <div class="form-check d-flex align-items-center mb-10">
-                                    <input class="form-check-input" id="baner" name="info-pendaftaran" type="radio" value="media_cetak">
+                                    <input @checked(old('info-pendaftaran') == 'media_cetak') class="form-check-input" id="baner" name="info-pendaftaran" type="radio" value="media_cetak">
                                     <label class="form-check-label" for="baner">Baner/Brosur</label>
                                 </div>
                                 <div class="form-check d-flex align-items-center mb-10">
-                                    <input class="form-check-input" id="youtube" name="info-pendaftaran" type="radio" value="youtube">
+                                    <input @checked(old('info-pendaftaran') == 'youtube') class="form-check-input" id="youtube" name="info-pendaftaran" type="radio" value="youtube">
                                     <label class="form-check-label" for="youtube">Youtube</label>
                                 </div>
                                 <div class="form-check d-flex align-items-center mb-10">
-                                    <input class="form-check-input" id="twitter" name="info-pendaftaran" type="radio" value="twitter">
+                                    <input @checked(old('info-pendaftaran') == 'twitter') class="form-check-input" id="twitter" name="info-pendaftaran" type="radio" value="twitter">
                                     <label class="form-check-label" for="twitter">Twitter</label>
                                 </div>
                                 <div class="form-check d-flex align-items-center mb-10">
-                                    <input class="form-check-input" id="masyarakat" name="info-pendaftaran" type="radio" value="masyarakat">
+                                    <input @checked(old('info-pendaftaran') == 'masyarakat')class="form-check-input" id="masyarakat" name="info-pendaftaran" type="radio" value="masyarakat">
                                     <label class="form-check-label" for="masyarakat">Masyarakat</label>
                                 </div>
                                 <div class="form-check d-flex align-items-center mb-10">
-                                    <input class="form-check-input" id="website" name="info-pendaftaran" type="radio" value="website">
+                                    <input @checked(old('info-pendaftaran') == 'website') class="form-check-input" id="website" name="info-pendaftaran" type="radio" value="website">
                                     <label class="form-check-label" for="website">Website</label>
                                 </div>
                                 @error('info-pendaftaran')

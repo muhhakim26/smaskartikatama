@@ -36,7 +36,7 @@ class PpdbController extends Controller
             return DataTables::eloquent($model)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    return '<a class="w-32-px h-32-px bg-primary-light text-primary-600 rounded-circle d-inline-flex align-items-center justify-content-center" href="' . route('kelola-pddb.show', $row->id) . '"> <iconify-icon icon="iconamoon:eye-light"></iconify-icon> </a> <a class="w-32-px h-32-px bg-success-focus text-success-main rounded-circle d-inline-flex align-items-center justify-content-center" href="' . route('kelola-ppdb.edit', $row->id) . '"> <iconify-icon icon="lucide:edit"></iconify-icon> </a> <a class="w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center" style="cursor:pointer" onclick="hapus(\'' . $row->id . '\')"> <iconify-icon icon="mingcute:delete-2-line"></iconify-icon> </a>';
+                    return '<a class="w-32-px h-32-px bg-primary-light text-primary-600 rounded-circle d-inline-flex align-items-center justify-content-center" href="' . route('kelola-ppdb.show', $row->id) . '"> <iconify-icon icon="iconamoon:eye-light"></iconify-icon> </a> <a class="w-32-px h-32-px bg-success-focus text-success-main rounded-circle d-inline-flex align-items-center justify-content-center" href="' . route('kelola-ppdb.edit', $row->id) . '"> <iconify-icon icon="lucide:edit"></iconify-icon> </a> <a class="w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center" style="cursor:pointer" onclick="hapus(\'' . $row->id . '\')"> <iconify-icon icon="mingcute:delete-2-line"></iconify-icon> </a>';
                 })
                 ->rawColumns(['action'])
                 ->removeColumn('id')
@@ -46,14 +46,12 @@ class PpdbController extends Controller
         return view('menu/ppdb/list');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $Provinsi = Province::all();
-        return view('menu/ppdb/create', compact('Provinsi'));
-    }
+    /** Show the form for creating a new resource. */
+    // public function create()
+    // {
+    //     $Provinsi = Province::all();
+    //     return view('menu/ppdb/create', compact('Provinsi'));
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -65,14 +63,14 @@ class PpdbController extends Controller
             'provinsi-siswa' => 'required|integer',
             'jenis-kelamin-siswa' => 'required|string|in:laki-laki,perempuan',
             'kabupaten-siswa' => 'required|integer',
-            'nisn-siswa' => 'required|digits:10|unique:ppdb,nisn',
+            'nisn-siswa' => 'required|digits:10|unique:tb_ppdb,nisn',
             'kecamatan-siswa' => 'required|integer',
             'tempat-lahir-siswa' => 'required|string|max:255',
             'desa-kelurahan-siswa' => 'required|integer',
             'tanggal-lahir-siswa' => 'required|date',
             'kode-pos-siswa' => 'required|digits:5',
             'agama-siswa' => 'required|string|in:buddha,hindu,islam,katolik,khonghucu,kristen',
-            'email-siswa' => 'required|string|email:rfc,dns|unique:ppdb,email',
+            'email-siswa' => 'required|string|email:rfc,dns|unique:tb_ppdb,email',
             'asal-sekolah-siswa' => 'required|string|max:255',
             'no-hp-siswa' => ['required', 'regex:/\+?([ -]?\d+)+|\(\d+\)([ -]\d+)/'],
             'alamat-siswa' => 'required|string|max:16777215',
@@ -196,14 +194,14 @@ class PpdbController extends Controller
             'provinsi-siswa' => 'required|integer',
             'jenis-kelamin-siswa' => 'required|string|in:laki-laki,perempuan',
             'kabupaten-siswa' => 'required|integer',
-            'nisn-siswa' => 'required|digits:10|unique:ppdb,nisn,' . $id,
+            'nisn-siswa' => 'required|digits:10|unique:tb_ppdb,nisn,' . $id,
             'kecamatan-siswa' => 'required|integer',
             'tempat-lahir-siswa' => 'required|string|max:255',
             'desa-kelurahan-siswa' => 'required|integer',
             'tanggal-lahir-siswa' => 'required|date',
             'kode-pos-siswa' => 'required|digits:5',
             'agama-siswa' => 'required|string|in:buddha,hindu,islam,katolik,khonghucu,kristen',
-            'email-siswa' => 'required|string|email:rfc,dns|unique:ppdb,email,' . $id,
+            'email-siswa' => 'required|string|email:rfc,dns|unique:tb_ppdb,email,' . $id,
             'asal-sekolah-siswa' => 'required|string|max:255',
             'no-hp-siswa' => ['required', 'regex:/\+?([ -]?\d+)+|\(\d+\)([ -]\d+)/'],
             'alamat-siswa' => 'required|string|max:16777215',
@@ -314,9 +312,9 @@ class PpdbController extends Controller
     public function destroy(string $id)
     {
         $PPDB = Ppdb::findOrFail($id);
-        if (!empty($PPDB->filefc_akte) && !empty($PPDB->filefc_kk) && !empty($PPDB->filefc_skhu) && !empty($PPDB->filefc_skm)) {
-            Storage::disk('berkas')->delete([$PPDB->filefc_akte, $PPDB->filefc_kk, $PPDB->filefc_skhu, $PPDB->filefc_skm]);
-            // Storage::disk('berkas')->deleteDirectory('siswa/' . $PPDB->nisn);
+        if (!empty($PPDB->fileft_siswa) && !empty($PPDB->filefc_akte) && !empty($PPDB->filefc_kk) && !empty($PPDB->filefc_skhu) && !empty($PPDB->filefc_skm)) {
+            Storage::disk('berkas')->delete([$PPDB->fileft_siswa, $PPDB->filefc_akte, $PPDB->filefc_kk, $PPDB->filefc_skhu, $PPDB->filefc_skm]);
+            Storage::disk('berkas')->deleteDirectory('siswa/' . $PPDB->nisn);
         }
         $PPDB->delete();
         return redirect()->route('kelola-ppdb.index')->with('message', 'sukses menghapus data.');

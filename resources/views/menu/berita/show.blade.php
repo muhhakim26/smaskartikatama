@@ -2,46 +2,59 @@
 @section('judul', 'Deskripsi Berita')
 
 @section('konten')
-    <div>
-        <a href="{{ route('kelola-berita.index') }}">Kembali</a>
-    </div>
-    {{-- blade-formatter-disable --}}
-        @if (session()->has('message'))
-            <div @class(['p-4', 'font-bold' => session()->get('isActive'), 'text-gray-500' => !session()->get('isActive'), 'bg-red' => session()->get('hasError'),])>
-                {{ session()->get('message') }}
+    <div class="card h-100 radius-12 p-0">
+        <div class="card-header border-bottom bg-base px-24 py-16">
+            <h6 class="fw-semibold mb-0">Deskripsi Berita</h6>
+        </div>
+        <div class="card-body p-24">
+            {{-- blade-formatter-disable --}}
+            @if (session()->has('message'))
+                 <div class="alert alert-success bg-success-100 text-success-600 border-success-600 border-start-width-4-px border-top-0 border-end-0 border-bottom-0 px-24 py-13 mb-0 fw-semibold text-lg radius-4 d-flex align-items-center justify-content-between" role="alert">
+                    <div class="d-flex align-items-center gap-2">
+                        <iconify-icon icon="akar-icons:double-check" class="icon text-xl"></iconify-icon>
+                        {{ session()->get('message') }}
+                    </div>
+                    <button class="remove-button text-success-600 text-xxl line-height-1">
+                        <iconify-icon icon="iconamoon:sign-times-light" class="icon"></iconify-icon>
+                    </button>
+                </div>
+            @endif
+            {{-- blade-formatter-enable --}}
+            <table>
+                <tr>
+                    <td class="w-76-px"><span class="text-md fw-semibold text-primary-light">Judul</span></td>
+                    <td class="w-20-px">:</td>
+                    <td><span class="text-secondary-light fw-medium">{{ $Berita->judul }}</span></td>
+                </tr>
+                <tr>
+                    <td><span class="text-md fw-semibold text-primary-light">Deskripsi</span></td>
+                    <td>:</td>
+                    <td><span class="text-secondary-light fw-medium">{!! $Berita->deskripsi !!}</span></td>
+                </tr>
+                <tr>
+                    <td><span class="text-md fw-semibold text-primary-light">Thumbnail</span></td>
+                    <td>:</td>
+                    <td><span class="text-secondary-light fw-medium"><img alt="{{ $Berita->judul }}" src="{{ asset('img/' . $Berita->file_foto) }}"></span></td>
+                </tr>
+                <tr>
+                    <td><span class="text-md fw-semibold text-primary-light">Dibuat</span></td>
+                    <td>:</td>
+                    <td><span class="text-secondary-light fw-medium">{{ $Berita->created_at }}</span></td>
+                </tr>
+                <tr>
+                    <td><span class="text-md fw-semibold text-primary-light">Diubah</span></td>
+                    <td>:</td>
+                    <td><span class="text-secondary-light fw-medium">{{ $Berita->updated_at }}</span></td>
+                </tr>
+            </table>
+            <div class="d-flex justify-content-between mt-24">
+                <div>
+                    <a class="btn btn-neutral-400 px-32" href="{{ route('kelola-berita.index') }}">Kembali</a>
+                </div>
+                <div>
+                    <a class="btn btn-primary-600 me-1 px-32" href="{{ route('kelola-berita.edit', $Berita->id) }}">Ubah</a>
+                </div>
             </div>
-        @endif
-    {{-- blade-formatter-enable --}}
-    <table border="0" cellpadding="5" cellspacing="0">
-        <tr>
-            <td align="right">Judul :</td>
-            <td>{{ $Berita->judul }}</td>
-        </tr>
-        <tr>
-            <td align="right">Deskripsi :</td>
-            <td>{!! $Berita->deskripsi !!}</td>
-        </tr>
-        <tr>
-            <td align="right">Foto :</td>
-            <td><img alt="{{ $Berita->judul }}" src="{{ asset('img/' . $Berita->file_foto) }}"></td>
-        </tr>
-
-        <tr>
-            <td align="right">Dibuat :</td>
-            <td>{{ $Berita->created_at }}</td>
-        </tr>
-        <tr>
-            <td align="right">Diubah :</td>
-            <td>{{ $Berita->updated_at }}</td>
-        </tr>
-    </table>
-
-    <div>
-        <a href="{{ route('kelola-berita.edit', $Berita->id) }}">Ubah</a>
-        <a href="{{ route('kelola-berita.destroy', $Berita->id) }}" onclick="event.preventDefault();document.getElementById('delete-form-{{ $Berita->id }}').submit();">Hapus</a>
-        <form action="{{ route('kelola-berita.destroy', $Berita->id) }}" id="delete-form-{{ $Berita->id }}" method="POST" style="display:inline;" style="display: none;">
-            @csrf
-            @method('delete')
-        </form>
+        </div>
     </div>
 @endsection

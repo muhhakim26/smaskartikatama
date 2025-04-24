@@ -21,7 +21,9 @@
                     <thead>
                         <tr>
                             <th class="w-100-px text-center" scope="col">No.</th>
-                            <th scope="col">Judul</th>
+                            <th scope="col">Nama</th>
+                            <th scope="col">NISN</th>
+                            <th scope="col">Asal Sekolah</th>
                             <th class="w-200-px text-center" scope="col">Action</th>
                         </tr>
                     </thead>
@@ -33,6 +35,14 @@
 @endsection
 
 @push('script')
+    @if (session()->has('message'))
+        <script>
+            Swal2.fire({
+                icon: "success",
+                title: "{{ session()->get('message') }}",
+            });
+        </script>
+    @endif
     <script>
         $(document).ready(function() {
             let table = new DataTable("#dataTable", {
@@ -51,10 +61,16 @@
                         orderable: false,
                         searchable: false
                     }, {
-                        data: 'judul',
-                        name: 'judul'
+                        data: 'nama',
+                        name: 'nama'
                     },
                     {
+                        data: 'nisn',
+                        name: 'nisn'
+                    }, {
+                        data: 'asal_sekolah',
+                        name: 'asal_sekolah'
+                    }, {
                         data: 'action',
                         name: 'action',
                         orderable: false,
