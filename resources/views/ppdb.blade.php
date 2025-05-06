@@ -8,9 +8,21 @@
             <h5 class="mb-40">Formulir Pendaftaran Calon Siswa Baru</h5>
             {{-- blade-formatter-disable --}}
             @if (session()->has('message'))
-                <div @class([ 'p-4', 'font-bold' => session()->get('isActive'), 'text-gray-500' => !session()->get('isActive'), 'bg-red' => session()->get('hasError'), ])>
-                    {{ session()->get('message') }}
+                <div @class([ 'p-4', 'font-bold' => session()->get('isActive'), 'text-gray-500' => !session()->get('isActive'), 'alert alert-danger' => session()->get('hasError'), ])>
+                   <p>{{ session()->get('message') }}</p>
                 </div>
+                @if ($errors->any())
+                        <div class="pt-3">
+                            <div class="alert alert-danger text-capitalize">
+                                <p>Lengkapi Data!</p>
+                                <ul class="pt-10" style="list-style:none;">
+                                    @foreach ($errors->all() as $item)
+                                        <li>{{ $item }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    @endif
             @endif
             {{-- blade-formatter-enable --}}
             <form action="{{ route('kelola-ppdb.store') }}" enctype="multipart/form-data" id="ppdb-create" method="post">
@@ -66,7 +78,7 @@
                     <div class="row g-5 mb-20">
                         <div class="col-md-6">
                             <label class="form-label" for="nisn-siswa">NISN</label>
-                            <input class="form-control" id="nisn-siswa" name="nisn-siswa" placeholder="NISN" required type="text" value="{{ old('nisn-siswa') }}">
+                            <input class="form-control" id="nisn-siswa" name="nisn-siswa" placeholder="NISN" maxlength="10" required type="number" value="{{ old('nisn-siswa') }}">
                             @error('nisn-siswa')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

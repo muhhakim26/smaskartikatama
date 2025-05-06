@@ -36,7 +36,7 @@ class PpdbController extends Controller
             return DataTables::eloquent($model)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    return '<a class="w-32-px h-32-px bg-primary-light text-primary-600 rounded-circle d-inline-flex align-items-center justify-content-center" href="' . route('kelola-ppdb.show', $row->id) . '"> <iconify-icon icon="iconamoon:eye-light"></iconify-icon> </a> <a class="w-32-px h-32-px bg-success-focus text-success-main rounded-circle d-inline-flex align-items-center justify-content-center" href="' . route('kelola-ppdb.edit', $row->id) . '"> <iconify-icon icon="lucide:edit"></iconify-icon> </a> <a class="w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center" style="cursor:pointer" onclick="hapus(\'' . $row->id . '\')"> <iconify-icon icon="mingcute:delete-2-line"></iconify-icon> </a>';
+                    return '<a class="w-32-px h-32-px bg-success-focus text-success-main rounded-circle d-inline-flex align-items-center justify-content-center" href="' . route('kelola-ppdb.edit', $row->id) . '"> <iconify-icon icon="lucide:edit"></iconify-icon> </a> <a class="w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center" style="cursor:pointer" onclick="hapus(\'' . $row->id . '\')"> <iconify-icon icon="mingcute:delete-2-line"></iconify-icon> </a>';
                 })
                 ->rawColumns(['action'])
                 ->removeColumn('id')
@@ -69,7 +69,7 @@ class PpdbController extends Controller
             'desa-kelurahan-siswa' => 'required|integer',
             'tanggal-lahir-siswa' => 'required|date',
             'kode-pos-siswa' => 'required|digits:5',
-            'agama-siswa' => 'required|string|in:buddha,hindu,islam,katolik,khonghucu,kristen',
+            'agama-siswa' => 'required|string|in:buddha,hindu,islam,kristen_katolik,khonghucu,kristen_protestan',
             'email-siswa' => 'required|string|email:rfc,dns|unique:tb_ppdb,email',
             'asal-sekolah-siswa' => 'required|string|max:255',
             'no-hp-siswa' => ['required', 'regex:/\+?([ -]?\d+)+|\(\d+\)([ -]\d+)/'],
@@ -152,7 +152,7 @@ class PpdbController extends Controller
             }
         }
         Ppdb::create($data);
-        return redirect()->route('kelola-ppdb.create')->with(['message' => 'sukses menambahkan data.', 'isActive' => true, 'hasError' => false]);
+        return redirect()->route('home')->with(['message' => 'sukses menambahkan data.', 'isActive' => true, 'hasError' => false]);
     }
 
     /**
@@ -200,7 +200,7 @@ class PpdbController extends Controller
             'desa-kelurahan-siswa' => 'required|integer',
             'tanggal-lahir-siswa' => 'required|date',
             'kode-pos-siswa' => 'required|digits:5',
-            'agama-siswa' => 'required|string|in:buddha,hindu,islam,katolik,khonghucu,kristen',
+            'agama-siswa' => 'required|string|in:buddha,hindu,islam,kristen_katolik,khonghucu,kristen_protestan',
             'email-siswa' => 'required|string|email:rfc,dns|unique:tb_ppdb,email,' . $id,
             'asal-sekolah-siswa' => 'required|string|max:255',
             'no-hp-siswa' => ['required', 'regex:/\+?([ -]?\d+)+|\(\d+\)([ -]\d+)/'],

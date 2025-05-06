@@ -12,9 +12,21 @@
                 <div class="card-body">
                     {{-- blade-formatter-disable --}}
                         @if (session()->has('message'))
-                            <div @class(['p-4', 'font-bold' => session()->get('isActive'), 'text-gray-500' => !session()->get('isActive'), 'bg-red' => session()->get('hasError'),])>
+                            <div @class(['p-4', 'font-bold' => session()->get('isActive'), 'text-gray-500' => !session()->get('isActive'), 'alert alert-danger' => session()->get('hasError'),])>
                                 {{ session()->get('message') }}
                             </div>
+                            @if ($errors->any())
+                        <div class="pt-3">
+                            <div class="alert alert-danger text-capitalize">
+                                <p>Lengkapi Data!</p>
+                                <ul class="pt-10" style="list-style:none;">
+                                    @foreach ($errors->all() as $item)
+                                        <li>{{ $item }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    @endif
                         @endif
                     {{-- blade-formatter-enable --}}
                     <form action="{{ route('kelola-ppdb.update', $PPDB->id) }}" enctype="multipart/form-data" id="ppdb-create" method="post">
