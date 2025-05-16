@@ -1,4 +1,4 @@
-@extends('layouts/user/preset')
+@extends('layouts.guest.preset')
 @section('judul', 'Info PPDB')
 @section('konten')
     @push('style')
@@ -11,20 +11,20 @@
             }
 
             /* ul,
-                            ol {
-                                list-style: auto;
-                                padding-left: 2rem;
-                            } */
+                                                                                    ol {
+                                                                                        list-style: auto;
+                                                                                        padding-left: 2rem;
+                                                                                    } */
         </style>
     @endpush
-    @include('layouts.user.hero', ['judul' => 'Info PPDB'])
+    @include('layouts.guest.hero', ['judul' => 'Info PPDB'])
     <!-- Info Section -->
     <section class="py-120" id="info">
         <div class="container">
             <div class="card lh-sm mb-40 text-base">
                 <div class="card-body lh-lg text-black">
                     <div class="editor p-20">
-                        {!! $Infoppdb->deskripsi !!}
+                        {!! $Infoppdb->deskripsi ?? 'Belum ada informasi.' !!}
                     </div>
                 </div>
             </div>
@@ -60,60 +60,34 @@
                     <h4>Jadwal PPDB SMAS Kartikatama Metro</h4>
                 </div>
                 <div class="row gy-4">
-                    <div class="col-md-4">
-                        <div class="card shadow-sm">
-                            <div class="card-body p-6">
-                                <div class="p-20">
-                                    <h5 class="mb-36 text-center"><a class="text-uppercase text-line-2 text-primary-600 text-hover-primary-600 transition-2 href="#"><strong>Batch 1</strong></a></h5>
-                                    <div class="mb-32 text-black">
-                                        <p class="mb-10">Pendaftaran Batch 1</p>
-                                        <p class="mb-10">1 Agustus s.d. 30 November 2024</p>
-                                        <p class="mb-10">Lokasi: SMAS Kartikatama Metro</p>
-                                        <p class="mb-10">Offline: 10.00 WIB sampai 15.00 WIB</p>
-                                        <p class="mb-10">Online 24 Jam</p>
-                                        {{-- <p class="fst-italic mb-10">* Kuota Pendaftar 150 Orang Siswa</p> --}}
+                    @foreach ($Gelombang as $key => $value)
+                        <div class="col-md-4">
+                            <div class="card shadow-sm">
+                                <div class="card-body p-6">
+                                    <div class="p-20">
+                                        <h5 class="mb-36 text-center"><a class="text-uppercase text-line-2 text-primary-600 text-hover-primary-600 transition-2 disabled" href="#"><strong>Batch {{ $value->id }}</strong></a></h5>
+                                        <div class="mb-32 text-black">
+                                            @if ($value->status_pendaftaran === 1)
+                                                <p class="mb-10">Pendaftaran Batch {{ $value->id }}</p>
+                                                <p class="mb-10">{{ $value->tanggal_dibuka }} s.d. {{ $value->tanggal_ditutup }}</p>
+                                                {!! $value->catatan !!}
+                                                <p class="fst-italic mb-10">* Kuota Pendaftar {{ $value->kuota_pendaftaran }} Orang Siswa/i</p>
+                                            @else
+                                                <p class="mb-10">Pendaftaran Batch {{ $value->id }} Ditutup</p>
+                                                <p class="mb-10">- s.d. -</p>
+                                                <p class="mb-10">Lokasi: -</p>
+                                                <p class="mb-10">-</p>
+                                                <p class="fst-italic mb-10">* Kuota Pendaftar - Orang Siswa/i</p>
+                                            @endif
+                                        </div>
+                                        {{-- blade-formatter-disable --}}
+                                    <a @class([ 'btn rounded-pill btn-primary radius-50 w-100 py-12', 'disabled' => !$value->status_pendaftaran ]) href="{{ $value->status_pendaftaran ? route('ppdb.index', $value->id) : '#' }}">Daftar Batch {{$value->id}}</a>
+                                    {{-- blade-formatter-enable --}}
                                     </div>
-                                    <a class="btn rounded-pill btn-primary radius-50 w-100 py-12 disabled" href="#">Daftar Batch 1</a>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card shadow-sm">
-                            <div class="card-body p-6">
-                                <div class="p-20">
-                                    <h5 class="mb-36 text-center"><a class="text-uppercase text-line-2 text-primary-600 text-hover-primary-600 transition-2 disabled" href="#"><strong>Batch 2</strong></a></h5>
-                                    <div class="mb-32 text-black">
-                                        <p class="mb-10"><strong>Pendaftaran Batch 2</strong></p>
-                                        <p class="mb-10">09 Desember 2024 s.d. 21 Maret 2025</p>
-                                        <p class="mb-10">Lokasi: SMAS Kartikatama Metro</p>
-                                        <p class="mb-10">Offline: 10.00 WIB sampai 15.00 WIB</p>
-                                        <p class="mb-10">Online 24 Jam</p>
-                                        {{-- <p class="fst-italic mb-10">* Kuota Pendaftar 150 Orang Siswa</p> --}}
-                                    </div>
-                                    <a class="btn rounded-pill btn-primary radius-50 w-100 py-12 disabled" href="#">Daftar Batch 2</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card shadow-sm">
-                            <div class="card-body p-6">
-                                <div class="p-20">
-                                    <h5 class="mb-36 text-center"><a class="text-uppercase text-line-2 text-primary-600 text-hover-primary-600 transition-2 disabled" href={{ route('ppdb') }}><strong>Batch 3</strong></a></h5>
-                                    <div class="mb-32 text-black">
-                                        <p class="mb-10">Pendaftaran Batch 3</p>
-                                        <p class="mb-10">14 April 2025 s.d. 13 Juni 2025</p>
-                                        <p class="mb-10">Lokasi: SMAS Kartikatama Metro</p>
-                                        <p class="mb-10">Offline: 10.00 WIB sampai 15.00 WIB</p>
-                                        <p class="mb-10">Online 24 Jam</p>
-                                        {{-- <p class="fst-italic mb-10">* Kuota Pendaftar 150 Orang Siswa</p> --}}
-                                    </div>
-                                    <a class="btn rounded-pill btn-primary radius-50 w-100 py-12" href="{{ route('ppdb') }}">Daftar Batch 3</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </section>

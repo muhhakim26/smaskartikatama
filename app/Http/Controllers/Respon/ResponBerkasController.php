@@ -11,11 +11,11 @@ class ResponBerkasController extends Controller
 {
     public function berkas($path)
     {
-        if (auth('admin')->check()) {
+        if (auth('admin')->check() || auth('siswa')->check()) {
             $file = Storage::disk('berkas')->get($path);
             $type = File::mimeType(storage_path('app/berkas/' . $path));
             $response = Response::make($file, 200);
-            $response->header("Content-Type", $type);
+            $response->header('Content-Type', $type);
             return $response;
         }
         abort(404);

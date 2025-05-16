@@ -1,4 +1,4 @@
-@extends('layouts/preset')
+@extends('layouts.admin.preset')
 @section('judul', 'Kelola Galeri video')
 @section('konten')
     <div class="card h-100 radius-12 basic-data-table p-0">

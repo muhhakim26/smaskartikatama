@@ -1,4 +1,4 @@
-@extends('layouts/preset')
+@extends('layouts.admin.preset')
 @section('judul', 'Deskripsi Data Guru')
 
 @section('konten')

@@ -1,4 +1,4 @@
-@extends('layouts/preset')
+@extends('layouts.admin.preset')
 @section('judul', 'Kelola PPDB')
 @push('style')
     <!-- style untuk kolom serach -->
@@ -21,10 +21,12 @@
                     <thead>
                         <tr>
                             <th class="w-100-px text-center" scope="col">No.</th>
-                            <th scope="col">Nama</th>
+                            <th scope="col">No. Pendaftaran</th>
+                            <th scope="col">Nama Lengkap</th>
                             <th scope="col">NISN</th>
-                            <th scope="col">Asal Sekolah</th>
-                            <th class="w-200-px text-center" scope="col">Action</th>
+                            <th scope="col">Status Diterima</th>
+                            <th class="w-200-px text-center" scope="col"></th>
+                            <th class="w-200-px text-center" scope="col">Aksi</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -53,13 +55,16 @@
                 order: [],
                 columnDefs: [{
                     className: "text-center",
-                    targets: [0, 2]
+                    targets: [0, 5, 6]
                 }, ],
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
                         orderable: false,
                         searchable: false
+                    }, {
+                        data: 'id_pendaftaran',
+                        name: 'id_pendaftaran'
                     }, {
                         data: 'nama',
                         name: 'nama'
@@ -68,8 +73,16 @@
                         data: 'nisn',
                         name: 'nisn'
                     }, {
-                        data: 'asal_sekolah',
-                        name: 'asal_sekolah'
+                        data: 'detail_siswa',
+                        name: 'detail_siswa.status_siswa',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'status_terima',
+                        name: 'status_terima',
+                        orderable: false,
+                        searchable: false
                     }, {
                         data: 'action',
                         name: 'action',
@@ -77,12 +90,15 @@
                         searchable: false
                     },
                 ],
+                drawCallback: function() {
+                    $('[data-bs-toggle="tooltip"]').tooltip();
+                }
             });
         });
 
-        function hapus(id) {
+        function terima(id) {
             Swal2.fire({
-                title: "Yakin hapus?",
+                title: "Terima Siswa?",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
@@ -91,40 +107,25 @@
                 cancelButtonText: "Batal",
                 showLoaderOnConfirm: true,
                 reverseButtons: true,
-                preConfirm: async () => {
-                    try {
-                        const url = window.location.href + '/' + id;
-                        const response = await fetch(url, {
-                            method: 'POST',
-                            headers: {
-                                "X-Requested-With": "XMLHttpRequest",
-                                "Content-Type": "application/json",
-                                "X-CSRF-TOKEN": $("meta[name='csrf-token']").attr("content")
-                            },
-                            body: JSON.stringify({
-                                "_method": "DELETE"
-                            })
-                        });
-                        const res = await response.json();
-                        if (!response.ok) {
-                            Swal2.fire({
-                                title: "Dibatalkan!",
-                                text: res.data,
-                                icon: "error",
-                            });
-                            return false;
-                        }
-                        return res;
-                    } catch (error) {
-                        Swal2.showValidationMessage(`Request failed: ${error}`);
-                    }
-                },
-                allowOutsideClick: () => !Swal2.isLoading()
+                preConfirm: () => {
+                    let token = $("meta[name='csrf-token']").attr("content");
+                    return $.ajax({
+                        url: window.location.href + '/terima/' + id,
+                        type: "POST",
+                        data: {
+                            '_method': 'PUT',
+                            "_token": token
+                        },
+                    }).then(response => {
+                        return response;
+                    }).catch(error => {
+                        Swal.showValidationMessage("Terjadi kesalahan saat memproses data");
+                    });
+                }
             }).then((result) => {
                 if (result.isConfirmed) {
                     Swal2.fire({
-                        title: "Dihapus!",
-                        text: result.value.data,
+                        title: "Diterima!",
                         icon: "success",
                     }).then(() => {
                         window.location.reload();

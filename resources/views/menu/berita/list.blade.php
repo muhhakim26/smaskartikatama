@@ -1,4 +1,4 @@
-@extends('layouts/preset')
+@extends('layouts.admin.preset')
 @section('judul', 'Kelola Berita')
 @push('style')
     <!-- style untuk kolom serach -->

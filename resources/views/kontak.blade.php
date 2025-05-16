@@ -1,4 +1,4 @@
-@extends('layouts/user/preset')
+@extends('layouts.guest.preset')
 @section('judul', 'Kontak')
 @section('konten')
     @push('style')
@@ -19,7 +19,7 @@
             }
         </style>
     @endpush
-    @include('layouts.user.hero', ['judul' => 'Informasi Kontak'])
+    @include('layouts.guest.hero', ['judul' => 'Informasi Kontak'])
     <!-- Info Section -->
     <section class="py-120" id="kontak">
         <div class="container">
@@ -62,13 +62,13 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="telepon">Nomor Telepon</label>
-                            <input class="form-control" id="telepon" name="telepon" placeholder="Nomor Telepon" type="tel" pattern="[0-9]+" required>
+                            <input class="form-control" id="telepon" name="telepon" pattern="[0-9]+" placeholder="Nomor Telepon" required type="tel">
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="pesan">Pesan</label>
                             <textarea class="form-control" id="pesan" name="pesan" placeholder="Pesan" rows="3"></textarea>
                         </div>
-                        <button class="btn-kirimpesan" type="button" onclick="kirimWhatsApp()">Kirim Pesan</button>
+                        <button class="btn-kirimpesan" onclick="kirimWhatsApp()" type="button">Kirim Pesan</button>
                     </form>
                 </div>
             </div>

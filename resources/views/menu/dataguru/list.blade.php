@@ -1,4 +1,4 @@
-@extends('layouts/preset')
+@extends('layouts.admin.preset')
 @section('judul', 'Kelola Data Guru')
 @push('style')
     <!-- style untuk kolom serach -->

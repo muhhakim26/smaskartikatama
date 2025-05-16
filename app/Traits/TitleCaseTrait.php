@@ -4,10 +4,10 @@ namespace App\Traits;
 
 use Illuminate\Support\Str;
 
-trait UpperCaseTrait
+trait TitleCaseTrait
 {
     public function getNameAttribute()
     {
-        return Str::of($this->attributes['name'])->upper();
+        return Str::of($this->attributes['name'])->title();
     }
 }

@@ -1,4 +1,4 @@
-@extends('layouts/preset')
+@extends('layouts.admin.preset')
 @section('judul', 'Ubah Berita')
 
 @section('konten')
@@ -25,9 +25,8 @@
                     <form action="{{ route('kelola-berita.update', $Berita->id) }}" class="d-flex flex-column gap-20" enctype="multipart/form-data" id="berita-create" method="post">
                         @csrf
                         @method('put')
-                        @csrf
                         <div>
-                            <label class="form-label fw-bold text-neutral-900" id="nama-lengkap">Judul</label>
+                            <label class="form-label fw-bold text-neutral-900" id="judul-berita">Judul</label>
                             <input class="form-control" id="judul-berita" name="judul-berita" type="text" value="{{ old('judul-berita', $Berita->judul) }}">
                             @error('judul-berita')
                                 <div class="text-danger">{{ $message }}</div>

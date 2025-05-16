@@ -1,4 +1,4 @@
-@extends('layouts/preset')
+@extends('layouts.admin.preset')
 @section('judul', 'Ubah Ekstrakurikuler')
 @section('konten')
     <div class="row gy-4">

@@ -1,4 +1,4 @@
-@extends('layouts/preset')
+@extends('layouts.admin.preset')
 @section('judul', 'Masuk')
 @push('style')
     <link href="{{ asset('assets/css/iofrm-style.css') }}" rel="stylesheet" type="text/css">
@@ -59,9 +59,9 @@
                         {{ session('message') }}
                         <form action="{{ route('admin.login') }}" id="login" method="post">
                             @csrf
-                            <label for="surel">Email</label>
-                            <input class="form-control" id="surel" name="surel" required type="email">
-                            @error('surel', 'login')
+                            <label for="login">Email atau NISN</label>
+                            <input class="form-control" id="login" name="login" required type="text">
+                            @error('login', 'login')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                             <label for="kata-sandi">Password</label>

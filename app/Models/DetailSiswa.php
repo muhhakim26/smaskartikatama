@@ -9,28 +9,30 @@ use App\Models\Area\Village;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Ppdb extends Model
+class DetailSiswa extends Model
 {
     use HasFactory;
 
-    protected $table = 'tb_ppdb';
+    protected $table = 'tb_detail_siswa';
+    protected $primaryKey = 'siswa_id';
 
     protected $fillable = [
-        'id_pendaftaran',
-        'nama',
+        'siswa_id',
+        // 'id_pendaftaran',
+        // 'nama',
         'provinsi_id',
         'jenis_kelamin',
         'kabupaten_id',
-        'nisn',
+        // 'nisn',
         'kecamatan_id',
         'tempat_lahir',
         'desa_kelurahan_id',
         'tgl_lahir',
         'kode_pos',
         'agama',
-        'email',
+        // 'email',
         'asal_sekolah',
-        'nhp_siswa',
+        // 'nhp_siswa',
         'alamat',
         'nama_ayah',
         'pend_terakhir_ayah',
@@ -42,12 +44,30 @@ class Ppdb extends Model
         'pekerjaan_ibu',
         'penghasilan_ibu',
         'nhp_ibu',
+        'info_pendaftaran',
         'fileft_siswa',
+        'status_fileft_siswa',
         'filefc_akte',
+        'status_filefc_akte',
         'filefc_kk',
+        'status_filefc_kk',
         'filefc_skhu',
+        'status_filefc_skhu',
         'filefc_skm',
+        'status_filefc_skm',
+        'status_berkas',
+        'status_siswa'
     ];
+
+    public function siswa()
+    {
+        return $this->belongsTo(Siswa::class, 'siswa_id', 'id');
+    }
+
+    public function getInfoPendaftaranAttribute($value)
+    {
+        return explode(',', $value);
+    }
 
     public function provinsi()
     {

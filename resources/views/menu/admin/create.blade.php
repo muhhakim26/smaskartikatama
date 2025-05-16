@@ -1,4 +1,4 @@
-@extends('layouts.preset')
+@extends('layouts.admin.preset')
 @section('judul', 'Buat Admin')
 @section('konten')
     <div class="row gy-4">
@@ -67,22 +67,23 @@
                 </div>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection
 
-    @push('script')
-        <script>
-            function initializePasswordToggle(toggleSelector) {
-                $(toggleSelector).on("click", function() {
-                    $(this).toggleClass("ri-eye-off-line");
-                    var input = $($(this).attr("data-toggle"));
-                    if (input.attr("type") === "password") {
-                        input.attr("type", "text");
-                    } else {
-                        input.attr("type", "password");
-                    }
-                });
-            }
-            // Call the function
-            initializePasswordToggle(".toggle-password");
-        </script>
-    @endpush
+@push('script')
+    <script>
+        function initializePasswordToggle(toggleSelector) {
+            $(toggleSelector).on("click", function() {
+                $(this).toggleClass("ri-eye-off-line");
+                var input = $($(this).attr("data-toggle"));
+                if (input.attr("type") === "password") {
+                    input.attr("type", "text");
+                } else {
+                    input.attr("type", "password");
+                }
+            });
+        }
+        // Call the function
+        initializePasswordToggle(".toggle-password");
+    </script>
+@endpush

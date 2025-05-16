@@ -1,4 +1,4 @@
-@extends('layouts/user/preset')
+@extends('layouts.guest.preset')
 @section('judul', 'Guru')
 @section('konten')
     @push('style')
@@ -10,7 +10,7 @@
                 object-fit: cover;
             }
         </style>
-        @include('layouts.user.hero', ['judul' => 'Guru dan Tendik'])
+        @include('layouts.guest.hero', ['judul' => 'Guru dan Tendik'])
         <!-- Guru Section -->
         <section class="py-120" id="guru">
             <div class="container">

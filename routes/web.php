@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Area\AreaIndonesiaController;
 use App\Http\Controllers\Auth\AutentikasiController;
+use App\Http\Controllers\Auth\RegistrasiSiswaController;
 use App\Http\Controllers\Menu\AdminController;
 use App\Http\Controllers\Menu\BeritaController;
 use App\Http\Controllers\Menu\DashboardController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Menu\DataGuruController;
 use App\Http\Controllers\Menu\EkstrakurikulerController;
 use App\Http\Controllers\Menu\GaleriFotoController;
 use App\Http\Controllers\Menu\GaleriVideoController;
+use App\Http\Controllers\Menu\GelombangPendaftaranController;
 use App\Http\Controllers\Menu\InfoPpdbController;
 use App\Http\Controllers\Menu\KontakController;
 use App\Http\Controllers\Menu\OsisController;
@@ -18,7 +20,8 @@ use App\Http\Controllers\Menu\SejarahController;
 use App\Http\Controllers\Menu\StrukturOrganisasiController;
 use App\Http\Controllers\Menu\VisiMisiController;
 use App\Http\Controllers\Respon\ResponBerkasController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Siswa\SiswaController;
+use App\Http\Controllers\GuestController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,7 +30,7 @@ use Illuminate\Support\Facades\Route;
  * |------------------------------------------------------------------------------------------------------------------
  */
 
-Route::controller(HomeController::class)->group(function () {
+Route::controller(GuestController::class)->group(function () {
     // Menu Home
     Route::get('/', 'index')->name('home');
     // Menu Tentang Kami
@@ -45,7 +48,10 @@ Route::controller(HomeController::class)->group(function () {
     // Menu Info PPDB
     Route::get('info-ppdb', 'infoPpdb')->name('info-ppdb');
     // Menu PPDB
-    Route::get('ppdb', 'ppdb')->name('ppdb');
+    Route::name('ppdb.')->group(function () {
+        Route::get('ppdb/{ppdb}', 'ppdb')->name('index');
+        Route::post('ppdb/{ppdb}', 'ppdb')->name('store');
+    });
     // Menu OSIS
     Route::get('osis', 'osis')->name('osis');
     // Menu Ekstrakurikuler
@@ -61,15 +67,15 @@ Route::controller(HomeController::class)->group(function () {
  * |------------------------------------------------------------------------------------------------------------------
  */
 Route::controller(AutentikasiController::class)->group(function () {
-    Route::middleware('guest:admin')->name('admin.')->group(function () {
-        Route::get('admin/login', 'loginFormPage')->name('login');
-        Route::post('admin/login', 'loginForm');
+    Route::middleware('guest:admin,siswa')->name('admin.')->group(function () {
+        Route::get('login', 'loginFormPage')->name('login');
+        Route::post('login', 'loginForm');
     });
     Route::middleware('auth:admin')->name('admin.')->group(function () {
         Route::get('admin/ubah-sandi', 'changePasswordPage')->name('ubah-sandi');
         Route::put('admin/ubah-sandi/{id}', 'changePassword')->name('ubah-sandi.update');
     });
-    Route::middleware('auth:admin')->post('admin/logout', 'logout')->name('logout');
+    Route::middleware('auth:admin,siswa')->post('logout', 'logout')->name('logout');
 });
 
 Route::middleware('auth:admin')->prefix('dashboard')->group(function () {
@@ -90,6 +96,8 @@ Route::middleware('auth:admin')->prefix('dashboard')->group(function () {
     Route::resource('kelola-ekstrakurikuler', EkstrakurikulerController::class);
     Route::resource('kelola-galeri-foto', GaleriFotoController::class);
     Route::resource('kelola-galeri-video', GaleriVideoController::class);
+    Route::post('kelola-gelombang-pendaftaran/aksi/{aksi}', [GelombangPendaftaranController::class, 'aksi'])->name('kelola-gelombang-pendaftaran.status');
+    Route::resource('kelola-gelombang-pendaftaran', GelombangPendaftaranController::class)->except(['create', 'show', 'destroy', 'store']);
     Route::resource('kelola-info-ppdb', InfoPpdbController::class)->except(['create', 'show', 'edit', 'update', 'destroy']);
     Route::resource('kelola-kontak', KontakController::class)->except(['create', 'show', 'edit', 'update', 'destroy']);
     Route::prefix('kelola-osis')->controller(OsisController::class)->group(function () {
@@ -101,7 +109,9 @@ Route::middleware('auth:admin')->prefix('dashboard')->group(function () {
         // Route::put('{kelola_osis}', 'update')->name('kelola-osis.update');
         Route::delete('{kelola_osis}', 'destroy')->name('kelola-osis.destroy');
     });
-    Route::resource('kelola-ppdb', PpdbController::class)->except(['create']);
+    Route::put('kelola-ppdb/terima/{id}', [PpdbController::class, 'terimaSiswa'])->name('kelola-ppdb.terima-siswa');
+    Route::put('kelola-ppdb/approve_berkas/{nama_berkas}/{id}', [PpdbController::class, 'terimaBerkas'])->name('kelola-ppdb.terima-berkas');
+    Route::resource('kelola-ppdb', PpdbController::class)->except(['create', 'destroy']);
     Route::resource('kelola-sambutan-kepsek', SambutanKepsekController::class)->except(['create', 'show', 'edit', 'update', 'destroy']);;
     Route::resource('kelola-sejarah', SejarahController::class)->except(['create', 'show', 'edit', 'update', 'destroy']);;
     Route::resource('kelola-struktur-organisasi', StrukturOrganisasiController::class)->except(['create', 'show', 'edit', 'update']);
@@ -120,6 +130,18 @@ Route::middleware('csrf_get')->prefix('data')->controller(AreaIndonesiaControlle
     Route::get('regencies', 'regencies')->name('regencies');
     Route::get('districts', 'districts')->name('districts');
     Route::get('villages', 'villages')->name('villages');
+});
+
+/*
+ * |------------------------------------------------------------------------------------------------------------------
+ * | Siswa Routes
+ * |------------------------------------------------------------------------------------------------------------------
+ */
+Route::middleware('auth:siswa,admin')->prefix('siswa')->name('siswa.')->group(function () {
+    Route::get('dashboard', [SiswaController::class, 'index'])->name('dashboard');
+    Route::get('{siswa}/edit', [SiswaController::class, 'edit'])->name('edit');
+    Route::put('{siswa}', [SiswaController::class, 'update'])->name('update');
+    Route::get('uploads/s/{path}', [ResponBerkasController::class, 'berkas'])->where('path', '.*')->name('berkas');
 });
 
 Route::fallback(function () {
