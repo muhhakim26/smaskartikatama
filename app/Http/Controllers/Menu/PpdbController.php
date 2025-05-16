@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Menu;
 
+use App\Exports\SiswaExport;
 use App\Http\Controllers\Controller;
 use App\Models\Area\District;
 use App\Models\Area\Province;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 class PpdbController extends Controller
@@ -473,5 +475,11 @@ class PpdbController extends Controller
         }
 
         return back()->with($with);
+    }
+
+    public function excel()
+    {
+        $fileName = Carbon::now()->setTimezone('Asia/Jakarta')->format('d-m-Y_H.i.s');
+        return Excel::download(new SiswaExport, 'DataCalonSiswa_' . $fileName . '.xlsx');
     }
 }

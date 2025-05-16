@@ -11,8 +11,9 @@
 @section('konten')
     <div class="card h-100 radius-12 basic-data-table p-0">
         <div class="card-header border-bottom bg-base d-flex align-items-center justify-content-between flex-wrap gap-3 px-24 py-16">
-            <div class="d-flex align-items-center flex-wrap gap-3">
-                <h6 class="fw-semibold mb-0">Kelola PPDB</h6>
+            <h6 class="fw-semibold mb-0">Kelola PPDB</h6>
+            <div>
+                <a class="align-items-center btn btn-sm btn-success-500 d-flex justify-content-center text-md gap-1 px-3" href="{{ route('kelola-ppdb.excel') }}"><iconify-icon height="24" icon="prime:file-excel" width="24"></iconify-icon> Excel</a>
             </div>
         </div>
         <div class="card-body p-24">
