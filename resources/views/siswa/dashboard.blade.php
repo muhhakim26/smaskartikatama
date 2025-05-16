@@ -293,7 +293,7 @@
                 </div>
             </div>
         </div>
-    @elseif($ProSis?->step_2 === 1 && ($ProSis?->step_3 === 1 || $ProSis?->step_3 !== 1) && $ProSis?->step_4 !== 1)
+    @elseif($ProSis?->step_1 === 1 && $ProSis?->step_2 === 1 && ($ProSis?->step_3 !== 1 || $ProSis?->step_3 === 1) && $ProSis?->step_4 !== 1)
         <div class="row gy-4">
             <div class="col-md-12">
                 <div class="card">
@@ -336,6 +336,15 @@
                 </div>
             </div>
         </div>
-
     @endif
 @endsection
+@push('script')
+    @if ($CalSis?->detailSiswa?->status_berkas === 'ditolak')
+        <script>
+            Swal2.fire({
+                icon: "warning",
+                title: "Maaf, berkas yang Anda unggah ditolak. Silakan periksa kembali berkas yang ditolak dan lengkapi sesuai ketentuan.",
+            });
+        </script>
+    @endif
+@endpush

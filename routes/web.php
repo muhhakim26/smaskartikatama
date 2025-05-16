@@ -111,6 +111,7 @@ Route::middleware('auth:admin')->prefix('dashboard')->group(function () {
     });
     Route::put('kelola-ppdb/terima/{id}', [PpdbController::class, 'terimaSiswa'])->name('kelola-ppdb.terima-siswa');
     Route::put('kelola-ppdb/approve_berkas/{nama_berkas}/{id}', [PpdbController::class, 'terimaBerkas'])->name('kelola-ppdb.terima-berkas');
+    Route::put('kelola-ppdb/tolak_berkas/{nama_berkas}/{id}', [PpdbController::class, 'tolakBerkas'])->name('kelola-ppdb.tolak-berkas');
     Route::resource('kelola-ppdb', PpdbController::class)->except(['create', 'destroy']);
     Route::resource('kelola-sambutan-kepsek', SambutanKepsekController::class)->except(['create', 'show', 'edit', 'update', 'destroy']);;
     Route::resource('kelola-sejarah', SejarahController::class)->except(['create', 'show', 'edit', 'update', 'destroy']);;

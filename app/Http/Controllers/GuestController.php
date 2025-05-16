@@ -124,12 +124,17 @@ class GuestController extends Controller
         }
 
         $Gelombang = GelombangPendaftaran::findOrFail($id);
-        $jumlahPendaftar = Siswa::where('id', $Gelombang->id)->count();
+
+        $jumlahPendaftar = Siswa::where('gelombang_pendaftaran', $Gelombang->id)->where('tahun_ajaran', $Gelombang->tahun_ajaran)->count();
+
         if ($jumlahPendaftar >= $Gelombang->kuota_pendaftaran) {
-            abort(404);
+            return redirect()->back()->with(['status' => 'error', 'message' => 'kuota pendaftaran sudah penuh.']);
         }
 
         if ($request->isMethod('post')) {
+            if ($jumlahPendaftar >= $Gelombang->kuota_pendaftaran) {
+                return redirect()->back()->with(['status' => 'error', 'message' => 'kuota pendaftaran sudah penuh.']);
+            }
             $rules = [
                 'nama-siswa' => 'required|string|max:255',
                 'email-siswa' => 'required|string|email:rfc,dns|max:255|unique:siswa,email',

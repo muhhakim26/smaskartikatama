@@ -195,7 +195,9 @@
                                     <td><a href="{{ route('berkas', $CalSis->detailSiswa?->fileft_siswa) }}"><iconify-icon icon="bx:file" width="24"></iconify-icon></a></td>
                                     <td>
                                         @if ($CalSis?->detailSiswa?->status_fileft_siswa === 'diproses')
-                                            <p class="text text-danger">dalam proses</p>
+                                            <p class="text text-warning">dalam proses</p>
+                                        @elseif($CalSis?->detailSiswa?->status_fileft_siswa === 'ditolak')
+                                            <p class="text text-danger">ditolak</p>
                                         @elseif($CalSis?->detailSiswa?->status_fileft_siswa === 'diterima')
                                             <p class="text text-success">{{ $CalSis?->detailSiswa?->status_fileft_siswa }}</p>
                                         @endif
@@ -204,7 +206,7 @@
                                         @if ($CalSis?->detailSiswa?->status_fileft_siswa === 'diproses')
                                             <div class="d-flex gap-1">
                                                 <a class="terima-berkas" href="{{ route('kelola-ppdb.terima-berkas', ['nama_berkas' => 'foto_siswa', 'id' => $CalSis->id]) }}"><span class="badge fw-semibold bg-success-600 radius-4 px-20 py-9 text-sm text-white">Terima</span></a>
-                                                <a class=""><span class="badge fw-semibold bg-danger-600 radius-4 px-20 py-9 text-sm text-white">Tolak</span></a>
+                                                <a class="tolak-berkas" data-id="{{ $CalSis->id }}" data-nama-berkas="foto_siswa" href="javascript:void(0);"><span class="badge fw-semibold bg-danger-600 radius-4 px-20 py-9 text-sm text-white">Tolak</span></a>
                                             </div>
                                         @endif
                                     </td>
@@ -214,7 +216,9 @@
                                     <td><a href="{{ route('berkas', $CalSis->detailSiswa?->filefc_akte) }}"><iconify-icon icon="bx:file" width="24"></iconify-icon></a></td>
                                     <td>
                                         @if ($CalSis?->detailSiswa?->status_filefc_akte === 'diproses')
-                                            <p class="text text-danger">dalam proses</p>
+                                            <p class="text text-warning">dalam proses</p>
+                                        @elseif($CalSis?->detailSiswa?->status_filefc_akte === 'ditolak')
+                                            <p class="text text-danger">ditolak</p>
                                         @elseif($CalSis?->detailSiswa?->status_filefc_akte === 'diterima')
                                             <p class="text text-success">{{ $CalSis?->detailSiswa?->status_filefc_akte }}</p>
                                         @endif
@@ -223,7 +227,7 @@
                                         @if ($CalSis?->detailSiswa?->status_filefc_akte === 'diproses')
                                             <div class="d-flex gap-1">
                                                 <a class="terima-berkas" href="{{ route('kelola-ppdb.terima-berkas', ['nama_berkas' => 'file_akte', 'id' => $CalSis->id]) }}"><span class="badge fw-semibold bg-success-600 radius-4 px-20 py-9 text-sm text-white">Terima</span></a>
-                                                <a class=""><span class="badge fw-semibold bg-danger-600 radius-4 px-20 py-9 text-sm text-white">Tolak</span></a>
+                                                <a class="tolak-berkas" data-id="{{ $CalSis->id }}" data-nama-berkas="file_akte" href="javascript:void(0);"><span class="badge fw-semibold bg-danger-600 radius-4 px-20 py-9 text-sm text-white">Tolak</span></a>
                                             </div>
                                         @endif
                                     </td>
@@ -233,7 +237,9 @@
                                     <td><a href="{{ route('berkas', $CalSis->detailSiswa?->filefc_kk) }}"><iconify-icon icon="bx:file" width="24"></iconify-icon></a></td>
                                     <td>
                                         @if ($CalSis?->detailSiswa?->status_filefc_kk === 'diproses')
-                                            <p class="text text-danger">dalam proses</p>
+                                            <p class="text text-warning">dalam proses</p>
+                                        @elseif($CalSis?->detailSiswa?->status_filefc_kk === 'ditolak')
+                                            <p class="text text-danger">ditolak</p>
                                         @elseif($CalSis?->detailSiswa?->status_filefc_kk === 'diterima')
                                             <p class="text text-success">{{ $CalSis?->detailSiswa?->status_filefc_kk }}</p>
                                         @endif
@@ -242,7 +248,7 @@
                                         @if ($CalSis?->detailSiswa?->status_filefc_kk === 'diproses')
                                             <div class="d-flex gap-1">
                                                 <a class="terima-berkas" href="{{ route('kelola-ppdb.terima-berkas', ['nama_berkas' => 'file_kk', 'id' => $CalSis->id]) }}"><span class="badge fw-semibold bg-success-600 radius-4 px-20 py-9 text-sm text-white">Terima</span></a>
-                                                <a class=""><span class="badge fw-semibold bg-danger-600 radius-4 px-20 py-9 text-sm text-white">Tolak</span></a>
+                                                <a class="tolak-berkas" data-id="{{ $CalSis->id }}" data-nama-berkas="file_kk" href="javascript:void(0);"><span class="badge fw-semibold bg-danger-600 radius-4 px-20 py-9 text-sm text-white">Tolak</span></a>
                                             </div>
                                         @endif
                                     </td>
@@ -252,7 +258,9 @@
                                     <td><a href="{{ route('berkas', $CalSis->detailSiswa?->filefc_skhu) }}"><iconify-icon icon="bx:file" width="24"></iconify-icon></a></td>
                                     <td>
                                         @if ($CalSis?->detailSiswa?->status_filefc_skhu === 'diproses')
-                                            <p class="text text-danger">dalam proses</p>
+                                            <p class="text text-warning">dalam proses</p>
+                                        @elseif($CalSis?->detailSiswa?->status_filefc_skhu === 'ditolak')
+                                            <p class="text text-danger">ditolak</p>
                                         @elseif($CalSis?->detailSiswa?->status_filefc_skhu === 'diterima')
                                             <p class="text text-success">{{ $CalSis?->detailSiswa?->status_filefc_skhu }}</p>
                                         @endif
@@ -261,7 +269,7 @@
                                         @if ($CalSis?->detailSiswa?->status_filefc_skhu === 'diproses')
                                             <div class="d-flex gap-1">
                                                 <a class="terima-berkas" href="{{ route('kelola-ppdb.terima-berkas', ['nama_berkas' => 'file_skhu', 'id' => $CalSis->id]) }}"><span class="badge fw-semibold bg-success-600 radius-4 px-20 py-9 text-sm text-white">Terima</span></a>
-                                                <a class=""><span class="badge fw-semibold bg-danger-600 radius-4 px-20 py-9 text-sm text-white">Tolak</span></a>
+                                                <a class="tolak-berkas" href="{{ route('kelola-ppdb.tolak-berkas', ['nama_berkas' => 'file_skhu', 'id' => $CalSis->id]) }}"><span class="badge fw-semibold bg-danger-600 radius-4 px-20 py-9 text-sm text-white">Tolak</span></a>
                                             </div>
                                         @endif
                                     </td>
@@ -272,7 +280,9 @@
                                         <td><a href="{{ route('berkas', $CalSis->detailSiswa?->filefc_skm) }}"><iconify-icon icon="bx:file"></iconify-icon></a></td>
                                         <td>
                                             @if ($CalSis?->detailSiswa?->status_filefc_skm === 'diproses')
-                                                <p class="text text-danger">dalam proses</p>
+                                                <p class="text text-warning">dalam proses</p>
+                                            @elseif($CalSis?->detailSiswa?->status_filefc_skm === 'ditolak')
+                                                <p class="text text-danger">ditolak</p>
                                             @elseif($CalSis?->detailSiswa?->status_filefc_skm === 'diterima')
                                                 <p class="text text-success">{{ $CalSis?->detailSiswa?->status_filefc_skm }}</p>
                                             @endif
@@ -281,7 +291,7 @@
                                             @if ($CalSis?->detailSiswa?->status_filefc_skm === 'diproses')
                                                 <div class="d-flex gap-1">
                                                     <a class="terima-berkas" href="{{ route('kelola-ppdb.terima-berkas', ['nama_berkas' => 'file_skm', 'id' => $CalSis->id]) }}"><span class="badge fw-semibold bg-success-600 radius-4 px-20 py-9 text-sm text-white">Terima</span></a>
-                                                    <a class=""><span class="badge fw-semibold bg-danger-600 radius-4 px-20 py-9 text-sm text-white">Tolak</span></a>
+                                                    <a class="tolak-berkas" data-id="{{ $CalSis->id }}" data-nama-berkas="file_skm" href="javascript:void(0);"><span class="badge fw-semibold bg-danger-600 radius-4 px-20 py-9 text-sm text-white">Tolak</span></a>
                                                 </div>
                                             @endif
                                         </td>
@@ -300,7 +310,7 @@
     @if (session()->has('message'))
         <script>
             Swal2.fire({
-                icon: "success",
+                icon: "{{ session()->get('status') ?? 'success' }}",
                 title: "{{ session()->get('message') }}",
             });
         </script>
@@ -336,6 +346,62 @@
                 }));
                 // Tambahkan ke body dan submit
                 $form.appendTo('body').submit();
+            });
+
+            $('.tolak-berkas').on('click', function(e) {
+                e.preventDefault();
+
+
+                Swal2.fire({
+                    title: 'Masukkan alasan penolakan',
+                    input: 'textarea',
+                    inputLabel: 'Alasan Penolakan',
+                    inputPlaceholder: 'Contoh: Dokumen tidak jelas',
+                    showCancelButton: true,
+                    confirmButtonText: 'Kirim',
+                    cancelButtonText: 'Batal',
+                    inputValidator: (value) => {
+                        if (!value) {
+                            return 'Alasan tidak boleh kosong!';
+                        }
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Isi dan kirim form
+                        const alasan = result.value;
+                        const url = $(this).attr('href'); // Ambil URL dari href
+                        const csrfToken = $('meta[name="csrf-token"]').attr('content'); // Ambil CSRF token
+                        // Simpan posisi scroll ke localStorage
+                        localStorage.setItem('scrollPosition', window.scrollY);
+                        // Buat form POST secara dinamis
+                        const $form = $('<form>', {
+                            action: url,
+                            method: 'POST'
+                        });
+                        // Simpan posisi scroll ke localStorage
+                        localStorage.setItem('scrollPosition', window.scrollY);
+                        // Tambahkan input CSRF token
+                        $form.append($('<input>', {
+                            type: 'hidden',
+                            name: '_token',
+                            value: csrfToken
+                        }));
+                        // Tambahkan method override
+                        $form.append($('<input>', {
+                            type: 'hidden',
+                            name: '_method',
+                            value: 'PUT'
+                        }));
+                        // Tambahkan input alasan penolakan
+                        $form.append($('<input>', {
+                            type: 'hidden',
+                            name: 'alasan_penolakan',
+                            value: alasan
+                        }));
+                        // Tambahkan ke body dan submit
+                        $form.appendTo('body').submit();
+                    }
+                });
             });
         });
     </script>

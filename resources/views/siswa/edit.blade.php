@@ -28,6 +28,35 @@
                         @endif
                     @endif
                     {{-- blade-formatter-enable --}}
+                    @php
+                        $berkasDitolak = [];
+
+                        if ($CalSis->detailSiswa?->status_fileft_siswa === 'ditolak') {
+                            $berkasDitolak[] = 'Foto Siswa';
+                        }
+                        if ($CalSis->detailSiswa?->status_filefc_akte === 'ditolak') {
+                            $berkasDitolak[] = 'Akte';
+                        }
+                        if ($CalSis->detailSiswa?->status_filefc_kk === 'ditolak') {
+                            $berkasDitolak[] = 'Kartu Keluarga';
+                        }
+                        if ($CalSis->detailSiswa?->status_filefc_skhu === 'ditolak') {
+                            $berkasDitolak[] = 'Surat Keterangan Hasil Ujian';
+                        }
+                        if ($CalSis->detailSiswa?->status_filefc_skm === 'ditolak') {
+                            $berkasDitolak[] = 'Standar Kompetensi Mandiri';
+                        }
+                    @endphp
+
+                    @if (count($berkasDitolak))
+                        <div class="alert alert-danger bg-danger-600 border-danger-600 d-flex align-items-center justify-content-between text-md mb-0 px-24 py-11 text-white" role="alert">
+                            <div>
+                                File berikut ditolak: <strong>{{ implode(', ', $berkasDitolak) }}</strong>.
+                                Silakan unggah ulang sesuai ketentuan yang berlaku.
+                            </div>
+                        </div>
+                    @endif
+
                     <form action="{{ route('siswa.update', $CalSis?->id) }}" enctype="multipart/form-data" id="ppdb-form" method="post">
                         @csrf
                         @method('put')
@@ -312,69 +341,131 @@
                             <div class="row g-5 mb-20">
                                 <div class="col-md-6">
                                     <h6 class="mb-20">File</h6>
-                                    <div class="alert alert-danger bg-danger-100 text-danger-600 border-danger-600 border-start-width-4-px border-top-0 border-end-0 border-bottom-0 py-13 fw-semibold radius-4 d-flex align-items-center justify-content-between mb-0 px-24 text-lg" role="alert">
-                                        <div class="d-flex align-items-center gap-2">
-                                            <iconify-icon icon="material-symbols:info"></iconify-icon>
-                                            <p class="mb-0 text-sm">Upload berkas sesuai dengan syarat dan ketentuan dengan format jpg, jpeg, png dan maksimal 3MB</p>
+                                    <div class="mb-20">
+                                        <div class="alert alert-danger bg-danger-100 text-danger-600 border-danger-600 border-start-width-4-px border-top-0 border-end-0 border-bottom-0 py-13 fw-semibold radius-4 text-md mb-0 px-24" role="alert">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <iconify-icon icon="material-symbols:info"></iconify-icon>
+                                                <p class="mb-0 text-sm">Upload berkas sesuai dengan syarat dan ketentuan dengan format jpg, jpeg, png dan maksimal 3MB</p>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="mb-20">
                                         <label class="form-label" for="file-ft-siswa">Foto 3x4</label>
-                                        <input accept="image/jpg, image/png, image/jpeg" class="form-control @error('file-ft-siswa') is-invalid @enderror" id="file-ft-siswa" name="file-ft-siswa" onchange="imagePreviewFunc(this, imagePreview_1)" type="file">
+                                        @if ($CalSis->detailSiswa?->status_fileft_siswa !== 'diterima')
+                                            <input accept="image/jpg, image/png, image/jpeg" class="form-control @error('file-ft-siswa') is-invalid @enderror" id="file-ft-siswa" name="file-ft-siswa" onchange="imagePreviewFunc(this, imagePreview_1)" type="file">
+                                        @endif
                                         @error('file-ft-siswa')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                         <div id="imagePreview_1">
                                             @if ($CalSis?->detailSiswa?->fileft_siswa)
-                                                <img alt="Foto Siswa {{ $CalSis->nama }}" src="{{ route('siswa.berkas', $CalSis->detailSiswa?->fileft_siswa) }}">
+                                                <div class="mt-8">
+                                                    <img alt="Foto Siswa {{ $CalSis->nama }}" src="{{ route('siswa.berkas', $CalSis->detailSiswa?->fileft_siswa) }}">
+                                                </div>
+                                            @endif
+                                            @if ($CalSis->detailSiswa?->status_fileft_siswa === 'ditolak' && !$errors->has('file-ft-siswa'))
+                                                <div class="mt-8">
+                                                    <div class="alert alert-danger bg-danger-100 text-danger-600 border-danger-100 fw-bold text-md mb-0 px-24 py-11" role="alert">
+                                                        <span class="text-danger-700">Catatan:</span>
+                                                        <p class="mb-0">{{ $CalSis->detailSiswa?->catatan_fileft_siswa }}</p>
+                                                    </div>
+                                                </div>
                                             @endif
                                         </div>
                                     </div>
                                     <div class="mb-20">
                                         <label class="form-label" for="file-akte">Scan Akta Kelahiran</label>
-                                        <input accept="image/jpg, image/png, image/jpeg" class="form-control @error('file-akte') is-invalid @enderror" id="file-akte" name="file-akte" onchange="imagePreviewFunc(this, imagePreview_2)" type="file">
+                                        @if ($CalSis->detailSiswa?->status_filefc_akte !== 'diterima')
+                                            <input accept="image/jpg, image/png, image/jpeg" class="form-control @error('file-akte') is-invalid @enderror" id="file-akte" name="file-akte" onchange="imagePreviewFunc(this, imagePreview_2)" type="file">
+                                        @endif
                                         @error('file-akte')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                         <div id="imagePreview_2">
                                             @if ($CalSis?->detailSiswa?->filefc_akte)
-                                                <img alt="Akte {{ $CalSis->nama }}" src="{{ route('siswa.berkas', $CalSis->detailSiswa?->filefc_akte) }}">
+                                                <div class="mt-8">
+                                                    <img alt="Akte {{ $CalSis->nama }}" src="{{ route('siswa.berkas', $CalSis->detailSiswa?->filefc_akte) }}">
+                                                </div>
+                                            @endif
+                                            @if ($CalSis->detailSiswa?->status_filefc_akte === 'ditolak' && !$errors->has('file-akte'))
+                                                <div class="mt-8">
+                                                    <div class="alert alert-danger bg-danger-100 text-danger-600 border-danger-100 fw-bold text-md mb-0 px-24 py-11" role="alert">
+                                                        <span class="text-danger-700">Catatan:</span>
+                                                        <p class="mb-0">{{ $CalSis->detailSiswa?->catatan_filefc_akte }}</p>
+                                                    </div>
+                                                </div>
                                             @endif
                                         </div>
                                     </div>
                                     <div class="mb-20">
                                         <label class="form-label" for="file-kk">Scan Kartu Keluarga</label>
-                                        <input accept="image/jpg, image/png, image/jpeg" class="form-control @error('file-kk') is-invalid @enderror" id="file-kk" name="file-kk" onchange="imagePreviewFunc(this, imagePreview_3)" type="file">
+                                        @if ($CalSis->detailSiswa?->status_filefc_kk !== 'diterima')
+                                            <input accept="image/jpg, image/png, image/jpeg" class="form-control @error('file-kk') is-invalid @enderror" id="file-kk" name="file-kk" onchange="imagePreviewFunc(this, imagePreview_3)" type="file">
+                                        @endif
                                         @error('file-kk')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                         <div id="imagePreview_3">
                                             @if ($CalSis?->detailSiswa?->filefc_kk)
-                                                <img alt="KK {{ $CalSis->nama }}" src="{{ route('siswa.berkas', $CalSis->detailSiswa?->filefc_kk) }}">
+                                                <div class="mt-8">
+                                                    <img alt="KK {{ $CalSis->nama }}" src="{{ route('siswa.berkas', $CalSis->detailSiswa?->filefc_kk) }}">
+                                                </div>
+                                            @endif
+                                            @if ($CalSis->detailSiswa?->status_filefc_kk === 'ditolak' && !$errors->has('file-kk'))
+                                                <div class="mt-8">
+                                                    <div class="alert alert-danger bg-danger-100 text-danger-600 border-danger-100 fw-bold text-md mb-0 px-24 py-11" role="alert">
+                                                        <span class="text-danger-700">Catatan:</span>
+                                                        <p class="mb-0">{{ $CalSis->detailSiswa?->catatan_filefc_kk }}</p>
+                                                    </div>
+                                                </div>
                                             @endif
                                         </div>
                                     </div>
                                     <div class="mb-20">
                                         <label class="form-label" for="file-skhu">Scan Surat Keterangan Hasil Ujian</label>
-                                        <input accept="image/jpg, image/png, image/jpeg" class="form-control @error('file-skhu') is-invalid @enderror" id="file-skhu" name="file-skhu" onchange="imagePreviewFunc(this, imagePreview_4)" type="file">
+                                        @if ($CalSis->detailSiswa?->status_filefc_skhu !== 'diterima')
+                                            <input accept="image/jpg, image/png, image/jpeg" class="form-control @error('file-skhu') is-invalid @enderror" id="file-skhu" name="file-skhu" onchange="imagePreviewFunc(this, imagePreview_4)" type="file">
+                                        @endif
                                         @error('file-skhu')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                         <div id="imagePreview_4">
                                             @if ($CalSis?->detailSiswa?->filefc_skhu)
-                                                <img alt="SKHU {{ $CalSis->nama }}" src="{{ route('siswa.berkas', $CalSis->detailSiswa?->filefc_skhu) }}">
+                                                <div class="mt-8">
+                                                    <img alt="SKHU {{ $CalSis->nama }}" src="{{ route('siswa.berkas', $CalSis->detailSiswa?->filefc_skhu) }}">
+                                                </div>
+                                            @endif
+                                            @if ($CalSis->detailSiswa?->status_filefc_skhu === 'ditolak' && !$errors->has('file-skhu'))
+                                                <div class="mt-8">
+                                                    <div class="alert alert-danger bg-danger-100 text-danger-600 border-danger-100 fw-bold text-md mb-0 px-24 py-11" role="alert">
+                                                        <span class="text-danger-700">Catatan:</span>
+                                                        <p class="mb-0">{{ $CalSis->detailSiswa?->catatan_filefc_skhu }}</p>
+                                                    </div>
+                                                </div>
                                             @endif
                                         </div>
                                     </div>
                                     <div class="mb-20">
                                         <label class="form-label" for="file-skm">Scan Standar Kompetensi Mandiri</label>
-                                        <input accept="image/jpg, image/png, image/jpeg" class="form-control @error('file-skm') is-invalid @enderror" id="file-skm" name="file-skm" onchange="imagePreviewFunc(this, imagePreview_5)" type="file">
+                                        @if ($CalSis->detailSiswa?->status_filefc_skm !== 'diterima')
+                                            <input accept="image/jpg, image/png, image/jpeg" class="form-control @error('file-skm') is-invalid @enderror" id="file-skm" name="file-skm" onchange="imagePreviewFunc(this, imagePreview_5)" type="file">
+                                        @endif
                                         @error('file-skm')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                         <div id="imagePreview_5">
                                             @if ($CalSis?->detailSiswa?->filefc_skm)
-                                                <img alt="SKM {{ $CalSis->nama }}" src="{{ route('siswa.berkas', $CalSis->detailSiswa?->filefc_skm) }}">
+                                                <div class="mt-8">
+                                                    <img alt="SKM {{ $CalSis->nama }}" src="{{ route('siswa.berkas', $CalSis->detailSiswa?->filefc_skm) }}">
+                                                </div>
+                                            @endif
+                                            @if ($CalSis->detailSiswa?->status_filefc_skm === 'ditolak' && !$errors->has('file-skm'))
+                                                <div class="mt-8">
+                                                    <div class="alert alert-danger bg-danger-100 text-danger-600 border-danger-100 fw-bold text-md mb-0 px-24 py-11" role="alert">
+                                                        <span class="text-danger-700">Catatan:</span>
+                                                        <p class="mb-0">{{ $CalSis->detailSiswa?->catatan_filefc_skm }}</p>
+                                                    </div>
+                                                </div>
                                             @endif
                                         </div>
                                     </div>

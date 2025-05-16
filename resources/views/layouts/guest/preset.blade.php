@@ -177,6 +177,18 @@
             },
         })
     </script>
+    @if (session()->has('message'))
+        <script>
+            Swal2.fire({
+                icon: "{{ session()->get('status') }}",
+                timer: 3000,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                title: "{{ session()->get('message') }}",
+                showConfirmButton: false,
+            });
+        </script>
+    @endif
     @stack('script')
 </body>
 
