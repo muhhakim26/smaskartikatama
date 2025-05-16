@@ -115,6 +115,12 @@
                             <span>Galeri Video</span>
                         </a>
                     </li>
+                    <li @class(['active-page' => Route::is('kelola-gelombang-pendaftaran*')])>
+                        <a @class(['active-page' => Route::is('kelola-gelombang-pendaftaran*')]) href="{{ route('kelola-gelombang-pendaftaran.index') }}">
+                            <iconify-icon class="menu-icon" icon="mdi:calendar-clock"></iconify-icon>
+                            <span>Gelombang</span>
+                        </a>
+                    </li>
                     <li @class(['active-page' => Route::is('kelola-kontak*')])>
                         <a @class(['active-page' => Route::is('kelola-kontak*')]) href="{{ route('kelola-kontak.index') }}">
                             <iconify-icon class="menu-icon" icon="mdi:contact-phone-outline"></iconify-icon>
@@ -130,7 +136,6 @@
                     <li @class(['active-page' => Route::is('kelola-ppdb*')])>
                         <a @class(['active-page' => Route::is('kelola-ppdb*')]) href="{{ route('kelola-ppdb.index') }}">
                             <iconify-icon class="menu-icon" icon="mdi:database-alert-outline"></iconify-icon>
-
                             <span>PPDB</span>
                         </a>
                     </li>
@@ -249,6 +254,8 @@
     <script src="{{ asset('assets/js/lib/magnifc-popup.min.js') }}"></script>
     <!-- SweetAlert2 -->
     <script src="{{ asset('assets/js/lib/sweetalert2.all.min.js') }}"></script>
+    <!-- InputMask js -->
+    <script src="{{ asset('assets/js/lib/jquery.inputmask.min.js') }}"></script>
     <!-- main js -->
     <script src="{{ asset('assets/js/app.js') }}"></script>
 
@@ -260,7 +267,7 @@
             $(this).closest(".alert").addClass("d-none")
         });
     </script>
-    <!-- alert swal -->
+    <!-- alert -->
     <script>
         const Swal2 = Swal.mixin({
             customClass: {
@@ -269,6 +276,7 @@
             },
         })
     </script>
+    <!-- logout action -->
     <script>
         $(document).ready(function() {
             $('#logout').on('click', function() {

@@ -1,4 +1,4 @@
-@extends('layouts/user/preset')
+@extends('layouts.guest.preset')
 @section('judul', 'Sambutan Kepala Sekolah')
 @section('konten')
     @push('style')
@@ -11,7 +11,7 @@
             }
         </style>
     @endpush
-    @include('layouts.user.hero', ['judul' => 'Sambutan'])
+    @include('layouts.guest.hero', ['judul' => 'Sambutan'])
     <!-- Sambutan Section -->
     <section class="py-120" id="sambuatan">
         <div class="container text-base">
@@ -30,7 +30,7 @@
                                             <p>Tidak Ada Foto</p>
                                         @endif
                                     </div>
-                                    <h6 class="fw-semibold mt-16 text-center">{{ $DataGuru->nama ?? 'Dra. HJ Tugirah' }}
+                                    <h6 class="fw-semibold mt-16 text-center">{{ $DataGuru->nama ?? '-' }}
                                     </h6>
                                 </div>
                             </div>

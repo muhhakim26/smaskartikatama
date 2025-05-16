@@ -1,7 +1,7 @@
-@extends('layouts/user/preset')
+@extends('layouts.guest.preset')
 @section('judul', 'Galeri Foto')
 @section('konten')
-    @include('layouts.user.hero', ['judul' => 'Galeri Foto'])
+    @include('layouts.guest.hero', ['judul' => 'Galeri Foto'])
     <!-- Foto Section -->
     <section class="py-120" id="foto">
         <div class="container">

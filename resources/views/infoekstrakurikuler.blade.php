@@ -1,7 +1,7 @@
-@extends('layouts/user/preset')
+@extends('layouts.guest.preset')
 @section('judul', 'Ekstrakurikuler')
 @section('konten')
-    @include('layouts.user.hero', ['judul' => 'Ekstrakurikuler'])
+    @include('layouts.guest.hero', ['judul' => 'Ekstrakurikuler'])
     <!-- Info Section -->
     <section class="py-120" id="Info">
         <div class="container">

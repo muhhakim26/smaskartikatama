@@ -24,22 +24,35 @@ class AutentikasiController extends Controller
 
     public function loginForm(Request $request)
     {
-        $credentials = $request->validateWithBag('login', [
-            'surel' => ['required', 'string', 'email:rfc,dns'],
+        $field = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL) ? 'email' : 'nisn';
+        $data = [
+            'login' => ['required', 'string'],
             'kata-sandi' => ['required', 'string'],
-        ]);
+        ];
+        $validated = $request->validateWithBag('login', $data);
 
-        $key = Str::transliterate(Str::lower($request->input('surel')) . '|' . $request->ip());
+        $key = Str::transliterate(Str::lower($validated['login']) . '|' . $request->ip());
         $maxAttemps = 3;
 
         if (RateLimiter::retriesLeft($key, $maxAttemps) !== 0 && RateLimiter::availableIn($key) === 0) {
-            $kredensial = [
-                'email' => $credentials['surel'],
-                'password' => $credentials['kata-sandi'],
+            $credentials = [
+                $field => $validated['login'],
+                'password' => $validated['kata-sandi'],
             ];
-            if (Auth::guard('admin')->attempt($kredensial)) {
-                $request->session()->regenerate();
-                return redirect()->intended('dashboard');
+            if ($field === 'nisn') {
+                if (Auth::guard('siswa')->attempt($credentials)) {
+                    $request->session()->regenerate();
+                    return redirect()->intended(route('siswa.dashboard'));
+                }
+            } else {
+                if (Auth::guard('admin')->attempt($credentials)) {
+                    $request->session()->regenerate();
+                    return redirect()->intended('dashboard');
+                }
+                if (Auth::guard('siswa')->attempt($credentials)) {
+                    $request->session()->regenerate();
+                    return redirect()->intended(route('siswa.dashboard'));
+                }
             }
         }
         // Menambah hitungan percobaan yang dilakukan.
@@ -53,7 +66,7 @@ class AutentikasiController extends Controller
             ]);
         }
 
-        return back()->with(['message' => 'email atau password salah', 'status' => 'tersisa ' . RateLimiter::retriesLeft($key, $maxAttemps) . ' percobaan login'])->withErrors($credentials)->onlyInput('surel');
+        return back()->with(['message' => 'identitas pengguna tidak dikenali. silakan periksa kembali.', 'status' => 'tersisa ' . RateLimiter::retriesLeft($key, $maxAttemps) . ' percobaan login'])->withErrors($credentials)->onlyInput('surel');
     }
 
     public function logout(Request $request)

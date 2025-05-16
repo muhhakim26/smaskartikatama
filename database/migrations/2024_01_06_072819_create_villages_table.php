@@ -13,17 +13,14 @@ class CreateVillagesTable extends Migration
      */
     public function up()
     {
-        Schema::create(env('INDONESIA_AREA_TABLE_PREFIX', 'indonesia_') . 'villages', function (Blueprint $table) {
+        Schema::create('indonesia_villages', function (Blueprint $table) {
             $table->id();
             $table->char('code', 13)->unique();
             $table->char('district_code', 8);
             $table->string('name', 255);
             $table->timestamps();
 
-            $table->foreign('district_code')
-                ->references('code')
-                ->on(env('INDONESIA_AREA_TABLE_PREFIX', 'indonesia_') . 'districts')
-                ->onUpdate('cascade')->onDelete('restrict');
+            $table->foreign('district_code')->references('code')->on(env('INDONESIA_AREA_TABLE_PREFIX', 'indonesia_') . 'districts')->onUpdate('cascade')->onDelete('restrict');
         });
     }
 
@@ -34,6 +31,6 @@ class CreateVillagesTable extends Migration
      */
     public function down()
     {
-        Schema::drop(env('INDONESIA_AREA_TABLE_PREFIX', 'indonesia_') . 'villages');
+        Schema::drop('indonesia_villages');
     }
 }

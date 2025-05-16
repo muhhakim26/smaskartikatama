@@ -1,4 +1,4 @@
-@extends('layouts/preset')
+@extends('layouts.admin.preset')
 @section('judul', 'Ubah Kata Sandi')
 @section('konten')
     <h1>Halaman Ubah Sandi</h1>

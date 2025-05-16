@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Berita;
 use App\Models\DataGuru;
 use App\Models\Ppdb;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -14,7 +15,7 @@ class DashboardController extends Controller
     {
         $jumlahGuru = DataGuru::count();
         $jumlahBerita = Berita::count();
-        $jumlahPendaftarPpdb = Ppdb::count();
+        $jumlahPendaftarPpdb = Siswa::count();
         return view('menu.dashboard', compact('jumlahGuru', 'jumlahBerita', 'jumlahPendaftarPpdb'));
     }
 }
