@@ -92,6 +92,19 @@
                                 </a>
                             </li>
                         @endif
+                        @if (auth()->guard('admin')->check())
+                            <li class="nav-item mx-8">
+                                <a class="nav-link" href="{{ route('dashboard') }}">
+                                    Dashboard
+                                </a>
+                            </li>
+                        @elseif(auth()->guard('siswa')->check())
+                            <li class="nav-item mx-8">
+                                <a class="nav-link" href="{{ route('siswa.dashboard') }}">
+                                    Dashboard
+                                </a>
+                            </li>
+                        @endif
                     </ul>
                 </div>
             </div>
@@ -177,6 +190,18 @@
             },
         })
     </script>
+    @if (session()->has('message'))
+        <script>
+            Swal2.fire({
+                icon: "{{ session()->get('status') }}",
+                timer: 3000,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                title: "{{ session()->get('message') }}",
+                showConfirmButton: false,
+            });
+        </script>
+    @endif
     @stack('script')
 </body>
 
