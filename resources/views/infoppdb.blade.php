@@ -1,22 +1,16 @@
 @extends('layouts.guest.preset')
 @section('judul', 'Info PPDB')
+@push('style')
+    <style>
+        .backgroundinfo {
+            background-image: url('{{ asset('assets/images/bgpendaftaran1.png') }}');
+            background-size: cover;
+            background-position: center;
+            width: 100%;
+        }
+    </style>
+@endpush
 @section('konten')
-    @push('style')
-        <style>
-            .backgroundinfo {
-                background-image: url('{{ asset('assets/images/bgpendaftaran1.png') }}');
-                background-size: cover;
-                background-position: center;
-                width: 100%;
-            }
-
-            /* ul,
-                                                                                    ol {
-                                                                                        list-style: auto;
-                                                                                        padding-left: 2rem;
-                                                                                    } */
-        </style>
-    @endpush
     @include('layouts.guest.hero', ['judul' => 'Info PPDB'])
     <!-- Info Section -->
     <section class="py-120" id="info">

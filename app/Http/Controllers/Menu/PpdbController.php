@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Menu;
 
+use App\Exports\SiswaExport;
 use App\Http\Controllers\Controller;
 use App\Models\Area\District;
 use App\Models\Area\Province;
 use App\Models\Area\Regency;
 use App\Models\Area\Village;
-use App\Models\DetailSiswa;
-use App\Models\Ppdb;
 use App\Models\ProgresSiswa;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
@@ -16,6 +15,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
 class PpdbController extends Controller
@@ -389,6 +389,14 @@ class PpdbController extends Controller
         return response()->json(['success' => true, 'data' => $Siswa]);
     }
 
+    public function tolakSiswa(string $id)
+    {
+        $Siswa = Siswa::with('detailSiswa')->find($id);
+        $ProSis = ProgresSiswa::where('siswa_id', $id)->update(['step_4' => true]);
+        $Siswa->detailSiswa->update(['status_siswa' => 'ditolak']);
+        return response()->json(['success' => true, 'data' => $Siswa]);
+    }
+
     public function terimaBerkas(string $berkas, string $id)
     {
         $CalSis = Siswa::with('detailSiswa')->findOrFail($id);
@@ -424,5 +432,54 @@ class PpdbController extends Controller
         }
 
         return back()->with($with);
+    }
+
+    public function tolakBerkas(Request $request, string $berkas, string $id)
+    {
+        $CalSis = Siswa::with('detailSiswa')->findOrFail($id);
+        $file = [];
+        $with = ['status' => 'error', 'message'];
+        if ($berkas === 'foto_siswa') {
+            $file['status_fileft_siswa'] = 'ditolak';
+            $file['catatan_fileft_siswa'] = $request->input('alasan_penolakan');
+            $with['message'] = 'file foto ditolak';
+        }
+
+        if ($berkas === 'file_akte') {
+            $file['status_filefc_akte'] = 'ditolak';
+            $file['catatan_filefc_akte'] = $request->input('alasan_penolakan');
+            $with['message'] = 'file akte ditolak';
+        }
+
+        if ($berkas === 'file_kk') {
+            $file['status_filefc_kk'] = 'ditolak';
+            $file['catatan_filefc_kk'] = $request->input('alasan_penolakan');
+            $with['message'] = 'file kk ditolak';
+        }
+
+        if ($berkas === 'file_skhu') {
+            $file['status_filefc_skhu'] = 'ditolak';
+            $file['catatan_filefc_skhu'] = $request->input('alasan_penolakan');
+            $with['message'] = 'file skhu ditolak';
+        }
+
+        if ($berkas === 'file_skm') {
+            $file['status_filefc_skm'] = 'ditolak';
+            $file['catatan_filefc_skm'] = $request->input('alasan_penolakan');
+            $with['message'] = 'file skm ditolak';
+        }
+        $CalSis->detailSiswa->update($file);
+        if ($CalSis->detailSiswa->status_fileft_siswa === 'ditolak' || $CalSis->detailSiswa->status_filefc_akte === 'ditolak' || $CalSis->detailSiswa->status_filefc_kk === 'ditolak' || $CalSis->detailSiswa->status_filefc_skhu === 'ditolak') {
+            $CalSis->detailSiswa->update(['status_berkas' => 'ditolak']);
+            ProgresSiswa::where('siswa_id', $id)->update(['step_1' => false, 'step_2' => false, 'step_3' => false]);
+        }
+
+        return back()->with($with);
+    }
+
+    public function excel()
+    {
+        $fileName = Carbon::now()->setTimezone('Asia/Jakarta')->format('d-m-Y_H.i.s');
+        return Excel::download(new SiswaExport, 'DataCalonSiswa_' . $fileName . '.xlsx');
     }
 }

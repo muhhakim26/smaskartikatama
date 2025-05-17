@@ -248,6 +248,13 @@ class SiswaController extends Controller
                 $newFilename = "{$inputName}-{$nisn}-{$slugName}-{$today}.{$ext}";
                 $path = $request->file($inputName)->storeAs("siswa/{$nisn}", $newFilename, 'berkas');
                 $data[$fieldDb] = $path;
+
+                // Jika status file yang sesuai sebelumnya ditolak, otomatis juga status berkas ditolak
+                $statusField = 'status_' . $fieldDb;
+                if ($CalSis->detailSiswa?->$statusField === 'ditolak' && $CalSis->detailSiswa?->status_berkas === 'ditolak') {
+                    $data[$statusField] = 'diproses';
+                    $data['status_berkas'] = 'diproses';
+                }
             }
         }
         DetailSiswa::updateOrCreate(['siswa_id' => auth()->user()->id], $data);
