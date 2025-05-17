@@ -277,7 +277,7 @@ class PpdbController extends Controller
         $nhpSiswaLama = $CalSis->nhp_siswa;
         $emailLama = $CalSis->email;
         $nisnLama = $CalSis->nisn;
-        if ($namaLama !== $validated['nama-siswa'] || $nhpSiswaLama !== $validated['no-hp-siswa'] || $emailLama !== $validated['email-siswa'] || $nisnLama !== $validated['nisn-lama']) {
+        if ($namaLama !== $validated['nama-siswa'] || $nhpSiswaLama !== $validated['no-hp-siswa'] || $emailLama !== $validated['email-siswa'] || $nisnLama !== $validated['nisn-siswa']) {
             if ($namaLama !== $validated['nama-siswa']) {
                 $CalSis->nama = $validated['nama-siswa'];
             }
