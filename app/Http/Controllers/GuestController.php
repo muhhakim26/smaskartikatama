@@ -159,8 +159,14 @@ class GuestController extends Controller
             if (empty($SiswaModel)) {
                 $nomorUrut = '0001';
             } else {
-                $explode = explode('-', $SiswaModel->id_pendaftaran);
-                $nomorUrut = intval($explode[4]) + 1;
+                // $explode = explode('-', $SiswaModel->id_pendaftaran);
+                // $nomorUrut = intval($explode[4]) + 1;
+                // $nomorUrut = str_pad($nomorUrut, 4, '0', STR_PAD_LEFT);
+                // Ambil 4 karakter terakhir dari ID
+                $angka = substr($SiswaModel->id_pendaftaran, -4);
+
+                // Tambah 1 lalu padding nol di depan
+                $nomorUrut = intval($angka) + 1;
                 $nomorUrut = str_pad($nomorUrut, 4, '0', STR_PAD_LEFT);
             }
             $siswa = Siswa::create([
