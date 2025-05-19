@@ -2,7 +2,7 @@
 
 namespace Database\Seeders\Area;
 
-use Database\Seeders\Utilitas\CsvtoArray;
+use Database\Seeders\Utilitas\CsvToArray;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,7 +13,7 @@ class ProvinceSeeder extends Seeder
      */
     public function run(): void
     {
-        //Province::truncate();
+        // Province::truncate();
 
         // $csvFile = fopen(base_path("database/data/provinces.csv"), "r");
 
@@ -31,7 +31,7 @@ class ProvinceSeeder extends Seeder
         // fclose($csvFile);
 
         $csvFile = __DIR__ . '/../../data/provinces.csv';
-        $csv = new CsvtoArray();
+        $csv = new CsvToArray();
         $header = ['code', 'name'];
         $data = $csv->csv_to_array($csvFile, $header);
         DB::table(env('INDONESIA_AREA_TABLE_PREFIX', 'indonesia_') . 'provinces')->insertOrIgnore($data);

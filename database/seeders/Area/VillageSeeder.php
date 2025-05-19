@@ -2,7 +2,7 @@
 
 namespace Database\Seeders\Area;
 
-use Database\Seeders\Utilitas\CsvtoArray;
+use Database\Seeders\Utilitas\CsvToArray;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -28,7 +28,7 @@ class VillageSeeder extends Seeder
         // }
         // fclose($csvFile);
         $csvFile = __DIR__ . '/../../data/villages.csv';
-        $csv = new CsvtoArray();
+        $csv = new CsvToArray();
         $header = ['code', 'district_code', 'name'];
         $data = $csv->csv_to_array($csvFile, $header);
         $collection = collect($data);
