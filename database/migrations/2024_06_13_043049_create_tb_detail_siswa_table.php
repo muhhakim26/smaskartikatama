@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->foreignId('desa_kelurahan_id')->constrained('indonesia_villages', 'id')->cascadeOnUpdate()->restrictOnDelete();
             $table->date('tgl_lahir');
             $table->unsignedInteger('kode_pos');
-            $table->enum('agama', ['islam', 'kristen_protestan', 'kristen_katolik', 'konghucu', 'buddha', 'hindu']);
+            $table->enum('agama', ['islam', 'kristen_protestan', 'kristen_katolik', 'khonghucu', 'buddha', 'hindu']);
             $table->string('asal_sekolah');
             $table->text('alamat');
             $table->string('nama_ayah');

@@ -29,7 +29,7 @@
             </div>
         </div>
     </div>
-    @if ($ProSis?->step_1 !== 1)
+    @if ($ProSis?->step_1 != 1)
         <div class="row gy-4">
             <div class="col-md-6">
                 <div class="card">
@@ -43,7 +43,7 @@
                 </div>
             </div>
         </div>
-    @elseif ($ProSis?->step_1 === 1 && $ProSis?->step_2 !== 1 && $ProSis?->step_3 !== 1 && $ProSis?->step_4 !== 1)
+    @elseif ($ProSis?->step_1 == 1 && $ProSis?->step_2 != 1 && $ProSis?->step_3 != 1 && $ProSis?->step_4 != 1)
         <div class="row gy-4">
             <div class="col-md-6">
                 <div class="card">
@@ -293,7 +293,7 @@
                 </div>
             </div>
         </div>
-    @elseif($ProSis?->step_1 === 1 && $ProSis?->step_2 === 1 && ($ProSis?->step_3 !== 1 || $ProSis?->step_3 === 1) && $ProSis?->step_4 !== 1)
+    @elseif($ProSis?->step_1 == 1 && $ProSis?->step_2 == 1 && ($ProSis?->step_3 != 1 || $ProSis?->step_3 == 1) && $ProSis?->step_4 != 1)
         <div class="row gy-4">
             <div class="col-md-12">
                 <div class="card">
@@ -313,7 +313,7 @@
                 </div>
             </div>
         </div>
-    @elseif($ProSis?->step_4 === 1)
+    @elseif($ProSis?->step_4 == 1)
         <div class="row gy-4">
             <div class="col-md-12">
                 <div class="card">

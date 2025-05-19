@@ -39,7 +39,7 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-                @if ($ProSis->step_1 !== 1 && $ProSis?->step_2 !== 1)
+                @if ($ProSis->step_1 != 1 && $ProSis?->step_2 != 1)
                     <li @class(['active-page' => Route::is('siswa.edit')])>
                         <a @class(['active-page' => Route::is('siswa.edit')]) href="{{ route('siswa.edit', auth()->user()->id) }}">
                             <iconify-icon icon="lucide:edit"></iconify-icon>

@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
         Siswa::create([
             'gelombang_pendaftaran' => 1,
             'tahun_ajaran' => '2025/2026',
-            'id_pendaftaran' => 'SKT-2025-05-10-0001',
+            'id_pendaftaran' => 'SKT202505100001',
             'nama' => 'AZKA KAMAL FADHIL AL-FATIH',
             'email' => 'siswa@test.com',
             'nhp_siswa' => '081234567890',
