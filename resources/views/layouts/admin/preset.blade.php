@@ -279,7 +279,8 @@
     <!-- logout action -->
     <script>
         $(document).ready(function() {
-            $('#logout').on('click', function() {
+            $('#logout').on('click', function(e) {
+                e.preventDefault();
                 $.ajax({
                     type: 'POST',
                     url: '{{ route('logout') }}',
