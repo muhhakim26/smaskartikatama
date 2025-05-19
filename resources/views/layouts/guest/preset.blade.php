@@ -85,23 +85,24 @@
                         <li class="nav-item mx-8">
                             <a @class(['nav-link', 'active' => Route::is('kontak')]) href="{{ route('kontak') }}">Kontak</a>
                         </li>
-                        @if (!auth()->check())
+                        @if (auth()->guard('admin')->check() || auth()->guard('siswa')->check())
+                            @if (auth()->guard('admin')->check())
+                                <li class="nav-item mx-8">
+                                    <a class="nav-link" href="{{ route('dashboard') }}">
+                                        Dashboard
+                                    </a>
+                                </li>
+                            @elseif(auth()->guard('siswa')->check())
+                                <li class="nav-item mx-8">
+                                    <a class="nav-link" href="{{ route('siswa.dashboard') }}">
+                                        Dashboard
+                                    </a>
+                                </li>
+                            @endif
+                        @else
                             <li class="nav-item m-auto">
                                 <a class="btn btn-primary radius-50 px-20 py-12" href="{{ route('info-ppdb') }}">
                                     Pendaftaran PPDB
-                                </a>
-                            </li>
-                        @endif
-                        @if (auth()->guard('admin')->check())
-                            <li class="nav-item mx-8">
-                                <a class="nav-link" href="{{ route('dashboard') }}">
-                                    Dashboard
-                                </a>
-                            </li>
-                        @elseif(auth()->guard('siswa')->check())
-                            <li class="nav-item mx-8">
-                                <a class="nav-link" href="{{ route('siswa.dashboard') }}">
-                                    Dashboard
                                 </a>
                             </li>
                         @endif
