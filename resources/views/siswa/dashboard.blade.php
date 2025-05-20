@@ -29,7 +29,7 @@
             </div>
         </div>
     </div>
-    @if ($ProSis?->step_1 !== 1)
+    @if ($ProSis?->step_1 != 1)
         <div class="row gy-4">
             <div class="col-md-6">
                 <div class="card">
@@ -43,7 +43,7 @@
                 </div>
             </div>
         </div>
-    @elseif ($ProSis?->step_1 === 1 && $ProSis?->step_2 !== 1 && $ProSis?->step_3 !== 1 && $ProSis?->step_4 !== 1)
+    @elseif ($ProSis?->step_1 == 1 && $ProSis?->step_2 != 1 && $ProSis?->step_3 != 1 && $ProSis?->step_4 != 1)
         <div class="row gy-4">
             <div class="col-md-6">
                 <div class="card">
@@ -293,7 +293,7 @@
                 </div>
             </div>
         </div>
-    @elseif($ProSis?->step_1 === 1 && $ProSis?->step_2 === 1 && ($ProSis?->step_3 !== 1 || $ProSis?->step_3 === 1) && $ProSis?->step_4 !== 1)
+    @elseif($ProSis?->step_1 == 1 && $ProSis?->step_2 == 1 && ($ProSis?->step_3 != 1 || $ProSis?->step_3 == 1) && $ProSis?->step_4 != 1)
         <div class="row gy-4">
             <div class="col-md-12">
                 <div class="card">
@@ -313,7 +313,7 @@
                 </div>
             </div>
         </div>
-    @elseif($ProSis?->step_4 === 1)
+    @elseif($ProSis?->step_4 == 1)
         <div class="row gy-4">
             <div class="col-md-12">
                 <div class="card">
@@ -321,7 +321,7 @@
                         <h6 class="mb-0">Pemberitahuan</h6>
                     </div>
                     <div class="card-body">
-                        @if ($Gelombang?->status_pengumuman === 1)
+                        @if ($Gelombang?->status_pengumuman == 1)
                             <div class="alert alert-success bg-success-600 border-success-600 fw-semibold radius-8 mb-0 px-24 py-11 text-lg text-white" role="alert">
                                 <h5 class="text-white">Hasil Pengumuman PPDB Tahun Ajaran {{ $CalSis?->tahun_ajaran }}</h5>
                                 <h5>Anda telah dinyatakan <strong>Diterima</strong></h5>

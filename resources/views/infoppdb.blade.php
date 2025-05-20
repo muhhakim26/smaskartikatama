@@ -61,7 +61,7 @@
                                     <div class="p-20">
                                         <h5 class="mb-36 text-center"><a class="text-uppercase text-line-2 text-primary-600 text-hover-primary-600 transition-2 disabled" href="#"><strong>Batch {{ $value->id }}</strong></a></h5>
                                         <div class="mb-32 text-black">
-                                            @if ($value->status_pendaftaran === 1)
+                                            @if ($value->status_pendaftaran == 1)
                                                 <p class="mb-10">Pendaftaran Batch {{ $value->id }}</p>
                                                 <p class="mb-10">{{ $value->tanggal_dibuka }} s.d. {{ $value->tanggal_ditutup }}</p>
                                                 {!! $value->catatan !!}
